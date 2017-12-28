@@ -5,12 +5,12 @@ return [
     /*
      * Laravel-admin name.
      */
-    'name' => 'Laravel-admin',
+    'name' => 'BearDoctor-admin',
 
     /*
      * Logo in admin panel header.
      */
-    'logo' => '<b>Laravel</b> admin',
+    'logo' => '<b>BearDoctor</b> admin',
 
     /*
      * Mini-logo in admin panel header.
@@ -53,7 +53,7 @@ return [
             'file'  => 'file',
         ],
 
-        'host' => 'http://localhost:8000/upload/',
+        'host' => 'http://www.beardoctor.com/upload/',
     ],
 
     /*
@@ -65,7 +65,7 @@ return [
         'connection' => '',
 
         // User tables and model.
-        'users_table' => 'xbs_admin',
+        'users_table' => 'admin',
         'users_model' => Encore\Admin\Auth\Database\Administrator::class,
 
         // Role table and model.
