@@ -74,7 +74,9 @@ class GoodsController extends Controller
         return Admin::grid(Goods::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-
+            $grid->name("商品名称");
+            $grid->cover("封面图片");
+            $grid->descript("描述");
             $grid->created_at();
             $grid->updated_at();
         });
@@ -90,6 +92,9 @@ class GoodsController extends Controller
         return Admin::form(Goods::class, function (Form $form) {
 
             $form->display('id', 'ID');
+            $form->display('name', '商品名称');
+            $form->image('cover', '商品图片');
+            $form->ip('descript', '商品描述');
 
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
