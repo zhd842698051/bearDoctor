@@ -65,7 +65,7 @@ return [
         'connection' => '',
 
         // User tables and model.
-        'users_table' => 'xbs_admin',
+        'users_table' => 'admin',
         'users_model' => Encore\Admin\Auth\Database\Administrator::class,
 
         // Role table and model.

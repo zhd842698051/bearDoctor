@@ -23,7 +23,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        echo 1;die;
         return Admin::content(function (Content $content) {
 
             $content->header('Dashboard');
