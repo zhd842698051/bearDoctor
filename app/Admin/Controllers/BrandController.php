@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Brand;
 
+use App\Category;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
@@ -74,7 +75,8 @@ class BrandController extends Controller
         return Admin::grid(Brand::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-
+            $grid->name("品牌名称");
+            $grid->logo()->image('',50,50);
             $grid->created_at();
             $grid->updated_at();
         });
@@ -90,7 +92,11 @@ class BrandController extends Controller
         return Admin::form(Brand::class, function (Form $form) {
 
             $form->display('id', 'ID');
-
+            $form->text('name','品牌名称');
+            $form->image('logo','品牌logo');
+            $form->textarea('description','品牌描述');
+            $form->number('order','排序')->default(50);
+            $form->multipleSelect('category','所属分类' )->options(Category::all()->pluck('title', 'id'));
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });

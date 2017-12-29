@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Attribute;
+use App\Category;
 
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -90,7 +91,8 @@ class AttrController extends Controller
         return Admin::form(Attribute::class, function (Form $form) {
 
             $form->display('id', 'ID');
-
+            $form->text('name','属性名称');
+            $form->multipleSelect('category','所属分类')->options(Category::all()->pluck('title', 'id'));
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });

@@ -256,9 +256,9 @@ trait ModelTree
         if (empty($nodes)) {
             $nodes = $this->allNodes();
         }
-
         foreach ($nodes as $node) {
             $node[$this->titleColumn] = $prefix.'&nbsp;'.$node[$this->titleColumn];
+
             if ($node[$this->parentColumn] == $parentId) {
                 $children = $this->buildSelectOptions($nodes, $node[$this->getKeyName()], $prefix.$prefix);
 
