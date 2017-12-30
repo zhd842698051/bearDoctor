@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Attribute;
+use App\Attr;
 use App\Category;
 
 use Encore\Admin\Form;
@@ -72,10 +72,10 @@ class AttrController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(Attribute::class, function (Grid $grid) {
+        return Admin::grid(Attr::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-
+            $grid->name("属性名称");
             $grid->created_at();
             $grid->updated_at();
         });
@@ -88,11 +88,11 @@ class AttrController extends Controller
      */
     protected function form()
     {
-        return Admin::form(Attribute::class, function (Form $form) {
-
+        return Admin::form(Attr::class, function (Form $form) {
             $form->display('id', 'ID');
             $form->text('name','属性名称');
             $form->multipleSelect('category','所属分类')->options(Category::all()->pluck('title', 'id'));
+            $form->textarea('value','属性值')->placeholder('多个值用,隔开');
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });
