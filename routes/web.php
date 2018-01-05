@@ -21,10 +21,13 @@ Route::get('/register','\App\Http\Controllers\Auth\RegisterController@register')
 Route::get('/cart/show','\App\Http\Controllers\Auth\CartController@cartShow');
 Route::get('/cart/order_info','\App\Http\Controllers\Auth\CartController@cartOrderInfo');
 Route::get('/cart/submitOrder','\App\Http\Controllers\Auth\CartController@submitOrder');
+Route::get('/cart','\App\Http\Controllers\Auth\CartController@test');
+Route::get('/cart/dataSel','\App\Http\Controllers\Auth\CartController@cartSel');
+
 //品牌
 Route::get('/brand','\App\Http\Controllers\Auth\BrandController@brand');
 Route::get('/brand/list','\App\Http\Controllers\Auth\BrandController@brandList');
-Route::get('/brand/list','\App\Http\Controllers\Auth\BrandController@brandList');
+Route::get('/brand/{cart}','\App\Http\Controllers\Auth\BrandController@brandList');
 //分类
 Route::get('/category','\App\Http\Controllers\Auth\CategoryController@category');
 Route::get('/category/list','\App\Http\Controllers\Auth\CategoryController@list');
