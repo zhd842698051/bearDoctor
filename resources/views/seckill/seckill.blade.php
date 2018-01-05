@@ -76,57 +76,72 @@
                             <a href="#" class="ch_a" id="gold_btn" onclick="seckill();">立即抢购</a>
                         </div>
                         
-                       <script type="text/javascript" src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
-                        <!-- <div class="times">倒计时：1200 时 30 分 28 秒</div> -->
-                        <script type="text/javascript">
-                                                               
-                            //总时间，以分为单位
-                            var time = 100;
-                            //小时
-                            var h = parseInt(time / 60) > 0 ? parseInt(time / 60) : 0;
-                            //分
-                            var m = time % 60;
-                            //秒
-                            var s = 60;
-                            //输出到当前Script的Dom位置
-                            document.write('<div class="times">距离开抢，还剩余<font id="f_hh">' + h + '</font>小时<font id="f_mm">' + m + '</font>分<font id="f_ss">' + s + '</font>秒</div>');
-                            //开始执行倒计时
-                            var timeInterval = setInterval(function () {
-                                //如果时、分、秒都为0时将停止当前的倒计时
-                                if (h == 0 && m == 0 && s == 0) { clearInterval(timeInterval); return; }
-                                //当秒走到0时，再次为60秒
-                                if (s == 0) { s = 60; }
-                                if (s == 60) {
-                                    //每次当秒走到60秒时，分钟减一
-                                    m -= 1;
-                                    //当分等于0时并且小时还多余1个小时的时候进里面看看
-                                    if (m == 0 && h > 0) {
-                                        //小时减一
-                                        h -= 1;
-                                        //分钟自动默认为60分
-                                        m = 60;
-                                        //秒自动默认为60秒
-                                        s = 60;
-                                    }
-                                }
-                                //秒继续跳动，减一
-                                s -= 1;
-                                //小时赋值
-                                document.getElementById('f_hh').innerHTML = h;
-                                //分钟赋值
-                                document.getElementById('f_mm').innerHTML = m;
-                                //秒赋值
-                                document.getElementById('f_ss').innerHTML = s;
-                            }, 1000);
-
-                        </script>
-
+                     
+                        <div class="times" id="showStartTime_3"></div>
+                      <input type="hidden" id="showtimekill_3" value="7200">
+                       
+                   <!--      <div class="times">距离开抢，还剩余<font id="f_hh">' + h + '</font>小时<font id="f_mm">' + m + '</font>分<font id="f_ss">' + s + '</font>秒</div> -->
                     </li>
                         @endforeach
                 </ul>
             </div>
             <!--End 特卖 End-->
-   
+     <script type="text/javascript" src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
+                        <script type="text/javascript">
+                                                               
+                            // //总时间，以分为单位
+                            // var time = 100;
+                            // //小时
+                            // var h = parseInt(time / 60) > 0 ? parseInt(time / 60) : 0;
+                            // //分
+                            // var m = time % 60;
+                            // //秒
+                            // var s = 60;
+                            // //输出到当前Script的Dom位置
+                            // document.write('<div class="times">距离开抢，还剩余<font id="f_hh">' + h + '</font>小时<font id="f_mm">' + m + '</font>分<font id="f_ss">' + s + '</font>秒</div>');
+                            // //开始执行倒计时
+                            // var timeInterval = setInterval(function () {
+                            //     //如果时、分、秒都为0时将停止当前的倒计时
+                            //     if (h == 0 && m == 0 && s == 0) { clearInterval(timeInterval); return; }
+                            //     //当秒走到0时，再次为60秒
+                            //     if (s == 0) { s = 60; }
+                            //     if (s == 60) {
+                            //         //每次当秒走到60秒时，分钟减一
+                            //         m -= 1;
+                            //         //当分等于0时并且小时还多余1个小时的时候进里面看看
+                            //         if (m == 0 && h > 0) {
+                            //             //小时减一
+                            //             h -= 1;
+                            //             //分钟自动默认为60分
+                            //             m = 60;
+                            //             //秒自动默认为60秒
+                            //             s = 60;
+                            //         }
+                            //     }
+                            //     //秒继续跳动，减一
+                            //     s -= 1;
+                            //     //小时赋值
+                            //     document.getElementById('f_hh').innerHTML = h;
+                            //     //分钟赋值
+                            //     document.getElementById('f_mm').innerHTML = m;
+                            //     //秒赋值
+                            //     document.getElementById('f_ss').innerHTML = s;
+                            // }, 1000);
+
+                            setInterval("set_time("+3+")",1000);
+                             function set_time($id){
+                                    var data=parseInt($("#showtimekill_"+$id).val());
+                                    var day=Math.floor(data/3600/24)<10?'0'+Math.floor(data/3600/24):Math.floor(data/3600/24);
+                                    var hours=Math.floor(data/3600%24)<10?'0'+Math.floor(data/3600%24):Math.floor(data/3600%24);
+                                    var minutes=Math.floor(data%3600/60)<10?'0'+Math.floor(data%3600/60):Math.floor(data%3600/60);
+                                    var seconds=(data%60)<10?'0'+(data%60):(data%60);
+                                    $("#showStartTime_"+$id).html("距离开抢："+day+"天"+hours+"时"+minutes+"分"+seconds+"秒");
+                                    data--;
+                                    $("#showtimekill_"+$id).val(data)
+                                }
+
+                        </script>
+
 
     <script type="text/javascript">
         //       $(function(){
