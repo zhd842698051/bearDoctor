@@ -47,23 +47,12 @@ Route::get('/user/safe','\App\Http\Controllers\Auth\UserController@safe');
 
 //订单
 Route::get('/order','\App\Http\Controllers\Auth\OrderController@list');
+Route::get('/orderno','\App\Http\Controllers\Auth\OrderController@orderNo');
+Route::get('/orderinfo','\App\Http\Controllers\Auth\OrderController@orderInfo');
+Route::get('/addorder','\App\Http\Controllers\Auth\OrderController@addOrder');
+Route::get('/delCart','\App\Http\Controllers\Auth\OrderController@delCart');
 
 //商品
 Route::get('/goods/product','\App\Http\Controllers\Auth\GoodsController@product');
 Route::get('/goods/sell','\App\Http\Controllers\Auth\GoodsController@sell');
 Route::get('/goods/sellDetails','\App\Http\Controllers\Auth\GoodsController@sellDetails');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
