@@ -3,8 +3,8 @@
 namespace App\Admin\Controllers;
 
 use App\Attr;
+use App\Attribute;
 use App\Category;
-
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Facades\Admin;
@@ -76,8 +76,16 @@ class AttrController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->name("属性名称");
-            $grid->created_at();
-            $grid->updated_at();
+            $grid->attribute("属性值")->display(function ($roles) {
+
+                $roles = array_map(function ($role) {
+                    return "<span class='label label-success'>{$role['value']}</span>";
+                }, $roles);
+
+                return join('&nbsp;', $roles);
+            });
+            $grid->created_at('添加时间');
+            //$grid->updated_at();
         });
     }
 
@@ -92,7 +100,12 @@ class AttrController extends Controller
             $form->display('id', 'ID');
             $form->text('name','属性名称');
             $form->multipleSelect('category','所属分类')->options(Category::all()->pluck('title', 'id'));
-            $form->textarea('value','属性值')->placeholder('多个值用,隔开');
+            $form->hasMany('attribute',function (Form\NestedForm $form){
+                $form->text("value",'属性值');
+                $form->number("sort",'排序')->default(0);
+                $form->display('created_at', 'Created At');
+                $form->display('updated_at', 'Updated At');
+            })->label("属性值");
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });

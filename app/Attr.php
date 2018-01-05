@@ -9,4 +9,8 @@ class Attr extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    public function attribute(){
+        return $this->hasMany(Attribute::class,'attr_id');
+    }
 }

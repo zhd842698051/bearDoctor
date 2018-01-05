@@ -54,6 +54,12 @@ Route::get('/goods/sell','\App\Http\Controllers\Auth\GoodsController@sell');
 Route::get('/goods/sellDetails','\App\Http\Controllers\Auth\GoodsController@sellDetails');
 
 
+//后台
+Route::get("/admin/goods/getAttr",'App\Admin\Controllers\GoodsController@getAttr');
+Route::get("/admin/goods/getAttribute",'App\Admin\Controllers\GoodsController@getAttribute');
+Route::get("/admin/goods/ajaxGetAttr",'App\Admin\Controllers\GoodsController@ajaxGetAttr');
+
+
 
 
 
