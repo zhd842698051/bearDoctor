@@ -3,7 +3,7 @@ var jq = jQuery.noConflict();
 jq.fn.extend({
 	jselect:function(){
 		return jq(this).each(function(){
-			var width = this.style.width;//因为ff取不到auto
+			var width = this.style.width;//脪貌脦陋ff脠隆虏禄碌陆auto
 			jq(this).after("<input type=\"hidden\" /><div class='jslct'><div class='jslct_t'><em></em></div><dl></dl></div>");
 			var ipt = jq(this).next("input");
 			var lst = ipt.next("div");
