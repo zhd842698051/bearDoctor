@@ -77,7 +77,7 @@ class GoodsController extends Controller
             $grid->name("商品名称");
             $grid->cover("封面图片");
             $grid->descript("描述");
-            $grid->created_at();
+            $grid->created_at()
             $grid->updated_at();
         });
     }
