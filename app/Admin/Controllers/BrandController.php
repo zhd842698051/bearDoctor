@@ -76,9 +76,17 @@ class BrandController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->name("品牌名称");
-            $grid->logo()->image('',50,50);
-            $grid->created_at();
-            $grid->updated_at();
+            $grid->logo("品牌logo")->image('',50,50);
+            $grid->category("所属分类")->display(function ($roles) {
+
+                $roles = array_map(function ($role) {
+                    return "<span class='label label-success'>{$role['title']}</span>";
+                }, $roles);
+
+                return join('&nbsp;', $roles);
+            });
+            $grid->created_at("创建时间");
+            $grid->updated_at("修改时间");
         });
     }
 
@@ -96,7 +104,9 @@ class BrandController extends Controller
             $form->image('logo','品牌logo');
             $form->textarea('description','品牌描述');
             $form->number('order','排序')->default(50);
-            $form->multipleSelect('category','所属分类' )->options(Category::all()->pluck('title', 'id'));
+            $res = Category::selectOptions();
+            unset($res[0]);
+            $form->multipleSelect('category','所属分类' )->options($res);
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });
