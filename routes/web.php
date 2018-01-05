@@ -53,10 +53,14 @@ Route::get('/goods/product','\App\Http\Controllers\Auth\GoodsController@product'
 Route::get('/goods/sell','\App\Http\Controllers\Auth\GoodsController@sell');
 Route::get('/goods/sellDetails','\App\Http\Controllers\Auth\GoodsController@sellDetails');
 
+//营销（秒杀-优惠券-团购）
+Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
+Route::get('/seckill/show','\App\Http\Controllers\Auth\SeckillController@show');
 
 
 
-
+Route::get('/seckill/coupon','\App\Http\Controllers\Auth\SeckillController@coupon');
+Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
 
 
