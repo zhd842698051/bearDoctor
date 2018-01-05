@@ -4,36 +4,30 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    //登录
+    public function login()
     {
-        $this->middleware('guest')->except('logout');
+        return view('login/login');
+    }
+
+    public function loginDo(Request $request)
+    {
+
+    	$res=$this->validate($request,[
+    		'username'	=>	'required|min:6|max:16',
+    		'password'	=>	'required|min:6|max:16',
+    	]);
+    	
+    	$user = request(['username','password']);
+    	if(\Auth::attempt($user)){
+    		return redirect('/');
+    	}else{
+    		echo "<script>alert('账号或密码错误');</script>";
+    	}
+    	//return \Redirect::back()->withErrors("用户名和密码不匹配");
     }
 }
