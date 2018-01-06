@@ -57,7 +57,7 @@ class CartController extends Controller
 			$this->validate(request(),['userid'=>'required']);
 			$userid = request('userid');
 			//查询数据
-			$data = Db::table('cart')->where('user_id',$userid)->join('product','cart.product_id','=','product.id')->join('goods','product.goods_id','=','goods.id')->get();
+			$data = Db::table('cart')->where('user_id',$userid)->join('product','cart.product_id','=','product.id')->join('goods','product.goods_id','=','goods.id')->select('cart.num','user_id','price','sell_price','cover','goods_id','name')->get();
 		}
 		else
 		{

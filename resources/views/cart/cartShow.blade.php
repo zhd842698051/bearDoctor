@@ -71,7 +71,6 @@
           </tr>
           <tr valign="top" height="150">
             <td colspan="8" align="right">
-                <input type="hidden" name='goods_id' value='2' />
                 <a href="#"><img src="{{asset('images')}}/buy1.gif" /></a>&nbsp; &nbsp; <a href="#"><img src="{{asset('images')}}/buy2.gif" class='settle' /></a>
             </td>
           </tr>
@@ -174,6 +173,8 @@
 <script src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
 <script>
 $(function(){
+    //window.localStorage.clear();
+    //var cart = window.localStorage.setItem('cart');
     var cart = window.localStorage.getItem('cart');
     //获取用户id
     var userid =$("input[name='user']").val();
@@ -188,16 +189,148 @@ $(function(){
         else
         {
             //将获取的内容进行展示
+            var re = '';
+            $.each(eval(cart),function(k,v){
+                re+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.goodsid+"' /><input type='hidden' name='num' value='2'></td><td><div class='c_s_img'><img src='{{asset('images')}}/c_1.jpg' width='73' height='73' /></div>哈哈哈哈哈</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.goodsnum+"' name='stock' class='car_ipt' /><input type='hidden' value='88' class='hide_money'/><input type='hidden' value='"+v.goodsid+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>88</span></td><td align='center'><a onclick='ShowDiv('MyDiv','fade')'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
+
+            })
+            $("#content").html(re)
+            common_price();
+            //用户没登陆 下的加减
+            $(document).on('click',"input[name='jia']",function(){       
+                var c = $(this).parent().find(".car_ipt").val();
+                if(c>100){
+                    c = 100;
+                }
+                if(c<=1)
+                {
+                    c=1;
+                }
+                c=parseInt(c)+1;
+                var goodsid = $(this).prev().val();
+                var goodsnum = c;
+                var data = eval(cart);
+                //var st = '';
+                $.each(data,function(k,v){
+                    if(goodsid==v.goodsid)
+                    {
+                        v.goodsnum = parseInt(v.goodsnum)+1;
+                        //st = 1;
+                    }
+                })
+                // if(st!=1)
+                // {
+                //     data[data.length]={'goodsid':goodsid,'goodsnum':goodsnum};
+                // }
+                window.localStorage.setItem('cart',data);
+                var money = $(this).parent().find(".hide_money").val();
+                
+                var count_money = $(this).parents('div').find('#count_money').html();
+                count_money = parseFloat(count_money)+parseFloat(money);
+                money = money*c;
+                $(this).parents('div').find('#count_money').html(count_money+'.00');
+                $(this).parents('tr').find('.money').html(money+'.00');
+                $(this).parent().find(".car_ipt").val(c);
+            })
             
+            //没登陆的情况下减
+            $(document).on('click',"input[name='jian']",function(){  
+                var c = $(this).parent().find(".car_ipt").val();
+                if(c==1){    
+                    c=1;
+                    return false;   
+                }else{    
+                    c=parseInt(c)-1;    
+                    $(this).parent().find(".car_ipt").val(c);
+                }
+                var goodsid = $(this).prev().val();
+                var goodsnum = c;
+                var data = eval(cart);
+                //var st = '';
+                $.each(data,function(k,v){
+                    if(goodsid==v.goodsid)
+                    {
+                        v.goodsnum = parseInt(v.goodsnum)-1;
+                        //st = 1;
+                    }
+                })
+
+                // if(st!=1)
+                // {
+                //     data[data.length]={'goodsid':goodsid,'goodsnum':goodsnum};
+                // }
+                window.localStorage.setItem('cart',data);
+                var money = $(this).parent().find(".hide_money").val();
+                var count_money = $(this).parents('div').find('#count_money').html();
+                count_money = parseFloat(count_money)-parseFloat(money);
+                money = parseFloat(money)*c;
+                $(this).parents('div').find('#count_money').html(count_money+'.00');
+                $(this).parents('tr').find('.money').html(money+'.00');
+            })
 
         }
+
     }
     else //用户登录下
     {
         //发送ajax查询数据库
         Dbcart(userid,'get','cart/dataSel');
+        $(document).on('click',"input[name='jia']",function(){       
+            var c = $(this).parent().find(".car_ipt").val();
+            if(c>100){
+                c = 100;
+            }
+            if(c<=1)
+            {
+                c=1;
+            }
+            c=parseInt(c)+1;
+            var goodsid = $(this).prev().val();
+            var goodsnum = c;
+            var money = $(this).parent().find(".hide_money").val();
+            
+            var count_money = $(this).parents('div').find('#count_money').html();
+            count_money = parseFloat(count_money)+parseFloat(money);
+            money = money*c;
+            $(this).parents('div').find('#count_money').html(count_money+'.00');
+            $(this).parents('tr').find('.money').html(money+'.00');
+            $(this).parent().find(".car_ipt").val(c);
+        })
 
+        $(document).on('click',"input[name='jian']",function(){  
+            var c = $(this).parent().find(".car_ipt").val();
+            if(c==1){    
+                c=1;
+                return false;   
+            }else{    
+                c=parseInt(c)-1;    
+                $(this).parent().find(".car_ipt").val(c);
+            }
+            var money = $(this).parent().find(".hide_money").val();
+            var count_money = $(this).parents('div').find('#count_money').html();
+            count_money = parseFloat(count_money)-parseFloat(money);
+            money = parseFloat(money)*c;
+            $(this).parents('div').find('#count_money').html(count_money+'.00');
+            $(this).parents('tr').find('.money').html(money+'.00');
+        })
     }
+
+    //商品总价
+    function common_price()
+    {
+        var obj = $(".money");
+        len = obj.length;
+        var ct_money = null;
+        for(var i=0;i<len;i++){
+            
+            ct_money += parseFloat(obj[i].innerText);
+        }
+        $("#count_money").html(ct_money)
+    }
+    
+    
+    
+
     //全选反选
     $("input[name='checkbox']").click(function(){
         console.log($(this).attr('checked'))
@@ -207,35 +340,7 @@ $(function(){
             $(".checkbox").removeAttr('checked')
         }
     })
-    $(document).on('click',"input[name='jia']",function(){       
-        var c = $(this).parent().find(".car_ipt").val();
-        
-        c=parseInt(c)+1;
-        var money = $(this).parent().find(".hide_money").val();
-        var count_money = $(this).parents('div').find('#count_money').html();
-        count_money = parseFloat(count_money)+parseFloat(money);
-        money = money*c;
-        $(this).parents('div').find('#count_money').html(count_money+'.00');
-        $(this).parents('tr').find('.money').html(money+'.00');
-        $(this).parent().find(".car_ipt").val(c);
-    })
-
-    $(document).on('click',"input[name='jian']",function(){  
-        var c = $(this).parent().find(".car_ipt").val();
-        if(c==1){    
-            c=1;
-            return false;   
-        }else{    
-            c=parseInt(c)-1;    
-            $(this).parent().find(".car_ipt").val(c);
-        }
-        var money = $(this).parent().find(".hide_money").val();
-        var count_money = $(this).parents('div').find('#count_money').html();
-        count_money = parseFloat(count_money)-parseFloat(money);
-        money = parseFloat(money)*c;
-        $(this).parents('div').find('#count_money').html(count_money+'.00');
-        $(this).parents('tr').find('.money').html(money+'.00');
-    })
+    
 
     //清空购物车
     $("input[name='clear']").click(function(){
@@ -388,17 +493,10 @@ $(function(){
                     console.log(result)
                     var str = '';
                     $.each(result,function(k,v){
-                        str+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.goods_id+"' /><input type='hidden' name='num' value='2'></td><td><div class='c_s_img'><img src='{{asset('images')}}/c_1.jpg' width='73' height='73' /></div>"+v.name+"</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='1' name='stock' class='car_ipt' /><input type='hidden' value='"+v.sell_price+"' class='hide_money'/><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>"+v.sell_price+"</span></td><td align='center'><a onclick='ShowDiv('MyDiv','fade')'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
+                        str+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.goods_id+"' /><input type='hidden' name='num' value='2'></td><td><div class='c_s_img'><img src='{{asset('images')}}/c_1.jpg' width='73' height='73' /></div>"+v.name+"</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.num+"' name='stock' class='car_ipt' /><input type='hidden' value='"+v.sell_price+"' class='hide_money'/><input type='hidden' value='"+v.goods_id+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>"+v.sell_price+"</span></td><td align='center'><a onclick='ShowDiv('MyDiv','fade')'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
                     });
                     $("#content").html(str)
-                    var obj = $(".money");
-                    len = obj.length;
-                    var ct_money = null;
-                    for(var i=0;i<len;i++){
-                        ct_money += parseFloat(obj.html());
-                    }
-                    $("#count_money").html(ct_money)
-                   
+                    common_price();
                 }
                 
             }

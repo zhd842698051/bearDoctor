@@ -11,12 +11,5 @@ class Cart extends Model
     	$data = self::where("user_id",$userid)->get()->toArray();
     	return $data;
     }
-
-    //商品属性关联
-    public function product()
-    {
-    	return $this->belongsTo('App\Product');
-    }
-
      
 }
