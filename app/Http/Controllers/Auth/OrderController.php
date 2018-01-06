@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
@@ -12,13 +13,14 @@ use App\Goods;
 use App\Address;
 use App\Prop;
 use App\User_prop;
+use App\Order;
 class OrderController extends Controller
 {
 	public function orderInfo(){
 
 		//购物车商品信息
 		$goods_list=Cart::where(['user_id'=>1])->orderBy('created_at', 'desc')->get()->toArray();
-		
+
 		foreach ($goods_list as $key => $value) {
 			$product=Product::find($goods_list[$key]['product_id'])->toArray();
 			$goods=Goods::find($product['goods_id'])->toArray();
@@ -33,7 +35,7 @@ class OrderController extends Controller
 				$str.=$v->value.",";
 			}
 			$goods_list[$key]['attr']=rtrim($str,',');
-			
+
 		}
 
 		//收货人信息
@@ -69,7 +71,7 @@ class OrderController extends Controller
 
 
 	public function addOrder(){
-     
+
 		$user_id=sprintf("%04d",$user_id);
 		$order_no=substr(time(),-8).mt_rand(1000,9999).$user_id;
 		$user_id = \Auth::id();
@@ -87,7 +89,23 @@ class OrderController extends Controller
 	//订单列表
 	public function list()
 	{
-		return view('Order/list');
+		$status=IndexController::isLogin();
+		if($status == false){
+			return redirect('/login');
+		}else{
+		$user=Auth::user();
+		if($user == null){
+			return view('index/index',compact('user',$user));
+		}else{
+			//检测用户是否登录  并且在导航栏展示用户登录状态
+			$isLogin=Auth::check();
+			$user->isLogin = $isLogin;
+
+			$order=Order::orderList($user->id);
+			//dd($order);
+			return view('Order/list',compact('user',$user));
+			}
+		}
 	}
-	
+
 }
