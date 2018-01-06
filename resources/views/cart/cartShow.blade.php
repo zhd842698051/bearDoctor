@@ -274,7 +274,7 @@ $(function(){
     else //用户登录下
     {
         //发送ajax查询数据库
-        Dbcart(userid,'get','cart/dataSel');
+        Dbcart(userid,'get',"{{URL('cart/dataSel')}}");
         $(document).on('click',"input[name='jia']",function(){       
             var c = $(this).parent().find(".car_ipt").val();
             if(c>100){
@@ -474,7 +474,7 @@ $(function(){
         //发送ajax
         $.ajax({
             type:type,
-            url:{{asset('')}}+url,
+            url:url,
             data:{
                 userid:userid,
                 //_token:"{{csrf_token()}}",
