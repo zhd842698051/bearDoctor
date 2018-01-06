@@ -56,13 +56,14 @@ Route::get('/delCart','\App\Http\Controllers\Auth\OrderController@delCart');
 Route::get('/goods/product','\App\Http\Controllers\Auth\GoodsController@product');
 Route::get('/goods/sell','\App\Http\Controllers\Auth\GoodsController@sell');
 Route::get('/goods/sellDetails','\App\Http\Controllers\Auth\GoodsController@sellDetails');
-<<<<<<< HEAD
+
 
 
 //后台
 Route::get("/admin/goods/getAttr",'App\Admin\Controllers\GoodsController@getAttr');
 Route::get("/admin/goods/getAttribute",'App\Admin\Controllers\GoodsController@getAttribute');
 Route::get("/admin/goods/ajaxGetAttr",'App\Admin\Controllers\GoodsController@ajaxGetAttr');
+Route::get("/admin/goods/add",'App\Admin\Controllers\GoodsController@add');
 
 
 
@@ -74,9 +75,3 @@ Route::get("/admin/goods/ajaxGetAttr",'App\Admin\Controllers\GoodsController@aja
 
 
 
-
-
-
-
-=======
->>>>>>> 1ce86247b3f66a3ec17daf6bca917ab04a544719
