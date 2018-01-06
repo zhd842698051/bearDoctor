@@ -83,11 +83,12 @@
                    $(this).parent().next().children().html(res*dan_price);
                    znum();
                   
-                    var prop= $(".jslct").val();
+                    var pull= $(".jslct").val().split('|')[1];
+
                     var zunms=$(".znum").html();
                      $(".z_num").html(zunms);
-                    if(prop<zunms){
-                      $(".jslct").removeAttr("disabled"); 
+                    if(pull<zunms){
+                      $(".jslct option").removeAttr("disabled"); 
                     }
 
                 })
@@ -130,11 +131,117 @@
                     zunms=$(".znum").html();
                   
                   $(".z_num").html($(".znum").html());
+                 
+                  
                 $(".jslct").change(function(){
+                   var prop= parseInt($(this).val().split('|')[0]);
+                   var zunms=parseInt($(".znum").html());
+                   var pull=parseInt($(this).val().split('|')[1]);
+               
+                   if( pull>zunms){
+                   // $(this).children().attr("disabled",true);
+                   $(".jslct option:selected").attr("disabled",true);
+                   alert('您没有达到红包使用要求')
+                    return false;
+                    }
+                    if(prop!=0){
+                      $("#red").html("您将使用"+prop+"元红包")
+                    }else{
+                      $("#red").html("您不使用红包")
+                    }
                    
-                   alert(zunms)
                  $(".z_num").html(zunms-prop);
                 })
+                $("#red").html($(".jslct").val())
+
+                //展示所有地址
+                $("#add_update").toggle(function(){
+                  $.get("{{url('getaddress')}}", {
+                    "user_id": user_id,
+                  },function (msg) {
+                if(msg.error==0){
+                var man='<select class="user">';
+                var address_='<select class="addr">';
+                var amply='<select class="ampll">';
+                var postcode='<select class="posts">';
+                var bulid='<select class="build">';
+                var phone='<select class="tel">';
+                //console.log(msg.content);return false;
+                $.each(msg.content,function (k,v) {
+                    man+='<option value='+v.name+' m_id='+v.id+'>'+v.name+'</option>';
+                    address_+='<option value='+v.address+'>'+v.address+'</option>';
+                    amply+='<option value='+v.amply+'>'+v.amply+'</option>';
+                    postcode+='<option value='+v.postcode+'>'+v.postcode+'</option>';
+                    bulid+='<option value='+v.bulid+'>'+v.bulid+'</option>';
+                    phone+='<option value='+v.phone+'>'+v.phone+'</option>';
+                    })
+                    man+='</select>';
+                    address_+='</select>';
+                    amply+='</select>';
+                    postcode+='</select>';
+                    bulid+='</select>';
+                    phone+='</select>';
+                    $(".man").html(man)
+                    $(".address_").html(address_)
+                    $(".amply").html(amply)
+                    $(".postcode").html(postcode)
+                    $(".bulid").html(bulid)
+                    $(".phone").html(phone)
+                }
+              },"json")
+              },function(){
+                var man=$(".user").val();
+            
+                var addr=$(".addr").val();
+                var ampll=$(".ampll").val();
+                var posts=$(".posts").val();
+                var build=$(".build").val();
+                var tel=$(".tel").val();
+               
+                $(".man").html(man);
+                $(".address_").html(addr);
+                $(".amply").html(ampll);
+                $(".postcode").html(posts);
+                $(".bulid").html(build);
+                $(".phone").html(tel)
+              } )
+
+             //地址修改
+             $(document).on("click",".user option",function (){
+               var user=$(this).val();
+                $.get("{{url('getadd')}}", {
+                    "user": user,
+                  },function (msg) {
+                if(msg.error==0){
+                var man='<select class="user">';
+                var address_='<select class="addr">';
+                var amply='<select class="ampll">';
+                var postcode='<select class="posts">';
+                var bulid='<select class="build">';
+                var phone='<select class="tel">';
+                $.each(msg.content,function (k,v) {
+                    man+='<option value='+v.name+' m_id='+v.id+'>'+v.name+'</option>';
+                    address_+='<option value='+v.address+'>'+v.address+'</option>';
+                    amply+='<option value='+v.amply+'>'+v.amply+'</option>';
+                    postcode+='<option value='+v.postcode+'>'+v.postcode+'</option>';
+                    bulid+='<option value='+v.bulid+'>'+v.bulid+'</option>';
+                    phone+='<option value='+v.phone+'>'+v.phone+'</option>';
+                    })
+                    man+='</select>';
+                    address_+='</select>';
+                    amply+='</select>';
+                    postcode+='</select>';
+                    bulid+='</select>';
+                    phone+='</select>';
+                    $(".man").html(man)
+                    $(".address_").html(address_)
+                    $(".amply").html(amply)
+                    $(".postcode").html(postcode)
+                    $(".bulid").html(bulid)
+                    $(".phone").html(phone)
+                }
+              },"json")
+            });
                                  
             })
             </script>
@@ -144,22 +251,22 @@
             <table border="0" class="peo_tab" style="width:1110px;" cellspacing="0" cellpadding="0">
               <tr>
                 <td class="p_td" width="160">收货人</td>
-                <td width="395"><?=$man['man']?></td>
+                <td width="395"><span class="man"><?=$man['name']?></span></td>
                 <td class="p_td" width="160">收货地址</td>
-                <td width="395"><?=$man['address']?></td>
+                <td width="395"><span class="address_"><?=$man['address']?></span></td>
               </tr>
               <tr>
                 <td class="p_td">详细地址</td>
-                <td><?=$man['amply']?></td>
+                <td><span class="amply"><?=$man['amply']?></span></td>
                 <td class="p_td">邮政编码</td>
-                <td><?=$man['postcode']?></td>
+                <td><span class="postcode"><?=$man['postcode']?></span></td>
               </tr>
              
               <tr>
                 <td class="p_td">标志建筑</td>
-                <td><?=$man['bulid']?></td>
+                <td><span class="bulid"><?=$man['bulid']?></span></td>
                 <td class="p_td">联系电话</td>
-                <td><?=$man['phone']?></td>
+                <td><span class="phone"><?=$man['phone']?></span></td>
               </tr>
             </table>
                         
@@ -175,7 +282,8 @@
                       <option value="0">请选择</option>
                      <?php foreach ($user_prop as $key => $v) {?>
                    
-                       <option value="<?=$v['price']?>"><?=$v['price']?>(<?=$v['prop_name']?>)</option>
+                       <option value="<?=$v['price']?>|<?=$v['full']?>"><?=$v['price']?>(<span class="pull"><?=$v['prop_name']?></span>)</option>
+
                      <?php }?>
                     
                     </select>
@@ -201,8 +309,11 @@
             <table border="0" style="width:900px; margin-top:20px;" cellspacing="0" cellpadding="0">
               <tr>
                 <td align="right">
-                    该订单完成后，您将获得 <font color="#ff4e00">1815</font> 积分 ，以及价值 <font color="#ff4e00">￥0.00</font> 的红包 <br />
+                    <span id="red"></span>
+                    该订单完成后，您将获得 <font color="#ff4e00">1815</font> 积分 ，以及价值 <font color="#ff4e00">￥0.00</font> 的红包 <br />                   
                     商品总价: <span class="znum" font color="#ff4e00"></font>
+              
+
                 </td>
               </tr>
               <tr height="70">
