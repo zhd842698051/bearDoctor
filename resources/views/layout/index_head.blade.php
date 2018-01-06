@@ -348,6 +348,16 @@
 </body>
 <!--[if IE 6]>
 <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<script >
+    window.onload = function(){
+        $.ajaxSetup({
+            headers: {
+                'X-XSRF-TOKEN': $.cookie('XSRF-TOKEN')
+            }
+        });
+    }
+
+</script>
 <![endif]-->
 </html>
 <script src="{{asset('js')}}/ShopShow.js"></script>

@@ -22,3 +22,4 @@ Route::group([
 Route::get("/admin/goods/getAttr",'App\Admin\Controllers\GoodsController@getAttr');
 Route::get("/admin/goods/getAttribute",'App\Admin\Controllers\GoodsController@getAttribute');
 Route::get("/admin/goods/ajaxGetAttr",'App\Admin\Controllers\GoodsController@ajaxGetAttr');
+Route::post("/admin/goods/add",'App\Admin\Controllers\GoodsController@add');
