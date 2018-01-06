@@ -15,6 +15,9 @@
 Route::get('/','\App\Http\Controllers\Auth\IndexController@index');
 //登录
 Route::get('/login','\App\Http\Controllers\Auth\LoginController@login');
+Route::get('/logout','\App\Http\Controllers\Auth\LoginController@logout');
+//qq登录
+Route::get('/qqCallback','\App\Http\Controllers\Auth\LoginController@qqCallback');
 //执行登录
 Route::post('/login','\App\Http\Controllers\Auth\LoginController@loginDo');
 //注册
@@ -53,9 +56,12 @@ Route::get('/user/packet','\App\Http\Controllers\Auth\UserController@packet');
 Route::get('/user/results','\App\Http\Controllers\Auth\UserController@results');
 Route::get('/user/safe','\App\Http\Controllers\Auth\UserController@safe');
 
-//收货地址四级联动
+//收货地址
 Route::get('/user/address/country','\App\Http\Controllers\Auth\UserController@country');
 Route::post('/user/address/add','\App\Http\Controllers\Auth\UserController@add');
+Route::get('/user/address/del','\App\Http\Controllers\Auth\UserController@del');
+Route::get('/user/address/find','\App\Http\Controllers\Auth\UserController@find');
+Route::post('/user/address/update','\App\Http\Controllers\Auth\UserController@update');
 
 //订单
 Route::get('/order','\App\Http\Controllers\Auth\OrderController@list');
@@ -69,6 +75,7 @@ Route::get('/goods/product','\App\Http\Controllers\Auth\GoodsController@product'
 Route::get('/goods/sell','\App\Http\Controllers\Auth\GoodsController@sell');
 Route::get('/goods/sellDetails','\App\Http\Controllers\Auth\GoodsController@sellDetails');
 
+
 //营销（秒杀-优惠券-团购）
 Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
 
@@ -76,10 +83,9 @@ Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seck
 Route::get("/admin/goods/getAttr",'App\Admin\Controllers\GoodsController@getAttr');
 Route::get("/admin/goods/getAttribute",'App\Admin\Controllers\GoodsController@getAttribute');
 Route::get("/admin/goods/ajaxGetAttr",'App\Admin\Controllers\GoodsController@ajaxGetAttr');
+Route::get("/admin/goods/add",'App\Admin\Controllers\GoodsController@add');
 
 
 Route::get('/seckill/coupon','\App\Http\Controllers\Auth\SeckillController@coupon');
 Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
-
-
 

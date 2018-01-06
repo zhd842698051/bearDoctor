@@ -67,6 +67,18 @@ return [
             'root' => public_path('upload'),
             'visibility' => 'public',
         ],
+        'qiniu' => [
+            'driver'  => 'qiniu',
+            'domains' => [
+                'default'   => 'http://p22vshs5l.bkt.clouddn.com', //你的七牛域名
+                'https'     => 'dn-yourdomain.qbox.me',         //你的HTTPS域名
+                'custom'    => 'www.bearDoctor.com',                //你的自定义域名
+            ],
+            'access_key'=> 'GMhTX0OI4Jg8p-i-16PkJBMfSLTIeuDbPkbJ4Z8l',  //AccessKey
+            'secret_key'=> 'rEd0uphLR7Lmi8gNtXpdVSTjdPGhDSbDhKnyYxfB',  //SecretKey
+            'bucket'    => 'beardoctor',  //Bucket名字
+            'notify_url'=> '',  //持久化处理回调地址
+        ],
 
     ],
 
