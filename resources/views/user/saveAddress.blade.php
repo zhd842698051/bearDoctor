@@ -2,46 +2,9 @@
 @section('content')
 		<div class="m_right">
             <p></p>
-            <div class="mem_tit">收货地址</div>
-			<div class="address">
-            	<div class="a_close"><a href="#"><img src="{{asset('images')}}/a_close.png" /></a></div>
-                <table border="0" class="add_tab" style="width:930px;"  cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td width="50" align="right"><center><b>收货人</b></center></td>
-                        <td width="80" align="right"><center><b>所在地区</b></center></td>
-                        <td width="80" align="right"><center><b>详细地址</b></center></td>
-                        <td width="50" align="right"><center><b>邮编</b></center></td>
-                        <td width="80" align="right"><center><b>电话号码</b></center></td>
-                        <td width="80" align="right"><center><b>操作</b></center></td>
-                    </tr>
-										@foreach($userAddress as $k=>$v)
-                    <tr>
 
-                        <td><center>{{ $v->name }}</center></td>
-                        <td><center>{{ $v->address }}</center></td>
-                        <td><center>{{ $v->amply }}</center></td>
-                        <td><center>{{ $v->postcode }}</center></td>
-                        <td><center>{{ $v->phone }}</center></td>
-                        <td>
-													<input type="hidden" name="addressId" value="{{ $v->id }}">
-
-														@if($v->is_default == 1)
-															<center><a href="{{ URL('user/address/find') }}?addressId={{ $v->id }}">编辑</a> | <a href="javascript:;" class="addressDel">删除</a></center>
-																<span style="margin-left:40px; color:red">默认地址</span>
-														@else
-														<center><a href="{{ URL('user/address/find') }}?addressId={{ $v->id }}">编辑</a> | <a href="javascript:;" class="addressDel">删除</a></center>
-														@endif
-                        </td>
-                    </tr>
-										@endforeach
-                </table>
-
-      </div>
-
-      <div class="mem_tit">
-      	<a href="#"><img src="{{asset('images')}}/add_ad.gif" /></a>
-      </div>
-      <form action="{{URL('/user/address/add')}}" method="post">
+    	<h1><center style="color:red; font-family:'宋体';">修改地址</center></h1>
+      <form action="{{ URL('/user/address/update') }}" method="post" style="padding-top:10px">
           {{csrf_field()}}
       <table border="0" class="add_tab" style="width:930px;"  cellspacing="0" cellpadding="0">
         <tr>
@@ -64,20 +27,21 @@
           </td>
         </tr>
         <tr>
+					<input type="hidden" name="id" value="{{ $address['id'] }}">
           <td align="right">收货人姓名</td>
-          <td style="font-family:'宋体';"><input type="text" value="" name="name" class="add_ipt" />（必填）</td>
+          <td style="font-family:'宋体';"><input type="text" value="{{ $address['name'] }}" name="name" class="add_ipt" />（必填）</td>
             <td align="right">手机</td>
-            <td style="font-family:'宋体';"><input type="text" value="" name="phone" class="add_ipt" />（必填）</td>
+            <td style="font-family:'宋体';"><input type="text" value="{{ $address['phone'] }}" name="phone" class="add_ipt" />（必填）</td>
         </tr>
         <tr>
           <td align="right">详细地址</td>
-          <td style="font-family:'宋体';"><input type="text" value="" name="amply" class="add_ipt" />（必填）</td>
+          <td style="font-family:'宋体';"><input type="text" value="{{ $address['amply'] }}" name="amply" class="add_ipt" />（必填）</td>
           <td align="right">邮政编码</td>
-          <td style="font-family:'宋体';"><input type="text" value="" name="postcode" class="add_ipt" /></td>
+          <td style="font-family:'宋体';"><input type="text" value="{{ $address['postcode'] }}" name="postcode" class="add_ipt" /></td>
         </tr>
         <tr>
             <td align="right">标志建筑</td>
-            <td style="font-family:'宋体';"><input type="text" value="" name="bulid" class="add_ipt" /></td>
+            <td style="font-family:'宋体';"><input type="text" value="{{ $address['bulid'] }}" name="bulid" class="add_ipt" /></td>
             <td align="right"></td>
             <td style="font-family:'宋体';"></td>
         </tr>
@@ -85,12 +49,8 @@
 
         </tr>
       </table>
-			<p align="right" style="margin-right:85px;">
-				<input type="checkbox" name="is_default" value="1">
-				<a href="#" style="color:#ff4e00;">设为默认</a>&nbsp; &nbsp; &nbsp; &nbsp;
-			</p>
      	<p align="right">
-            <input type="submit" value="确认添加" style="margin-right:110px; background:orange; border:none" >
+            <input type="submit" value="确认修改" style="margin-right:110px; background:orange; border:none" >
         </p>
       </form>
   </div>
@@ -163,10 +123,15 @@
 					}
 				})
 
-				// $(".checked").click(function(){
+				//编辑收货地址
+				// $(".save").click(function(){
+				// 		var addressId = $(this).parents("center").prev("input[name='addressId']").val();
+				// 		$.get("{{ URL('user/address/find') }}",{
+				// 				'addressId':addressId,
+				// 		},function(data){
         //
+				// 		},"json")
 				// })
-
     }
 </script>
 @endsection
