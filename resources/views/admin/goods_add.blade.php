@@ -12,9 +12,9 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form action="http://www.beardoctor.com/admin/goods" method="post" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" pjax-container>
+            <form action="http://www.beardoctor.com/admin/goods/add" method="post" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" >
                 <div class="box-body">
-
+                    {{ csrf_field() }}
                     <div class="fields-group">
                         <div class="form-group 1">
 
@@ -312,7 +312,7 @@
                             </div>
                         </div>
                         <center><a href="javascript:void(0)" id="create-pro" class="btn btn-warning">生成商品</a></center>
-
+                        <div id="attr-show"></div>
                     </div>
 
                 </div>
@@ -393,38 +393,23 @@
                 alert("请先选择属性")
                 return false;
             }
+            var str='';
             $.ajax({
                 url:'http://www.beardoctor.com/admin/goods/ajaxGetAttr',
+                type:'get',
                 data:{id:attribute_id},
                 dataType:'json',
                 success:function (msg) {
-
-                 console.log(msg)
+                    $.each(msg,function(k,v){
+                       str+='<div class="form-group 1"><label for="promotion_price" class="col-sm-2 control-label">'+v+'</label><div class="col-sm-8"><div class="input-group"><span class="input-group-addon">¥</span><input style="width: 120px" type="text" id="promotion_price" name="aprice['+k+']" value="" class="form-control promotion_price" placeholder="输入 价格" /><input style="width: 100px" type="text"  name="anum['+k+']"  class="form-control num" placeholder="输入 库存" /><span class="del-attr" style="cursor: pointer">X</span> </div></div></div>';
+                    })
+                   $("#num").parents(".form-group").remove()
+                    $("#attr-show").html(str)
                 }
             })
-            return false;
-            var arr = new Array();
-            $.each(attribute_id,function(k,v){
-                arr.push(v.split('-'))
-            })
-            var attr = new Array();
-            $.each(arr,function(k,v){
-                attr[v[0]]=[];
-            })
-            $.each(arr,function(k,v){
-                attr[v[0]][k]=[v[1],v[2]];
-            })
-            var str = ""
-            var num='s'
-            $.each(attr,function(k,v){
-                $.each(v,function(kk,vv){
-                    if(num!=k){
-                        str += vv[1];
-                    }
-                })
-                str+='-'
-                num=k
-            })
+        })
+        $(document).on("click",".del-attr",function(){
+            $(this).parents(".form-group").remove()
         })
     })
 </script>

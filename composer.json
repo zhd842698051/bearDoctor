@@ -9,7 +9,8 @@
         "encore/laravel-admin": "1.4.x-dev",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "mews/captcha": "^2.1"
+        "mews/captcha": "^2.1",
+        "zgldh/qiniu-laravel-storage": "^0.9.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

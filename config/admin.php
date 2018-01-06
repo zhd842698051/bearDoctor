@@ -46,14 +46,14 @@ return [
      */
     'upload' => [
 
-        'disk' => 'admin',
+        'disk' => 'qiniu',
 
         'directory' => [
             'image' => 'image',
             'file'  => 'file',
         ],
 
-        'host' => 'http://www.beardoctor.com/upload/',
+        'host' => 'http://p22vshs5l.bkt.clouddn.com',
     ],
 
     /*
