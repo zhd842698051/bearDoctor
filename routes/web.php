@@ -68,10 +68,7 @@ Route::get('/delCart','\App\Http\Controllers\Auth\OrderController@delCart');
 Route::get('/goods/product','\App\Http\Controllers\Auth\GoodsController@product');
 Route::get('/goods/sell','\App\Http\Controllers\Auth\GoodsController@sell');
 Route::get('/goods/sellDetails','\App\Http\Controllers\Auth\GoodsController@sellDetails');
-<<<<<<< HEAD
 
-=======
->>>>>>> a16c8e533eb145b0e1348287470d1adf06fea55f
 
 //营销（秒杀-优惠券-团购）
 Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
@@ -89,12 +86,4 @@ Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
 
 
-<<<<<<< HEAD
 
-
-
-
-
-
-=======
->>>>>>> a16c8e533eb145b0e1348287470d1adf06fea55f
