@@ -11,5 +11,12 @@ class Category extends Model
 
     protected $table = 'category';
 
+    public function brand(){
+        return $this->belongsToMany(Brand::class);
+    }
+
+    public function attr(){
+        return $this->belongsToMany(Attr::class);
+    }
 
 }

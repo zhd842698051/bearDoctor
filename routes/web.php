@@ -15,19 +15,27 @@
 Route::get('/','\App\Http\Controllers\Auth\IndexController@index');
 //登录
 Route::get('/login','\App\Http\Controllers\Auth\LoginController@login');
+//执行登录
+Route::post('/login','\App\Http\Controllers\Auth\LoginController@loginDo');
 //注册
 Route::get('/register','\App\Http\Controllers\Auth\RegisterController@register');
+//执行注册
+Route::post('/register','\App\Http\Controllers\Auth\RegisterController@registerDo');
+//检测用户名是否唯一
+Route::get('/checkUsername','\App\Http\Controllers\Auth\RegisterController@checkUsername');
+//验证验证码
+Route::get('/checkCaptcha','\App\Http\Controllers\Auth\RegisterController@checkCaptcha');
 //购物车
 Route::get('/cart/show','\App\Http\Controllers\Auth\CartController@cartShow');
 Route::get('/cart/order_info','\App\Http\Controllers\Auth\CartController@cartOrderInfo');
 Route::get('/cart/submitOrder','\App\Http\Controllers\Auth\CartController@submitOrder');
 Route::get('/cart','\App\Http\Controllers\Auth\CartController@test');
 Route::get('/cart/dataSel','\App\Http\Controllers\Auth\CartController@cartSel');
-
+Route::get('/cart/createOrder','\App\Http\Controllers\Auth\CartController@createOrder');
 //品牌
 Route::get('/brand','\App\Http\Controllers\Auth\BrandController@brand');
 Route::get('/brand/list','\App\Http\Controllers\Auth\BrandController@brandList');
-Route::get('/brand/{cart}','\App\Http\Controllers\Auth\BrandController@brandList');
+Route::get('/brand/list','\App\Http\Controllers\Auth\BrandController@brandList');
 //分类
 Route::get('/category','\App\Http\Controllers\Auth\CategoryController@category');
 Route::get('/category/list','\App\Http\Controllers\Auth\CategoryController@list');
@@ -48,25 +56,34 @@ Route::get('/user/packet','\App\Http\Controllers\Auth\UserController@packet');
 Route::get('/user/results','\App\Http\Controllers\Auth\UserController@results');
 Route::get('/user/safe','\App\Http\Controllers\Auth\UserController@safe');
 
+//收货地址四级联动
+Route::get('/user/address/country','\App\Http\Controllers\Auth\UserController@country');
+Route::post('/user/address/add','\App\Http\Controllers\Auth\UserController@add');
+
 //订单
 Route::get('/order','\App\Http\Controllers\Auth\OrderController@list');
+Route::get('/orderno','\App\Http\Controllers\Auth\OrderController@orderNo');
+Route::get('/orderinfo','\App\Http\Controllers\Auth\OrderController@orderInfo');
+Route::get('/addorder','\App\Http\Controllers\Auth\OrderController@addOrder');
+Route::get('/delCart','\App\Http\Controllers\Auth\OrderController@delCart');
 
 //商品
 Route::get('/goods/product','\App\Http\Controllers\Auth\GoodsController@product');
 Route::get('/goods/sell','\App\Http\Controllers\Auth\GoodsController@sell');
 Route::get('/goods/sellDetails','\App\Http\Controllers\Auth\GoodsController@sellDetails');
 
+//营销（秒杀-优惠券-团购）
+Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
+Route::get('/seckill/show','\App\Http\Controllers\Auth\SeckillController@show');
+
+//后台
+Route::get("/admin/goods/getAttr",'App\Admin\Controllers\GoodsController@getAttr');
+Route::get("/admin/goods/getAttribute",'App\Admin\Controllers\GoodsController@getAttribute');
+Route::get("/admin/goods/ajaxGetAttr",'App\Admin\Controllers\GoodsController@ajaxGetAttr');
 
 
-
-
-
-
-
-
-
-
-
+Route::get('/seckill/coupon','\App\Http\Controllers\Auth\SeckillController@coupon');
+Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
 
 

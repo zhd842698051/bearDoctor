@@ -288,7 +288,6 @@ $(function(){
             var goodsid = $(this).prev().val();
             var goodsnum = c;
             var money = $(this).parent().find(".hide_money").val();
-            
             var count_money = $(this).parents('div').find('#count_money').html();
             count_money = parseFloat(count_money)+parseFloat(money);
             money = money*c;
@@ -437,19 +436,28 @@ $(function(){
         }
         else
         {
+            //data[data.length]={'goodsid':goodsid,'goodsnum':goodsnum};
 
-            var fruit='[{';
+            var fruit='[';
             //遍历
             $("input:checkbox[name='fruit']:checked").each(function() {
-
                 //判断cookie中是否有该商品
-
-                fruit+= "'goods_id':"+$(this).val()+",'goods_num':"+$(this).next().val()+"";
+                fruit+= "{'goods_id':"+$(this).val()+",'goods_num':"+$(this).next().val()+"},";
             });
-            fruit+=']}';
+            fruit+=']';
         }
-        alert(fruit)
-        
+        //cc = eval(fruit)
+        //console.log(cc)
+        $.ajax({
+            type:'get',
+            url:"{{URL('cart/createOrder')}}",
+            data:{
+                data:fruit,
+            },
+            success:function(msg){
+                console.log(msg)
+            }
+        })
         
         //window.localStorage.setItem('cart',fruit);//存储数据
         //alert(window.localStorage.getItem('xqy1'));//读取数据
@@ -466,7 +474,7 @@ $(function(){
         //发送ajax
         $.ajax({
             type:type,
-            url:'http://localhost/six/bearDoctor/public/'+url,
+            url:{{asset('')}}+url,
             data:{
                 userid:userid,
                 //_token:"{{csrf_token()}}",
@@ -493,7 +501,7 @@ $(function(){
                     console.log(result)
                     var str = '';
                     $.each(result,function(k,v){
-                        str+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.goods_id+"' /><input type='hidden' name='num' value='2'></td><td><div class='c_s_img'><img src='{{asset('images')}}/c_1.jpg' width='73' height='73' /></div>"+v.name+"</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.num+"' name='stock' class='car_ipt' /><input type='hidden' value='"+v.sell_price+"' class='hide_money'/><input type='hidden' value='"+v.goods_id+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>"+v.sell_price+"</span></td><td align='center'><a onclick='ShowDiv('MyDiv','fade')'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
+                        str+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.goods_id+"' /><input type='hidden' name='num' value='2'></td><td><div class='c_s_img'><img src='{{asset('images')}}/c_1.jpg' width='73' height='73' /></div>"+v.name+"</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.num+"' name='stock' class='car_ipt' /><input type='hidden' value='"+v.sell_price+"' class='hide_money'/><input type='hidden' value='"+v.goods_id+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>"+v.sell_price*v.num+"</span></td><td align='center'><a onclick='ShowDiv('MyDiv','fade')'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
                     });
                     $("#content").html(str)
                     common_price();

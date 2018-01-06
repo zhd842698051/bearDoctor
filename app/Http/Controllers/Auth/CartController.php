@@ -66,6 +66,21 @@ class CartController extends Controller
 		return $data;
 	}
 
+	//结算生成订单
+	public function createOrder()
+	{
+		return 123;
+		//$aa = request('data');
+		// $aa = "[{'goods_id':1,'goods_num':2}]";
+		// $a = json_decode($aa);
+		// dd($a);
+		// $arr = json_decode($aa, true);
+		// return $arr;
+		// if($request->isMethod('post')){ 
+  //   		echo 123;
+		// }
+	}
+
 	//确认订单信息
 	public function cartOrderInfo()
 	{
