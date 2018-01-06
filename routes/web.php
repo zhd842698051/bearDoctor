@@ -69,6 +69,8 @@ Route::get('/orderno','\App\Http\Controllers\Auth\OrderController@orderNo');
 Route::get('/orderinfo','\App\Http\Controllers\Auth\OrderController@orderInfo');
 Route::get('/addorder','\App\Http\Controllers\Auth\OrderController@addOrder');
 Route::get('/delCart','\App\Http\Controllers\Auth\OrderController@delCart');
+Route::get('/getaddress','\App\Http\Controllers\Auth\OrderController@getAddress');
+Route::get('/getadd','\App\Http\Controllers\Auth\OrderController@getAdd');
 
 //商品
 Route::get('/goods/product','\App\Http\Controllers\Auth\GoodsController@product');
