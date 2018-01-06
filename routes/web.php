@@ -78,7 +78,6 @@ Route::get('/goods/sellDetails','\App\Http\Controllers\Auth\GoodsController@sell
 
 //营销（秒杀-优惠券-团购）
 Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
-Route::get('/seckill/show','\App\Http\Controllers\Auth\SeckillController@show');
 
 //后台
 Route::get("/admin/goods/getAttr",'App\Admin\Controllers\GoodsController@getAttr');
