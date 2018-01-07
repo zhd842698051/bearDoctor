@@ -148,7 +148,6 @@
 					var con=confirm("您确定要删除吗?")
 					if(con==true){
 							var addressId = $(this).parents("center").prev().val();
-							alert(addressId);
 							$.get("{{ URL('/user/address/del') }}",{
 									'addressId':addressId,
 							},function(data){
