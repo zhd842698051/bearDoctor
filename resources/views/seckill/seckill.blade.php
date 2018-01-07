@@ -56,6 +56,53 @@
                     <li>
                         <div class="img"><img src="{{asset('upload')}}/{{$goods->logo}}" width="160" height="140" /></div>
                         <div class="name">{{$goods->name}}</div>
+                 <ul class="sell_brand">
+                    <li>
+                        <div class="con">
+                            <div class="simg"><img src="{{asset('images')}}/sb1.jpg" width="220" height="100" /></div>
+                            <div class="ch_bg">
+                                <span class="ch_txt">先领券再消费</span>
+                                <a href="#" class="ch_a">查看</a>
+                            </div>
+                            09月12日 — 10月20日
+                        </div>
+                        <div class="img"><img src="{{asset('images')}}/tm1.jpg" width="530" height="190" /></div>
+                    </li>
+                    <li>
+                        <div class="con">
+                            <div class="simg"><img src="{{asset('images')}}/sb2.jpg" width="220" height="100" /></div>
+                            <div class="ch_bg">
+                                <span class="ch_txt">先领券再消费</span>
+                                <a href="#" class="ch_a">查看</a>
+                            </div>
+                            09月12日 — 10月20日
+                        </div>
+                        <div class="img"><img src="{{asset('images')}}/tm2.jpg" width="530" height="190" /></div>
+                    </li>
+                    <li>
+                        <div class="con">
+                            <div class="simg"><img src="{{asset('images')}}/sb3.jpg" width="220" height="100" /></div>
+                            <div class="ch_bg">
+                                <span class="ch_txt">先领券再消费</span>
+                                <a href="#" class="ch_a">查看</a>
+                            </div>
+                            09月12日 — 10月20日
+                        </div>
+                        <div class="img"><img src="{{asset('images')}}/tm3.jpg" width="530" height="190" /></div>
+                    </li>
+                </ul>
+
+                <div class="brand_t" >商品特卖</div> 
+                <div id="nowTime">当前时间:</div>
+            
+                <ul class="p_sell"  #nav_now>
+                   <?php foreach($data as $k=>$v) {?>
+                   
+                        <input type="hidden" id="timed" value="<?php echo $v['created_at']?>">
+                        
+                    <li>
+                        <div class="img"><img src="public/upload/<?php echo $v['cover']; ?>" width="150px" height="100px"/></div>
+                        <div class="name"><?php echo $v['goods']; ?></div>
                         <div class="price">
                             <table border="0" style="width:100%; color:#888888;" cellspacing="0" cellpadding="0">
                                 <tr style="font-family:'宋体';">
@@ -65,6 +112,7 @@
                                 </tr>
                                 <tr>
                                     <td style="text-decoration:line-through;">{{$goods->sell_price}}</td>
+                                    <td style="text-decoration:line-through;"><?php echo $v['sell_price']?></td>
                                     <td>8.0</td>
                                     <td>￥100</td>
                                 </tr>
@@ -141,7 +189,87 @@
                                 }
 
                         </script>
+                            <span class="ch_txt" id="ch_txt">￥<font><?php echo $v['seckill_price']?></font></span>
+                            <input type="hidden" id="time_color" value="<?php echo $v['seckill_price']?>">
 
+                            <a href="#" class="ch_a" id="gold_btn" onclick="seckill();">立即抢购</a>
+
+                        </div>
+                      
+                         <div class="times" id="showStartTime_<?php echo $v['id']?>"></div>
+                         <input type="hidden" id="showtimekill_<?php echo $v['id']?>" value="3600">
+
+                         <script type="text/javascript">
+                          setInterval("set_time("+<?php echo $v['id']?>+")",1000);
+                             
+                         </script>
+                    
+                    </li>
+                        <?php } ?>
+                    
+                </ul>
+            </div>
+            <!--End 特卖 End-->
+
+        <script type="text/javascript" src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
+            <!-- 比较开场时间与结束时间 -->
+            <script type="text/javascript">
+                // 数据库时间
+                $timed=$("#timed").attr("value");
+                
+                var time_end = new Date($timed).getTime(); 
+                // alert(time_end)
+                // 本地
+                $nowTime=$("#nowTime").attr("value");
+                // alert($nowTime);
+
+            </script>
+            <!-- 字体颜色变色 -->
+            <script type="text/javascript">
+               $time_color=$("#time_color").attr("value");
+               // alert($time_color);
+               
+            </script>
+
+        <!-- 倒计时 -->
+        <script type="text/javascript">
+               
+             function set_time($id){
+
+                    var data=parseInt($("#showtimekill_"+$id).val());
+                    // console.log(data)
+                    var day=Math.floor(data/3600/24)<10?'0'+Math.floor(data/3600/24):Math.floor(data/3600/24);
+                    var hours=Math.floor(data/3600%24)<10?'0'+Math.floor(data/3600%24):Math.floor(data/3600%24);
+                    var minutes=Math.floor(data%3600/60)<10?'0'+Math.floor(data%3600/60):Math.floor(data%3600/60);
+                    var seconds=(data%60)<10?'0'+(data%60):(data%60);
+                    $("#showStartTime_"+$id).html("距离开抢："+day+"天"+hours+"时"+minutes+"分"+seconds+"秒");
+                    data--;
+                    $("#showtimekill_"+$id).val(data);
+
+                }
+        </script>
+      <!-- 当前时间 -->
+       <script type="text/javascript">
+          function current(){
+           
+          var d=new Date(),str='';
+           str +=d.getFullYear()+'-';
+          //获取当前年份
+           str +=d.getMonth()+1+'-';
+            //获取当前月份（0——11）
+           str +=d.getDate()+' '; 
+            str +=d.getHours()+':';
+             str +=d.getMinutes()+':';
+          str +=d.getSeconds()+'';
+           return str;
+            } 
+            setInterval(function(){
+                 $("#nowTime").html(current())
+             var ttime = new Date($("#nowTime").html()).getTime();
+             
+            },1000); 
+        </script>
+     
 
     <script type="text/javascript">
         //       $(function(){

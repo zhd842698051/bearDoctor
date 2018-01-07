@@ -16,8 +16,8 @@ class CreateSeckillTable extends Migration
         Schema::create('seckill', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('goods_id')->comment("产品id");
-            $table->unsignedInteger('start_time')->comment("开始时间");
-            $table->unsignedInteger('end_time')->comment("结束时间");
+            // $table->unsignedInteger('start_time')->comment("开始时间");
+            // $table->unsignedInteger('end_time')->comment("结束时间");
             $table->unsignedInteger('seckill_num')->comment("秒杀数量");
             $table->unsignedInteger('seckill_stock')->comment("库存");
         
