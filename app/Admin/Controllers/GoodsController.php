@@ -15,6 +15,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
+use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request as sRequset;
@@ -72,6 +73,7 @@ class GoodsController extends Controller
             unset($cate[0]);
             $brand = Brand::all()->pluck('name', 'id');
             $content->body(view('admin/goods_add',compact('cate','brand'))->render());
+            //$content->body($this->form());
         });
     }
 
@@ -96,6 +98,8 @@ class GoodsController extends Controller
                 }
             });
             $grid->descript("描述");
+            $grid->created_at()
+            $grid->updated_at();
             // 显示多图
             $grid->images()->display(function ($pictures) {
 
@@ -103,7 +107,6 @@ class GoodsController extends Controller
 
             })->image('', 50, 50);
             $grid->created_at('添加时间');
-
         });
     }
 
@@ -139,6 +142,10 @@ class GoodsController extends Controller
             $form->display('updated_at', 'Updated At');
         });
     }
+    public function getAttr(){
+        $id = request('id');
+        $id=1;
+        $res = Db::select('select a.id,a.name from xbs_attr_category as c INNER JOIN xbs_attr as a on c.attr_id=a.id where category_id =1');
 
     public function add(sRequset $request){
         $cover = $request->file('cover')->store('','qiniu');
@@ -220,13 +227,41 @@ class GoodsController extends Controller
         foreach ($id as $k=>$v){
             $id[$k]=explode("-",$v);
         }
-
         foreach ($id as $k=>$v){
             $arr[$v[0]][$v[1]]=$v[2];
         }
         foreach ($arr as $k=>$v){
             $newArray[]=$v;
         }
+        //print_r($newArray);die;
+        $len = count($newArray);
+        $html = array();
+        $str = "";
+        foreach ($newArray[0] as $k=>$v){
+          foreach ($newArray[1] as $kk=>$vv){
+              $str ="";
+              $str.=$vv.'-'.$v;
+
+              if(isset($newArray[2])){
+                  foreach ($newArray[2] as $kkk=>$vvv){
+                      $str ="";
+                      $str.=$vvv.'-'.$vv.'-'.$v;
+                      $str .="<br>";
+                      echo $str;
+                      if(isset($newArray[3])){
+                          foreach ($newArray[3] as $kkkk=>$vvvv){
+                              $str ="";
+                                $str.=$vvvv.'-'.$vvv.'-'.$vv.'-'.$v;
+                              $str .="<br>";
+                              echo $str;
+                          }
+                      }
+                  }
+              }
+          }
+
+        }
+
         if(count($newArray)==1){
           exit(json_encode($newArray[0]));
         }
