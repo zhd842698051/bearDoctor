@@ -13,6 +13,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'image' => 'http://p22vshs5l.bkt.clouddn.com',
 
     /*
     |--------------------------------------------------------------------------
@@ -180,6 +181,8 @@ return [
         Encore\Admin\Providers\AdminServiceProvider::class,
 
         Mews\Captcha\CaptchaServiceProvider::class,
+
+        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class
 
     ],
 

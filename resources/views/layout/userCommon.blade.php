@@ -6,19 +6,19 @@
     <!--[if IE 6]>
     <script src="{{asset('js')}}/iepng.js" type="text/javascript"></script>
         <script type="text/javascript">
-           EvPNG.fix('div, ul, img, li, input, a'); 
+           EvPNG.fix('div, ul, img, li, input, a');
         </script>
     <![endif]-->
-        
+
     <script type="text/javascript" src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" src="{{asset('js')}}/menu.js"></script>    
-        
+    <script type="text/javascript" src="{{asset('js')}}/menu.js"></script>
+
     <script type="text/javascript" src="{{asset('js')}}/select.js"></script>
-        
-    
+
+
 <title>尤洪</title>
 </head>
-<body>  
+<body>
 <!--Begin Header Begin-->
 <div class="soubg">
     <div class="sou">
@@ -99,8 +99,18 @@
         </span>
         <!--End 所在收货地区 End-->
         <span class="fr">
-            <span class="fl">你好，请<a href="Login.html">登录</a>&nbsp; <a href="Regist.html" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="#">我的订单</a>&nbsp;|</span>
-            <span class="ss">
+          @if($user == null)
+              <span class="fl">你好，请<a href="{{URL('login')}}">登录</a>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
+          @elseif($user->isLogin == true)
+              <span class="fl">欢迎<span style="color:red">{{ $user->username }}</span><span id="login">登录</span>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
+              <script type="text/javascript" src="{{ asset('js') }}/app.js"></script>
+              <script>
+                  $(function(){
+                      $("#login").after('&nbsp;<a href="{{ URL('/logout') }}" style="color:#ff4e00;">退出</a>')
+                  })
+              </script>
+          @endif
+                <span class="ss">
                 <div class="ss_list">
                     <a href="#">收藏夹</a>
                     <div class="ss_list_bg">
@@ -111,7 +121,7 @@
                                 <li><a href="#">我的收藏夹</a></li>
                             </ul>
                         </div>
-                    </div>     
+                    </div>
                 </div>
                 <div class="ss_list">
                     <a href="#">客户服务</a>
@@ -124,7 +134,7 @@
                                 <li><a href="#">客户服务</a></li>
                             </ul>
                         </div>
-                    </div>    
+                    </div>
                 </div>
                 <div class="ss_list">
                     <a href="#">网站导航</a>
@@ -136,7 +146,7 @@
                                 <li><a href="#">网站导航</a></li>
                             </ul>
                         </div>
-                    </div>    
+                    </div>
                 </div>
             </span>
             <span class="fl">|&nbsp;关注我们：</span>
@@ -152,7 +162,7 @@
             <form>
                 <input type="text" value="" class="m_ipt" />
                 <input type="submit" value="搜索" class="m_btn" />
-            </form>                      
+            </form>
             <span class="fl"><a href="#">咖啡</a><a href="#">iphone 6S</a><a href="#">新鲜美食</a><a href="#">蛋糕</a><a href="#">日用品</a><a href="#">连衣裙</a></span>
         </div>
         <div class="i_car">
@@ -186,7 +196,7 @@
         </div>
     </div>
 </div>
-<!--End Header End--> 
+<!--End Header End-->
 <div class="i_bg bg_color">
     <!--Begin 用户中心 Begin -->
     <div class="m_content">
@@ -231,7 +241,7 @@
         </div>
 @yield('content')
 </div>
-    <!--End 用户中心 End--> 
+    <!--End 用户中心 End-->
     <!--Begin Footer Begin -->
     <div class="b_btm_bg b_btm_c">
         <div class="b_btm">
@@ -262,7 +272,7 @@
         </div>
     </div>
     <div class="b_nav">
-        <dl>                                                                                            
+        <dl>
             <dt><a href="#">新手上路</a></dt>
             <dd><a href="#">售后流程</a></dd>
             <dd><a href="#">购物流程</a></dd>
@@ -295,7 +305,7 @@
             <dd><a href="#">投诉与建议</a></dd>
         </dl>
         <div class="b_tel_bg">
-            <a href="#" class="b_sh1">新浪微博</a>            
+            <a href="#" class="b_sh1">新浪微博</a>
             <a href="#" class="b_sh2">腾讯微博</a>
             <p>
             服务热线：<br />
@@ -306,14 +316,14 @@
             <div class="b_er_c"><img src="{{asset('images')}}/er.gif" width="118" height="118" /></div>
             <img src="{{asset('images')}}/ss.png" />
         </div>
-    </div>    
+    </div>
     <div class="btmbg">
         <div class="btm">
             备案/许可证编号：蜀ICP备12009302号-1-www.dingguagua.com   Copyright © 2015-2018 尤洪商城网 All Rights Reserved. 复制必究 , Technical Support: Dgg Group <br />
             <img src="{{asset('images')}}/b_1.gif" width="98" height="33" /><img src="{{asset('images')}}/b_2.gif" width="98" height="33" /><img src="{{asset('images')}}/b_3.gif" width="98" height="33" /><img src="{{asset('images')}}/b_4.gif" width="98" height="33" /><img src="{{asset('images')}}/b_5.gif" width="98" height="33" /><img src="{{asset('images')}}/b_6.gif" width="98" height="33" />
-        </div>      
+        </div>
     </div>
-    <!--End Footer End -->    
+    <!--End Footer End -->
 </div>
 
 </body>

@@ -6,22 +6,22 @@
     <!--[if IE 6]>
     <script src="{{asset('js')}}/iepng.js" type="text/javascript"></script>
         <script type="text/javascript">
-           EvPNG.fix('div, ul, img, li, input, a'); 
+           EvPNG.fix('div, ul, img, li, input, a');
         </script>
     <![endif]-->
     <link rel="stylesheet" type="text/css" href="{{asset('css')}}/ShopShow.css" />
-    <link rel="stylesheet" type="text/css" href="{{asset('css')}}/MagicZoom.css" />  
+    <link rel="stylesheet" type="text/css" href="{{asset('css')}}/MagicZoom.css" />
     <script type="text/javascript" src="{{asset('js')}}/jquery-1.11.1.min_044d0927.js"></script>
     <script type="text/javascript" src="{{asset('js')}}/lrscroll_1.js"></script>
     <script type="text/javascript" src="{{asset('js')}}/jquery.bxslider_e88acd1b.js"></script>
     <script type="text/javascript" src="{{asset('js')}}/MagicZoom.js"></script>
     <script type="text/javascript" src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" src="{{asset('js')}}/menu.js"></script>    
-        
+    <script type="text/javascript" src="{{asset('js')}}/menu.js"></script>
+
     <script type="text/javascript" src="{{asset('js')}}/select.js"></script>
-    
+
     <script type="text/javascript" src="{{asset('js')}}/lrscroll.js"></script>
-    
+
     <script type="text/javascript" src="{{asset('js')}}/iban.js"></script>
     <script type="text/javascript" src="{{asset('js')}}/fban.js"></script>
     <script type="text/javascript" src="{{asset('js')}}/f_ban.js"></script>
@@ -33,15 +33,15 @@
     <script type="text/javascript" src="{{asset('js')}}/num.js">
 
         var jq = jQuery.noConflict();
-    </script>     
-    
+    </script>
+
     <script type="text/javascript" src="{{asset('js')}}/shade.js"></script>
     <script type="text/javascript" src="{{asset('js')}}/lrscroll_1.js"></script>
-    
-    
+
+
 <title>尤洪</title>
 </head>
-<body>  
+<body>
 <!--Begin Header Begin-->
 <div class="soubg">
     <div class="sou">
@@ -122,8 +122,18 @@
         </span>
         <!--End 所在收货地区 End-->
         <span class="fr">
-            <span class="fl">你好，请<a href="{{URL('login')}}">登录</a>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
-            <span class="ss">
+                @if($user == null)
+                    <span class="fl">你好，请<a href="{{URL('login')}}">登录</a>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
+                @elseif($user->isLogin == true)
+                    <span class="fl">欢迎<span style="color:red">{{ $user->username }}</span><span id="login">登录</span>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
+                    <script type="text/javascript" src="{{ asset('js') }}/app.js"></script>
+                    <script>
+                        $(function(){
+                            $("#login").after('&nbsp;<a href="{{ URL('/logout') }}" style="color:#ff4e00;">退出</a>')
+                        })
+                    </script>
+                @endif
+                <span class="ss">
                 <div class="ss_list">
                     <a href="#">收藏夹</a>
                     <div class="ss_list_bg">
@@ -133,7 +143,7 @@
                                 <li><a href="{{URL('user/collect')}}">我的收藏夹</a></li>
                             </ul>
                         </div>
-                    </div>     
+                    </div>
                 </div>
                 <div class="ss_list">
                     <a href="#">客户服务</a>
@@ -146,7 +156,7 @@
                                 <li><a href="#">客户服务</a></li>
                             </ul>
                         </div>
-                    </div>    
+                    </div>
                 </div>
                 <div class="ss_list">
                     <a href="#">网站导航</a>
@@ -158,7 +168,7 @@
                                 <li><a href="#">网站导航</a></li>
                             </ul>
                         </div>
-                    </div>    
+                    </div>
                 </div>
             </span>
             <span class="fl">|&nbsp;关注我们：</span>
@@ -173,7 +183,7 @@
         <form>
             <input type="text" value="" class="s_ipt" />
             <input type="submit" value="搜索" class="s_btn" />
-        </form>                      
+        </form>
         <span class="fl"><a href="#">咖啡</a><a href="#">iphone 6S</a><a href="#">新鲜美食</a><a href="#">蛋糕</a><a href="#">日用品</a><a href="#">连衣裙</a></span>
     </div>
     <div class="i_car">
@@ -208,11 +218,12 @@
 </div>
 <div class="menu_bg">
     <div class="menu">
-        <!--Begin 商品分类详情 Begin-->    
+        <!--Begin 商品分类详情 Begin-->
         <div class="nav">
             <div class="nav_t">全部商品分类</div>
             <div class="leftNav">
                 <ul>      
+                <ul>
                 <?php foreach($category as $key => $value){ ?>
 <!--  -->           <li>
                         <div class="fj">
@@ -242,6 +253,11 @@
         </div>  
         <!--End 商品分类详情 End-->                                                     
         <ul class="menu_r">                                                                                                                                   
+                </ul>
+            </div>
+        </div>
+        <!--End 商品分类详情 End-->
+        <ul class="menu_r">
             <li><a href="Index.html">首页</a></li>
             <li><a href="Food.html">美食</a></li>
             <li><a href="Fresh.html">生鲜</a></li>
@@ -285,7 +301,7 @@
         </div>
     </div>
     <div class="b_nav">
-        <dl>                                                                                            
+        <dl>
             <dt><a href="#">新手上路</a></dt>
             <dd><a href="#">售后流程</a></dd>
             <dd><a href="#">购物流程</a></dd>
@@ -318,7 +334,7 @@
             <dd><a href="#">投诉与建议</a></dd>
         </dl>
         <div class="b_tel_bg">
-            <a href="#" class="b_sh1">新浪微博</a>            
+            <a href="#" class="b_sh1">新浪微博</a>
             <a href="#" class="b_sh2">腾讯微博</a>
             <p>
             服务热线：<br />
@@ -329,16 +345,26 @@
             <div class="b_er_c"><img src="{{asset('images')}}/er.gif" width="118" height="118" /></div>
             <img src="{{asset('images')}}/ss.png" />
         </div>
-    </div>    
+    </div>
     <div class="btmbg">
         <div class="btm">
             备案/许可证编号：蜀ICP备12009302号-1-www.dingguagua.com   Copyright © 2015-2018 尤洪商城网 All Rights Reserved. 复制必究 , Technical Support: Dgg Group <br />
             <img src="{{asset('images')}}/b_1.gif" width="98" height="33" /><img src="{{asset('images')}}/b_2.gif" width="98" height="33" /><img src="{{asset('images')}}/b_3.gif" width="98" height="33" /><img src="{{asset('images')}}/b_4.gif" width="98" height="33" /><img src="{{asset('images')}}/b_5.gif" width="98" height="33" /><img src="{{asset('images')}}/b_6.gif" width="98" height="33" />
-        </div>      
+        </div>
     </div>
 </body>
 <!--[if IE 6]>
 <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<script >
+    window.onload = function(){
+        $.ajaxSetup({
+            headers: {
+                'X-XSRF-TOKEN': $.cookie('XSRF-TOKEN')
+            }
+        });
+    }
+
+</script>
 <![endif]-->
 </html>
 <script src="{{asset('js')}}/ShopShow.js"></script>
