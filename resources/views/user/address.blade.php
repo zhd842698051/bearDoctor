@@ -14,6 +14,24 @@
                         <td width="80" align="right"><center><b>电话号码</b></center></td>
                         <td width="80" align="right"><center><b>操作</b></center></td>
                     </tr>
+
+                    <tr>
+                        <td><center>李鑫</center></td>
+                        <td><center>山西省长治市襄垣县</center></td>
+                        <td><center>山西省长治市襄垣县</center></td>
+                        <td><center>046200</center></td>
+                        <td><center>18710002972</center></td>
+                        <td>
+                            <center><a href="">修改</a> | <a href="">删除</a></center>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <p align="right">
+                	<a href="#" style="color:#ff4e00;">设为默认</a>&nbsp; &nbsp; &nbsp; &nbsp; <a href="#" style="color:#ff4e00;">编辑</a>&nbsp; &nbsp; &nbsp; &nbsp;
+                </p>
+
 										@foreach($userAddress as $k=>$v)
                     <tr>
 
@@ -35,6 +53,7 @@
                     </tr>
 										@endforeach
                 </table>
+
 
       </div>
 
@@ -66,8 +85,13 @@
         <tr>
           <td align="right">收货人姓名</td>
           <td style="font-family:'宋体';"><input type="text" value="" name="name" class="add_ipt" />（必填）</td>
+
+          <td align="right">电子邮箱</td>
+          <td style="font-family:'宋体';"><input type="text" value="" name="email" class="add_ipt" />（必填）</td>
+
             <td align="right">手机</td>
             <td style="font-family:'宋体';"><input type="text" value="" name="phone" class="add_ipt" />（必填）</td>
+
         </tr>
         <tr>
           <td align="right">详细地址</td>
@@ -76,10 +100,17 @@
           <td style="font-family:'宋体';"><input type="text" value="" name="postcode" class="add_ipt" /></td>
         </tr>
         <tr>
+
+          <td align="right">手机</td>
+          <td style="font-family:'宋体';"><input type="text" value="" name="phone" class="add_ipt" />（必填）</td>
+            <td align="right">标志建筑</td>
+            <td style="font-family:'宋体';"><input type="text" value="" name="bulid" class="add_ipt" /></td>
+
             <td align="right">标志建筑</td>
             <td style="font-family:'宋体';"><input type="text" value="" name="bulid" class="add_ipt" /></td>
             <td align="right"></td>
             <td style="font-family:'宋体';"></td>
+
         </tr>
         <tr>
 
@@ -142,6 +173,7 @@
                 this_.parent().find("select[name='area']").html(str)
             },"json")
         })
+
 
 				//删除收货地址
 				$(".addressDel").click(function(){

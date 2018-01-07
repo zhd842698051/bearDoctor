@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Auth;
+
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
@@ -20,6 +22,9 @@ class OrderController extends Controller
 
 		//购物车商品信息
 		$goods_list=Cart::where(['user_id'=>1])->orderBy('created_at', 'desc')->get()->toArray();
+		
+		foreach ($goods_list as $key => $value) {
+			$product=Product::find($goods_list[$key]['product_id'])->toArray();
 
 		foreach ($goods_list as $key => $value) {
 			$product=Product::find($goods_list[$key]['product_id'])->toArray();
@@ -35,7 +40,6 @@ class OrderController extends Controller
 				$str.=$v->value.",";
 			}
 			$goods_list[$key]['attr']=rtrim($str,',');
-
 		}
 
 		//收货人信息
@@ -44,6 +48,10 @@ class OrderController extends Controller
 		//红包优惠券
 		$user_prop=User_prop::where(['user_id'=>1])->get()->toArray();
 
+
+		$man=$man[0];
+		//红包优惠券
+		$user_prop=User_prop::where(['user_id'=>1])->get()->toArray();
 		foreach ($user_prop as $key => $value) {
 		   $prop=Prop::where([['id', '=', $user_prop[$key]['prop_id']],['num', '>', '0']])->first()->toArray();
 		   $user_prop[$key]['prop_name']=$prop['name'];
@@ -52,7 +60,6 @@ class OrderController extends Controller
 		   $user_prop[$key]['start']=$prop['start_time'];
 		   $user_prop[$key]['end']=$prop['end_time'];
 		}
-
 		return view('Order/orderinfo',compact('goods_list','man','user_prop'));
 	}
 
@@ -71,7 +78,6 @@ class OrderController extends Controller
 
 
 	public function addOrder(){
-
 		$user_id=sprintf("%04d",$user_id);
 		$order_no=substr(time(),-8).mt_rand(1000,9999).$user_id;
 		$user_id = \Auth::id();
@@ -79,6 +85,32 @@ class OrderController extends Controller
 		return view('Order/addorder',compact('order_no'));
 	}
 
+	//获取收货地址信息
+	public function getAddress(){
+		 $user_id=request('user_id');
+		 $addinfo=Address::where(['user_id'=>$user_id])->get()->toArray();
+
+		 if($addinfo){
+		 	$data['error']=0;
+		 	$data['content']=$addinfo;
+		 }else{
+		 	$data['error']=1;
+		 }
+		 echo json_encode($data);
+	}
+
+	//联动改变收货地址
+	public function getAdd(){
+		$user=request('user');
+		$addr=Address::where(['name'=>$user])->get()->toArray();
+		if($addr){
+		 	$data['error']=0;
+		 	$data['content']=$addr;
+		 }else{
+		 	$data['error']=1;
+		 }
+		 echo json_encode($data);
+	}
 
 	//提交订单
 	public function submitOrder()
