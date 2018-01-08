@@ -19,6 +19,8 @@ Route::get('/login','\App\Http\Controllers\Auth\LoginController@login');
 Route::get('/logout','\App\Http\Controllers\Auth\LoginController@logout');
 //qq登录
 Route::get('/qqCallback','\App\Http\Controllers\Auth\LoginController@qqCallback');
+Route::get('/qqlogin','\App\Http\Controllers\Auth\LoginController@qqlogin');
+// Route::get('/qq','\App\Http\Controllers\Auth\LoginController@qq');
 
 //执行登录
 Route::post('/login','\App\Http\Controllers\Auth\LoginController@loginDo');
@@ -93,14 +95,13 @@ Route::get('/goods/sellDetails','\App\Http\Controllers\Auth\GoodsController@sell
 //营销（秒杀-优惠券-团购）
 Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
 Route::get('/seckill/show','\App\Http\Controllers\Auth\SeckillController@show');
+Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
 //后台
 Route::get("/admin/goods/getAttr",'App\Admin\Controllers\GoodsController@getAttr');
 Route::get("/admin/goods/getAttribute",'App\Admin\Controllers\GoodsController@getAttribute');
 Route::get("/admin/goods/ajaxGetAttr",'App\Admin\Controllers\GoodsController@ajaxGetAttr');
 
-//营销（秒杀-优惠券-团购）
-Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
 
 
 //后台
@@ -115,5 +116,5 @@ Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
 
 Route::get('/seckill/coupon','\App\Http\Controllers\Auth\SeckillController@coupon');
-Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
+Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
