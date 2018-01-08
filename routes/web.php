@@ -14,11 +14,13 @@
 //首页
 Route::get('/','\App\Http\Controllers\Auth\IndexController@index');
 //登录
-Route::get('/login','\App\Http\Controllers\Auth\LoginController@login');
+Route::get('/login','\App\Http\Controllers\Auth\LoginController@login')->name('login');
 
 Route::get('/logout','\App\Http\Controllers\Auth\LoginController@logout');
 //qq登录
 Route::get('/qqCallback','\App\Http\Controllers\Auth\LoginController@qqCallback');
+Route::get('/qqlogin','\App\Http\Controllers\Auth\LoginController@qqlogin');
+// Route::get('/qq','\App\Http\Controllers\Auth\LoginController@qq');
 
 //执行登录
 Route::post('/login','\App\Http\Controllers\Auth\LoginController@loginDo');
@@ -45,44 +47,49 @@ Route::get('/brand/list','\App\Http\Controllers\Auth\BrandController@brandList')
 Route::get('/category','\App\Http\Controllers\Auth\CategoryController@category');
 Route::get('/category/list','\App\Http\Controllers\Auth\CategoryController@list');
 //用户
-Route::get('/user','\App\Http\Controllers\Auth\UserController@index');
-Route::get('/user/address','\App\Http\Controllers\Auth\UserController@address');
-Route::get('/user/cash','\App\Http\Controllers\Auth\UserController@cash');
-Route::get('/user/collect','\App\Http\Controllers\Auth\UserController@collect');
-Route::get('/user/commission','\App\Http\Controllers\Auth\UserController@commission');
-Route::get('/user/links','\App\Http\Controllers\Auth\UserController@links');
-Route::get('/user/member','\App\Http\Controllers\Auth\UserController@member');
-Route::get('/user/memberList','\App\Http\Controllers\Auth\UserController@memberList');
-Route::get('/user/memberMoney','\App\Http\Controllers\Auth\UserController@memberMoney');
-Route::get('/user/memberCharge','\App\Http\Controllers\Auth\UserController@memberCharge');
-Route::get('/user/moneyPay','\App\Http\Controllers\Auth\UserController@moneyPay');
-Route::get('/user/message','\App\Http\Controllers\Auth\UserController@message');
-Route::get('/user/packet','\App\Http\Controllers\Auth\UserController@packet');
-Route::get('/user/results','\App\Http\Controllers\Auth\UserController@results');
-Route::get('/user/safe','\App\Http\Controllers\Auth\UserController@safe');
-
-
-//收货地址四级联动
-Route::get('/user/address/country','\App\Http\Controllers\Auth\UserController@country');
-Route::post('/user/address/add','\App\Http\Controllers\Auth\UserController@add');
+Route::group(['middleware'=>'auth:web'],function (){
+    Route::get('/user','\App\Http\Controllers\Auth\UserController@index');
+    Route::get('/user/address','\App\Http\Controllers\Auth\UserController@address');
+    Route::get('/user/cash','\App\Http\Controllers\Auth\UserController@cash');
+    Route::get('/user/collect','\App\Http\Controllers\Auth\UserController@collect');
+    Route::get('/user/commission','\App\Http\Controllers\Auth\UserController@commission');
+    Route::get('/user/links','\App\Http\Controllers\Auth\UserController@links');
+    Route::get('/user/member','\App\Http\Controllers\Auth\UserController@member');
+    Route::get('/user/memberList','\App\Http\Controllers\Auth\UserController@memberList');
+    Route::get('/user/memberMoney','\App\Http\Controllers\Auth\UserController@memberMoney');
+    Route::get('/user/memberCharge','\App\Http\Controllers\Auth\UserController@memberCharge');
+    Route::get('/user/moneyPay','\App\Http\Controllers\Auth\UserController@moneyPay');
+    Route::get('/user/message','\App\Http\Controllers\Auth\UserController@message');
+    Route::get('/user/packet','\App\Http\Controllers\Auth\UserController@packet');
+    Route::get('/user/results','\App\Http\Controllers\Auth\UserController@results');
+    Route::get('/user/safe','\App\Http\Controllers\Auth\UserController@safe');
+    //收货地址四级联动
+    Route::get('/user/address/country','\App\Http\Controllers\Auth\UserController@country');
+    Route::post('/user/address/add','\App\Http\Controllers\Auth\UserController@add');
 
 //收货地址
-Route::get('/user/address/country','\App\Http\Controllers\Auth\UserController@country');
-Route::post('/user/address/add','\App\Http\Controllers\Auth\UserController@add');
-Route::get('/user/address/del','\App\Http\Controllers\Auth\UserController@del');
-Route::get('/user/address/find','\App\Http\Controllers\Auth\UserController@find');
-Route::post('/user/address/update','\App\Http\Controllers\Auth\UserController@update');
+    Route::get('/user/address/country','\App\Http\Controllers\Auth\UserController@country');
+    Route::post('/user/address/add','\App\Http\Controllers\Auth\UserController@add');
+    Route::get('/user/address/del','\App\Http\Controllers\Auth\UserController@del');
+    Route::get('/user/address/find','\App\Http\Controllers\Auth\UserController@find');
+    Route::post('/user/address/update','\App\Http\Controllers\Auth\UserController@update');
+
+    //营销（秒杀-优惠券-团购）
+    Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
+
+    Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
 
-//订单
-Route::get('/order','\App\Http\Controllers\Auth\OrderController@list');
-Route::get('/orderno','\App\Http\Controllers\Auth\OrderController@orderNo');
-Route::get('/orderinfo','\App\Http\Controllers\Auth\OrderController@orderInfo');
-Route::get('/addorder','\App\Http\Controllers\Auth\OrderController@addOrder');
-Route::get('/delCart','\App\Http\Controllers\Auth\OrderController@delCart');
+    //订单
+    Route::get('/order','\App\Http\Controllers\Auth\OrderController@list');
+    Route::get('/orderno','\App\Http\Controllers\Auth\OrderController@orderNo');
+    Route::get('/orderinfo','\App\Http\Controllers\Auth\OrderController@orderInfo');
+    Route::get('/addorder','\App\Http\Controllers\Auth\OrderController@addOrder');
+    Route::get('/delCart','\App\Http\Controllers\Auth\OrderController@delCart');
+    Route::get('/getaddress','\App\Http\Controllers\Auth\OrderController@getAddress');
+    Route::get('/getadd','\App\Http\Controllers\Auth\OrderController@getAdd');
+});
 
-Route::get('/getaddress','\App\Http\Controllers\Auth\OrderController@getAddress');
-Route::get('/getadd','\App\Http\Controllers\Auth\OrderController@getAdd');
 
 
 //商品
@@ -91,16 +98,15 @@ Route::get('/goods/sell','\App\Http\Controllers\Auth\GoodsController@sell');
 Route::get('/goods/sellDetails','\App\Http\Controllers\Auth\GoodsController@sellDetails');
 
 //营销（秒杀-优惠券-团购）
-Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
+
 Route::get('/seckill/show','\App\Http\Controllers\Auth\SeckillController@show');
+Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
 //后台
 Route::get("/admin/goods/getAttr",'App\Admin\Controllers\GoodsController@getAttr');
 Route::get("/admin/goods/getAttribute",'App\Admin\Controllers\GoodsController@getAttribute');
 Route::get("/admin/goods/ajaxGetAttr",'App\Admin\Controllers\GoodsController@ajaxGetAttr');
 
-//营销（秒杀-优惠券-团购）
-Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
 
 
 //后台
@@ -111,9 +117,9 @@ Route::get("/admin/goods/add",'App\Admin\Controllers\GoodsController@add');
 
 
 Route::get('/seckill/coupon','\App\Http\Controllers\Auth\SeckillController@coupon');
-Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
+
 
 
 Route::get('/seckill/coupon','\App\Http\Controllers\Auth\SeckillController@coupon');
-Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
+Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
