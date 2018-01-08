@@ -194,7 +194,6 @@ class UserController extends Controller
 	}
 
 	//公用的header用户名 和登录状态
-
 	public static function status(){
 		$status=IndexController::isLogin();
 		if($status == false){
