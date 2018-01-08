@@ -80,258 +80,28 @@
             <div id="feature1">
                 <div id="block1">
                     <div id="botton-scroll1" style="visibility: visible; overflow: hidden; position: relative; z-index: 2; left: 0px; width: 1200px;">
-                        <ul class="featureUL" style="margin: 0px; padding: 0px; position: relative; list-style-type: none; z-index: 1; width: 3600px; left: -2400px;">
+                         <ul class="featureUL" style="margin: 0px; padding: 0px; position: relative; list-style-type: none; z-index: 1; width: 3600px; left: -2400px;">
+                            @foreach($hotGoods as $key => $value)
                             <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
                                 <div class="box">
-                                    <div class="h_icon"><img width="50" height="50" src="{{asset('images')}}/hot.png">
+                                    <div class="h_icon"><!-- <img width="50" height="50" src="http://p22vshs5l.bkt.clouddn.com/{{$value['cover']}}-hot"> -->
                                     </div>
                                     <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot1.jpg"></a>
+                                        <a href="/showinfo/{{$value['id']}}"><img width="160" height="136" src="{{config('app.image').$value['cover']}}-hot"></a>
                                     </div>                                        
                                     <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>德国进口</h2>
-                                        德亚全脂纯牛奶200ml*48盒
+                                        <a href="/showinfo/{{$value['id']}}">
+                                        <h2>{{$value['name']}}</h2>
                                         </a>
                                     </div>
                                     <div class="price">
-                                        <font>￥<span>189</span></font> &nbsp; 26R
+                                        <font>￥<span>{{$value['sell_price']}}</span></font> &nbsp; 26R
                                     </div>
                                 </div>
                             </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="h_icon"><img width="50" height="50" src="{{asset('images')}}/hot.png">
-                                    </div>                                
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot2.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>iphone 6S</h2>
-                                        Apple/苹果 iPhone 6s Plus公开版
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>5288</span></font> &nbsp; 25R
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="h_icon"><img width="50" height="50" src="{{asset('images')}}/hot.png">
-                                    </div>                                
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot3.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>倩碧特惠组合套装</h2>
-                                        倩碧补水组合套装8折促销
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>368</span></font> &nbsp; 18R
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="h_icon"><img width="50" height="50" src="{{asset('images')}}/hot.png">
-                                    </div>                                
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot4.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>品利特级橄榄油</h2>
-                                        750ml*4瓶装组合 西班牙原装进口
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>280</span></font> &nbsp; 30R
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="h_icon"><img width="50" height="50" src="{{asset('images')}}/hot.png">
-                                    </div>                                
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot4.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>品利特级橄榄油</h2>
-                                        750ml*4瓶装组合 西班牙原装进口
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>280</span></font> &nbsp; 30R
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot1.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>德国进口</h2>
-                                        德亚全脂纯牛奶200ml*48盒
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>189</span></font> &nbsp; 26R
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot2.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>iphone 6S</h2>
-                                        Apple/苹果 iPhone 6s Plus公开版
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>5288</span></font> &nbsp; 25R
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot3.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>倩碧特惠组合套装</h2>
-                                        倩碧补水组合套装8折促销
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>368</span></font> &nbsp; 18R
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot4.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>品利特级橄榄油</h2>
-                                        750ml*4瓶装组合 西班牙原装进口
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>280</span></font> &nbsp; 30R
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot4.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>品利特级橄榄油</h2>
-                                        750ml*4瓶装组合 西班牙原装进口
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>280</span></font> &nbsp; 30R
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot1.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>德国进口</h2>
-                                        德亚全脂纯牛奶200ml*48盒
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>189</span></font> &nbsp; 26R
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot2.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>iphone 6S</h2>
-                                        Apple/苹果 iPhone 6s Plus公开版
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>5288</span></font> &nbsp; 25R
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot3.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>倩碧特惠组合套装</h2>
-                                        倩碧补水组合套装8折促销
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>368</span></font> &nbsp; 18R
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot4.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>品利特级橄榄油</h2>
-                                        750ml*4瓶装组合 西班牙原装进口
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>280</span></font> &nbsp; 30R
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="featureBox" style="overflow: hidden; float: left; width: 238px; height: 228px;">
-                                <div class="box">
-                                    <div class="imgbg">
-                                        <a href="javascript:void(0)"><img width="160" height="136" src="{{asset('images')}}/hot4.jpg"></a>
-                                    </div>                                        
-                                    <div class="name">
-                                        <a href="javascript:void(0)">
-                                        <h2>品利特级橄榄油</h2>
-                                        750ml*4瓶装组合 西班牙原装进口
-                                        </a>
-                                    </div>
-                                    <div class="price">
-                                        <font>￥<span>280</span></font> &nbsp; 30R
-                                    </div>
-                                </div>
-                            </li>
+                            @endforeach
                         </ul>
+
                     </div>
                 </div>
                 <a href="javascript:void();" class="l_prev">Previous</a>

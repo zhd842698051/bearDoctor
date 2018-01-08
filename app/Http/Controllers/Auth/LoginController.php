@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
+
 class LoginController extends Controller
 {
     //登录
@@ -21,7 +22,7 @@ class LoginController extends Controller
     		'username'	=>	'required|min:6|max:16',
     		'password'	=>	'required|min:6|max:16',
     	]);
-    	
+
     	$user = request(['username','password']);
     	if(\Auth::attempt($user)){
     		return redirect('/');
@@ -50,8 +51,18 @@ class LoginController extends Controller
     //qq回调地址
     public function qqCallback()
     {
-        return 'qq回调地址';
+        return Socialite::with('qq')->redirect();
     }
+
+//     public function qq(){
+//       return Socialite::with('qq')->redirect();
+//     }
+
+     public function qqlogin(){
+        $user = Socialite::driver('qq')->user();
+        dd($user);
+     }
+
 
     //退出
     public function logout()
