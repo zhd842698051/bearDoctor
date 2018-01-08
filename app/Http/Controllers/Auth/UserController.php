@@ -53,7 +53,7 @@ class UserController extends Controller
 
 		$data['address']=$city;
 
-		//dd($data);
+		
 		$res = Address::create(['name'=>$data['name'],'amply'=>$data['amply'],'postcode'=>$data['postcode'],'phone'=>$data['phone'],'address'=>$data['address'],'user_id'=>$data['user_id'],'bulid'=>$data['bulid']]);
 
 
@@ -74,7 +74,6 @@ class UserController extends Controller
 			$address_id = request('addressId');
 			$address=Address::find($address_id)->toArray();
 
-			//echo $address['address'];die;
 			return view('user/saveAddress',compact(['address',$address]));
 	}
 

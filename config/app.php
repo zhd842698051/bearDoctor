@@ -13,7 +13,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'image' => 'http://p22vshs5l.bkt.clouddn.com',
+    'image' => 'http://p22vshs5l.bkt.clouddn.com/',
 
     /*
     |--------------------------------------------------------------------------
