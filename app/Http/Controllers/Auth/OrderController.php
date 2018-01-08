@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\UserController;
 use \App\Cart;
 use App\Product;
 use App\Attribute;
@@ -43,26 +44,26 @@ class OrderController extends Controller
 				$goods_list[$key]['attr'] = rtrim($str, ',');
 			}
 
-			//收货人信息
-			$man = Address::where([['user_id', '=', '1'], ['is_default', '=', '1']])->get()->toArray();
-			$man = $man[0];
-			//红包优惠券
-			$user_prop = User_prop::where(['user_id' => 1])->get()->toArray();
+
+		//收货人信息
+		$man=Address::where([['user_id', '=', '1'],['is_default', '=', '1']])->get()->toArray();
+		$man=$man[0];
+		//红包优惠券
+		$user_prop=User_prop::where(['user_id'=>1])->get()->toArray();
 
 
-			$man = $man[0];
-			//红包优惠券
-			$user_prop = User_prop::where(['user_id' => 1])->get()->toArray();
-			foreach ($user_prop as $key => $value) {
-				$prop = Prop::where([['id', '=', $user_prop[$key]['prop_id']], ['num', '>', '0']])->first()->toArray();
-				$user_prop[$key]['prop_name'] = $prop['name'];
-				$user_prop[$key]['full'] = $prop['full'];
-				$user_prop[$key]['price'] = $prop['price'];
-				$user_prop[$key]['start'] = $prop['start_time'];
-				$user_prop[$key]['end'] = $prop['end_time'];
-			}
-			return view('Order/orderinfo', compact('goods_list', 'man', 'user_prop'));
+		$man=$man[0];
+		//红包优惠券
+		foreach ($user_prop as $key => $value) {
+		   $prop=Prop::where([['id', '=', $user_prop[$key]['prop_id']],['num', '>', '0']])->first()->toArray();
+		   $user_prop[$key]['prop_name']=$prop['name'];
+		   $user_prop[$key]['full']=$prop['full'];
+		   $user_prop[$key]['price']=$prop['price'];
+		   $user_prop[$key]['start']=$prop['start_time'];
+		   $user_prop[$key]['end']=$prop['end_time'];
 		}
+
+		return view('Order/orderinfo',compact('goods_list','man','user_prop'));
 	}
 
 	public function delCart(){
@@ -104,7 +105,9 @@ class OrderController extends Controller
 	//联动改变收货地址
 	public function getAdd(){
 		$user=request('user');
-		$addr=Address::where(['name'=>$user])->get()->toArray();
+      
+		$addr=Address::where(['id'=>$user])->get()->toArray();
+	
 		if($addr){
 		 	$data['error']=0;
 		 	$data['content']=$addr;
