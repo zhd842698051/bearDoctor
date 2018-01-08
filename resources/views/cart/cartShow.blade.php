@@ -368,7 +368,7 @@ $(function(){
 
 
     //库存判断
-    $(document).on('blur','input[name="stock"]',function(){
+    $(document).on('keyup','input[name="stock"]',function(){
         var val = $(this).val();
         try
         {

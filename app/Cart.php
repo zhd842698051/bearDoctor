@@ -15,10 +15,16 @@ class Cart extends Model
     }
 
     //结算
-    public function aa()
+    public function selNum()
     {
-    	$data = self::where("product_id",$this->product_id)->join('product','cart.product_id','=','product.id')->get()->toArray();
+    	$data = self::where("product_id",$this->product_id)->join('product','cart.product_id','=','product.id')->select('cart.id','num','')->get();
     	return $data;
+    }
+
+    //删除结算内容
+    public function del()
+    {
+    	return self::where("id",$this->cart_id)->delete();
     }
      
 }

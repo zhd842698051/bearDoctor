@@ -70,18 +70,31 @@ class CartController extends Controller
 	public function createOrder()
 	{
 		$data = request('data');
+		$model = new Cart();
 		foreach($data as $k=>$v)
 		{
 			//
 			//查询库存
-			$row = Db::table('cart')->where('cart.product_id',$v['goods_id'])->join('product','cart.product_id','=','product.id')->get()->toArray();
-			
+			//$row = Db::table('cart')->where('cart.product_id',$v['goods_id'])->join('product','cart.product_id','=','product.id')->get()->toArray();
+			$model ->product_id = $v['goods_id'];
+			$row = $model->selNum();
+			return $row;
 			if($row[0]->num<$v['goods_num'])
 			{
 				return $row[0]->goods_id.' 库存不足';
-				// 1库存不足
-				// $msg = $row[0]['goods_id'].' 1';
-				// return $msg;
+			}
+			else
+			{
+				try{
+					$model ->cart_id = $row[0]->id;
+					$sre = $model ->del();
+				}
+				catch(Exception $e)
+				{
+					return 2;
+				}
+				return 1;
+
 			}
 			
 		}
