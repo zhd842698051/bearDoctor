@@ -117,6 +117,12 @@
                    $(this).parent().next().children().html(res*dan_price);
                    znum();
                   
+
+                    var prop= $(".jslct").val();
+                    var zunms=$(".znum").html();
+                     $(".z_num").html(zunms);
+                    if(prop<zunms){
+                      $(".jslct").removeAttr("disabled"); 
                     var pull= $(".jslct").val().split('|')[1];
 
                     var zunms=$(".znum").html();
@@ -165,6 +171,11 @@
                     zunms=$(".znum").html();
                   
                   $(".z_num").html($(".znum").html());
+                $(".jslct").change(function(){
+                   
+                   alert(zunms)
+                 $(".z_num").html(zunms-prop);
+                })
                  
                   
                 $(".jslct").change(function(){
@@ -293,6 +304,7 @@
                 $(".btn_close").trigger("click");
               },"json")
             });
+
                                  
             })
             </script>
@@ -314,6 +326,15 @@
             <table border="0" class="peo_tab" style="width:1110px;" cellspacing="0" cellpadding="0">
               <tr>
                 <td class="p_td" width="160">收货人</td>
+                <td width="395"><?=$man['man']?></td>
+                <td class="p_td" width="160">收货地址</td>
+                <td width="395"><?=$man['address']?></td>
+              </tr>
+              <tr>
+                <td class="p_td">详细地址</td>
+                <td><?=$man['amply']?></td>
+                <td class="p_td">邮政编码</td>
+                <td><?=$man['postcode']?></td>
                 <td width="395"><span class="man"><?=$man['name']?></span></td>
                 <td class="p_td" width="160">收货地址</td>
                 <td width="395"><span class="address_"><?=$man['address']?></span></td>
@@ -327,6 +348,9 @@
              
               <tr>
                 <td class="p_td">标志建筑</td>
+                <td><?=$man['bulid']?></td>
+                <td class="p_td">联系电话</td>
+                <td><?=$man['phone']?></td>
                 <td><span class="bulid"><?=$man['bulid']?></span></td>
                 <td class="p_td">联系电话</td>
                 <td><span class="phone"><?=$man['phone']?></span></td>
@@ -345,8 +369,8 @@
                       <option value="0">请选择</option>
                      <?php foreach ($user_prop as $key => $v) {?>
                    
+                       <option value="<?=$v['price']?>"><?=$v['price']?>(<?=$v['prop_name']?>)</option>
                        <option value="<?=$v['price']?>|<?=$v['full']?>"><?=$v['price']?>(<span class="pull"><?=$v['prop_name']?></span>)</option>
-
                      <?php }?>
                     
                     </select>
@@ -372,6 +396,8 @@
             <table border="0" style="width:900px; margin-top:20px;" cellspacing="0" cellpadding="0">
               <tr>
                 <td align="right">
+                    该订单完成后，您将获得 <font color="#ff4e00">1815</font> 积分 ，以及价值 <font color="#ff4e00">￥0.00</font> 的红包 <br />
+                    商品总价: <span class="znum" font color="#ff4e00"></font>
                     <span id="red"></span>
                     该订单完成后，您将获得 <font color="#ff4e00">1815</font> 积分 ，以及价值 <font color="#ff4e00">￥0.00</font> 的红包 <br />                   
                     商品总价: <span class="znum" font color="#ff4e00"></font>
