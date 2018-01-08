@@ -57,7 +57,7 @@ class CartController extends Controller
 			$this->validate(request(),['userid'=>'required']);
 			$userid = request('userid');
 			//查询数据
-			$data = Db::table('cart')->where('user_id',$userid)->join('product','cart.product_id','=','product.id')->join('goods','product.goods_id','=','goods.id')->select('cart.num','user_id','price','sell_price','cover','goods_id','name')->get();
+			$data = Db::table('cart')->where('user_id',$userid)->join('product','cart.product_id','=','product.id')->join('goods','product.goods_id','=','goods.id')->select('cart.num','user_id','price','sell_price','cover','goods_id','name','product_id')->get();
 		}
 		else
 		{
@@ -69,16 +69,22 @@ class CartController extends Controller
 	//结算生成订单
 	public function createOrder()
 	{
-		return 123;
-		//$aa = request('data');
-		// $aa = "[{'goods_id':1,'goods_num':2}]";
-		// $a = json_decode($aa);
-		// dd($a);
-		// $arr = json_decode($aa, true);
-		// return $arr;
-		// if($request->isMethod('post')){ 
-  //   		echo 123;
-		// }
+		$data = request('data');
+		foreach($data as $k=>$v)
+		{
+			//
+			//查询库存
+			$row = Db::table('cart')->where('cart.product_id',$v['goods_id'])->join('product','cart.product_id','=','product.id')->get()->toArray();
+			
+			if($row[0]->num<$v['goods_num'])
+			{
+				return $row[0]->goods_id.' 库存不足';
+				// 1库存不足
+				// $msg = $row[0]['goods_id'].' 1';
+				// return $msg;
+			}
+			
+		}
 	}
 
 	//确认订单信息

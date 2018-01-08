@@ -12,6 +12,7 @@ class IndexController extends Controller
 	//首页
 	public function index()
 	{
+<<<<<<< HEAD
 		$hotGoods = $this->getHotGoods();
         $user     = Auth::user();
         if ($user == null) {
@@ -27,6 +28,9 @@ class IndexController extends Controller
 	public static function isLogin(){
 		$status=Auth::check();
 		return $status;
+=======
+			return view('index/index');
+>>>>>>> 41ad786b343beb2d6e2444bc07b77ae3b814e828
 	}
 
 	public function getHotGoods()
