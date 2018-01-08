@@ -53,7 +53,7 @@ class UserController extends Controller
 
 		$data['address']=$city;
 
-		//dd($data);
+		
 		$res = Address::create(['name'=>$data['name'],'amply'=>$data['amply'],'postcode'=>$data['postcode'],'phone'=>$data['phone'],'address'=>$data['address'],'user_id'=>$data['user_id'],'bulid'=>$data['bulid']]);
 
 
@@ -62,9 +62,6 @@ class UserController extends Controller
 		}else{
 			$res = Address::create(['name'=>$data['name'],'amply'=>$data['amply'],'postcode'=>$data['postcode'],'phone'=>$data['phone'],'address'=>$data['address'],'user_id'=>$data['user_id'],'bulid'=>$data['bulid'],'is_default'=>$data['is_default']]);
 		}
-
-
-
 		if($res){
 			return redirect('user/address');
 		}
@@ -76,10 +73,8 @@ class UserController extends Controller
 	{
 			$address_id = request('addressId');
 			$address=Address::find($address_id)->toArray();
-			$user=auth::user();
-			//echo $address['address'];die;
 
-			return view('user/saveAddress',compact(['address',$address,'user',$user]));
+			return view('user/saveAddress',compact(['address',$address]));
 	}
 
 	//执行修改
@@ -117,8 +112,7 @@ class UserController extends Controller
 	//申请提现
 	public function cash()
 	{
-		$user=$this->status();
-		return view('user/cash',compact('user',$user));
+		return view('user/cash');
 	}
 
 	//我的收藏
@@ -192,16 +186,5 @@ class UserController extends Controller
 	{
 		return view('user/safe');
 	}
-
-	//公用的header用户名 和登录状态
-	public static function status(){
-		$status=IndexController::isLogin();
-		if($status == false){
-			return redirect('/login');
-		}else{
-			$user=Auth::user();
-			$user->isLogin = $status;
-			return $user;
-		}
-	}
+	
 }
