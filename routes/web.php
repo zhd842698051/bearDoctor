@@ -93,14 +93,13 @@ Route::get('/goods/sellDetails','\App\Http\Controllers\Auth\GoodsController@sell
 //营销（秒杀-优惠券-团购）
 Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
 Route::get('/seckill/show','\App\Http\Controllers\Auth\SeckillController@show');
+Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
 //后台
 Route::get("/admin/goods/getAttr",'App\Admin\Controllers\GoodsController@getAttr');
 Route::get("/admin/goods/getAttribute",'App\Admin\Controllers\GoodsController@getAttribute');
 Route::get("/admin/goods/ajaxGetAttr",'App\Admin\Controllers\GoodsController@ajaxGetAttr');
 
-//营销（秒杀-优惠券-团购）
-Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
 
 
 //后台
@@ -116,4 +115,3 @@ Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
 Route::get('/seckill/coupon','\App\Http\Controllers\Auth\SeckillController@coupon');
 Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
-
