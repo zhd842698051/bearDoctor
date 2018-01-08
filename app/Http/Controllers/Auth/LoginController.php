@@ -51,7 +51,7 @@ class LoginController extends Controller
     //qq回调地址
     public function qqCallback()
     {
-        eturn Socialite::with('qq')->redirect();
+        return Socialite::with('qq')->redirect();
     }
 
 //     public function qq(){
