@@ -191,7 +191,7 @@ $(function(){
             //将获取的内容进行展示
             var re = '';
             $.each(eval(cart),function(k,v){
-                re+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.goodsid+"' /><input type='hidden' name='num' value='2'></td><td><div class='c_s_img'><img src='{{asset('images')}}/c_1.jpg' width='73' height='73' /></div>哈哈哈哈哈</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.goodsnum+"' name='stock' class='car_ipt' /><input type='hidden' value='88' class='hide_money'/><input type='hidden' value='"+v.goodsid+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>88</span></td><td align='center'><a onclick='ShowDiv('MyDiv','fade')'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
+                re+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.product_id+"' /><input type='hidden' name='num' value='2'></td><td><div class='c_s_img'><img src='{{asset('images')}}/c_1.jpg' width='73' height='73' /></div>哈哈哈哈哈</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.goodsnum+"' name='stock' class='car_ipt' /><input type='hidden' value='88' class='hide_money'/><input type='hidden' value='"+v.goodsid+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>88</span></td><td align='center'><a onclick='ShowDiv('MyDiv','fade')'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
 
             })
             $("#content").html(re)
@@ -442,12 +442,11 @@ $(function(){
             //遍历
             $("input:checkbox[name='fruit']:checked").each(function() {
                 //判断cookie中是否有该商品
-                fruit+= "{'goods_id':"+$(this).val()+",'goods_num':"+$(this).next().val()+"},";
+                fruit+= "{'goods_id':"+$(this).val()+",'goods_num':"+$(this).parents('tr').find('input[name="stock"]').val()+"},";
             });
             fruit+=']';
+            fruit = eval(fruit);
         }
-        //cc = eval(fruit)
-        //console.log(cc)
         $.ajax({
             type:'get',
             url:"{{URL('cart/createOrder')}}",
@@ -482,7 +481,7 @@ $(function(){
             success:function(msg)
             {
                 //Database all remove
-                if(url=='cart')
+                if(url=="{{URL('cart')}}")
                 {
                     if(msg=='ok')
                     {
@@ -495,13 +494,13 @@ $(function(){
                 }
 
                 //Database select
-                if(url=='cart/dataSel')
+                if(url=="{{URL('cart/dataSel')}}")
                 {
+
                     var result=eval(msg);
-                    console.log(result)
                     var str = '';
                     $.each(result,function(k,v){
-                        str+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.goods_id+"' /><input type='hidden' name='num' value='2'></td><td><div class='c_s_img'><img src='{{asset('images')}}/c_1.jpg' width='73' height='73' /></div>"+v.name+"</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.num+"' name='stock' class='car_ipt' /><input type='hidden' value='"+v.sell_price+"' class='hide_money'/><input type='hidden' value='"+v.goods_id+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>"+v.sell_price*v.num+"</span></td><td align='center'><a onclick='ShowDiv('MyDiv','fade')'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
+                        str+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.product_id+"' /></td><td><div class='c_s_img'><img src='{{asset('images')}}/c_1.jpg' width='73' height='73' /></div>"+v.name+"</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.num+"' name='stock' class='car_ipt' /><input type='hidden' value='"+v.sell_price+"' class='hide_money'/><input type='hidden' value='"+v.goods_id+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>"+v.sell_price*v.num+"</span></td><td align='center'><a onclick='ShowDiv('MyDiv','fade')'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
                     });
                     $("#content").html(str)
                     common_price();
