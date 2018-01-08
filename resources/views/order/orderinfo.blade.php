@@ -35,7 +35,8 @@
   z-index: 1000;
   border: 1px solid #333;
   display: none;
-  overflow:auto;
+  overflow-y:scroll;
+  overflow-x:hidden;
   }
   .btn_close {
   position: absolute;
@@ -83,6 +84,8 @@
             </table>
             <script type="text/javascript" src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
             <script>
+            // document.oncontextmenu=new Function("return false") 
+            // document.onselectstart=new Function("return false") 
             $(function(){
                znum();
                var user_id=<?=$man['user_id']?>;
@@ -293,6 +296,14 @@
                 $(".btn_close").trigger("click");
               },"json")
             });
+
+            //确认订单
+            $("#sub").click(function(){
+              var user_id=<?=Auth::id()?>;
+              var money=$(".znum").html();
+              var real_money=$(".z_num").html();
+              alert(real_money)
+            })
                                  
             })
             </script>
@@ -385,7 +396,7 @@
                 </td>
               </tr>
               <tr height="70">
-                <td align="right"><a href="#"><img src="{{asset('images')}}/btn_sure.gif" /></a></td>
+                <td align="right"><a href="#" id="sub"><img src="{{asset('images')}}/btn_sure.gif" /></a></td>
               </tr>
             </table>
 
