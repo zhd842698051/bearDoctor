@@ -13,5 +13,12 @@ class Cart extends Model
     	$data = self::where("user_id",$userid)->get()->toArray();
     	return $data;
     }
+
+    //结算
+    public function aa()
+    {
+    	$data = self::where("product_id",$this->product_id)->join('product','cart.product_id','=','product.id')->get()->toArray();
+    	return $data;
+    }
      
 }

@@ -15,20 +15,17 @@ class UserController extends Controller
 	//用户
 	public function index()
 	{
-		$user=$this->status();
-		return view('user/index',compact('user',$user));
+		return view('user/index');
 	}
 
 	//地址
 	public function address()
 	{
-		$user=$this->status();
-
-		return view('user/address',compact('user',$user));
+		//return view('user/address');
 
 		$user_id=Auth::id();
 		$userAddress=Address::userAddress($user_id);
-		return view('user/address',compact(['user',$user,'userAddress',$userAddress]));
+		return view('user/address',compact(['userAddress',$userAddress]));
 
 	}
 
@@ -56,8 +53,8 @@ class UserController extends Controller
 
 		$data['address']=$city;
 
-		//dd($data);
-		$res = Address::create(['name'=>$data['name'],'email'=>$data['email'],'amply'=>$data['amply'],'postcode'=>$data['postcode'],'phone'=>$data['phone'],'address'=>$data['address'],'user_id'=>$data['user_id'],'bulid'=>$data['bulid']]);
+		
+		$res = Address::create(['name'=>$data['name'],'amply'=>$data['amply'],'postcode'=>$data['postcode'],'phone'=>$data['phone'],'address'=>$data['address'],'user_id'=>$data['user_id'],'bulid'=>$data['bulid']]);
 
 
 		if(!isset($data['is_default'])){
@@ -65,9 +62,6 @@ class UserController extends Controller
 		}else{
 			$res = Address::create(['name'=>$data['name'],'amply'=>$data['amply'],'postcode'=>$data['postcode'],'phone'=>$data['phone'],'address'=>$data['address'],'user_id'=>$data['user_id'],'bulid'=>$data['bulid'],'is_default'=>$data['is_default']]);
 		}
-
-
-
 		if($res){
 			return redirect('user/address');
 		}
@@ -79,10 +73,8 @@ class UserController extends Controller
 	{
 			$address_id = request('addressId');
 			$address=Address::find($address_id)->toArray();
-			$user=auth::user();
-			//echo $address['address'];die;
 
-			return view('user/saveAddress',compact(['address',$address,'user',$user]));
+			return view('user/saveAddress',compact(['address',$address]));
 	}
 
 	//执行修改
@@ -120,103 +112,79 @@ class UserController extends Controller
 	//申请提现
 	public function cash()
 	{
-		$user=$this->status();
-		return view('user/cash',compact('user',$user));
+		return view('user/cash');
 	}
 
 	//我的收藏
 	public function collect()
 	{
-		$user=$this->status();
-		return view('user/collect',compact('user',$user));
+		return view('user/collect');
 	}
 
 	//我的佣金
 	public function commission()
 	{
-		$user=$this->status();
-		return view('user/commission',compact('user',$user));
+		return view('user/commission');
 	}
 
 	//推广链接
 	public function links()
 	{
-		$user=$this->status();
-		return view('user/links',compact('user',$user));
+		return view('user/links');
 	}
 
 	//我的会员
 	public function member()
 	{
-		$user=$this->status();
-		return view('user/member',compact('user',$user));
+		return view('user/member');
 	}
 
 	//会员列表
 	public function memberList()
 	{
-		$user=$this->status();
-		return view('user/memberList',compact('user',$user));
+		return view('user/memberList');
 	}
 
 	//申请余额记录
 	public function memberMoney()
 	{
-		$user=$this->status();
-		return view('user/memberMoney',compact('user',$user));
+		return view('user/memberMoney');
 	}
 
 	//充值
 	public function memberCharge()
 	{
-		$user=$this->status();
-		return view('user/memberCharge',compact('user',$user));
+		return view('user/memberCharge');
 	}
 
 	//支付
 	public function moneyPay()
 	{
-		$user=$this->status();
-		return view('user/moneyPay',compact('user',$user));
+		return view('user/moneyPay');
 	}
 
 	//我的留言
 	public function message()
 	{
-		$user=$this->status();
-		return view('user/message',compact('user',$user));
+		return view('user/message');
 	}
 
 	//我的红包
 	public function packet()
 	{
-		$user=$this->status();
-		return view('user/packet',compact('user',$user));
+		return view('user/packet');
 	}
 
 	//我的业绩
 	public function results()
 	{
-		$user=$this->status();
-		return view('user/results',compact('user',$user));
+		return view('user/results');
 	}
 
 	//账户安全
 	public function safe()
 	{
-		$user=$this->status();
-		return view('user/safe',compact('user',$user));
+		return view('user/safe');
 	}
-
-	//公用的header用户名 和登录状态
-	public static function status(){
-		$status=IndexController::isLogin();
-		if($status == false){
-			return redirect('/login');
-		}else{
-			$user=Auth::user();
-			$user->isLogin = $status;
-			return $user;
-		}
-	}
+	
 }

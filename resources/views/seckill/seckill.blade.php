@@ -34,30 +34,6 @@
                 <div class="brand_t">品牌特卖</div>
                 <ul class="sell_brand">
                     <li>
-                        @foreach($data as $brand)
-                        <div class="con">
-                            <div class="simg"><img src="{{asset('upload')}}/{{$brand->logo}}" width="160" height="140" /></div>
-                            <div class="ch_bg">
-                                <span class="ch_txt">先领券再消费</span>
-                                <a href="{{url('brand/coupon')}}" class="ch_a">查看</a>
-                            </div>
-                                <!-- {{$brand->created_at}}-{{$brand->update_at}} -->
-                               09月12日 — 10月20日
-                        </div>
-                         <div class="img"><img src="{{asset('upload')}}/{{$brand->logo}}" width="530" height="190" /></div>
-                        @endforeach
-                       
-                    </li>
-                </ul>
-
-                <div class="brand_t">商品特卖</div>
-                <ul class="p_sell">
-                    @foreach($data as $goods)
-                    <li>
-                        <div class="img"><img src="{{asset('upload')}}/{{$goods->logo}}" width="160" height="140" /></div>
-                        <div class="name">{{$goods->name}}</div>
-                 <ul class="sell_brand">
-                    <li>
                         <div class="con">
                             <div class="simg"><img src="{{asset('images')}}/sb1.jpg" width="220" height="100" /></div>
                             <div class="ch_bg">
@@ -93,16 +69,14 @@
                 </ul>
 
                 <div class="brand_t" >商品特卖</div> 
-                <div id="nowTime">当前时间:</div>
-            
-                <ul class="p_sell"  #nav_now>
+                <!-- <div id="nowTime">当前时间:</div> -->
+                <ul class="p_sell">
                    <?php foreach($data as $k=>$v) {?>
                    
-                        <input type="hidden" id="timed" value="<?php echo $v['created_at']?>">
-                        
+                        <!-- <input type="hidden" id="timed" value="<?php echo $v['created_at']?>"> -->
                     <li>
-                        <div class="img"><img src="public/upload/<?php echo $v['cover']; ?>" width="150px" height="100px"/></div>
-                        <div class="name"><?php echo $v['goods']; ?></div>
+                        <div class="img"><img src="config('app.image')+xDTRT0fEm5dtskBbAP9bTLUkGcNA2niNBNgWDHFR.jpeg" width="150px" height="100px"/></div>
+                        <div class="name"><?php echo $v['name']?></div>
                         <div class="price">
                             <table border="0" style="width:100%; color:#888888;" cellspacing="0" cellpadding="0">
                                 <tr style="font-family:'宋体';">
@@ -111,91 +85,22 @@
                                     <td width="33%">为您节省</td>
                                 </tr>
                                 <tr>
-                                    <td style="text-decoration:line-through;">{{$goods->sell_price}}</td>
                                     <td style="text-decoration:line-through;"><?php echo $v['sell_price']?></td>
                                     <td>8.0</td>
                                     <td>￥100</td>
                                 </tr>
                             </table>
                         </div>
-                      
+
                         <div class="ch_bg" id="gold_div">
-                            <span class="ch_txt">￥<font>{{$goods->sale_price}}</font></span>
-                            <a href="#" class="ch_a" id="gold_btn" onclick="seckill();">立即抢购</a>
-                        </div>
-                        
-                     
-                        <div class="times" id="showStartTime_3"></div>
-                      <input type="hidden" id="showtimekill_3" value="7200">
-                       
-                   <!--      <div class="times">距离开抢，还剩余<font id="f_hh">' + h + '</font>小时<font id="f_mm">' + m + '</font>分<font id="f_ss">' + s + '</font>秒</div> -->
-                    </li>
-                        @endforeach
-                </ul>
-            </div>
-            <!--End 特卖 End-->
-     <script type="text/javascript" src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
-                        <script type="text/javascript">
-                                                               
-                            // //总时间，以分为单位
-                            // var time = 100;
-                            // //小时
-                            // var h = parseInt(time / 60) > 0 ? parseInt(time / 60) : 0;
-                            // //分
-                            // var m = time % 60;
-                            // //秒
-                            // var s = 60;
-                            // //输出到当前Script的Dom位置
-                            // document.write('<div class="times">距离开抢，还剩余<font id="f_hh">' + h + '</font>小时<font id="f_mm">' + m + '</font>分<font id="f_ss">' + s + '</font>秒</div>');
-                            // //开始执行倒计时
-                            // var timeInterval = setInterval(function () {
-                            //     //如果时、分、秒都为0时将停止当前的倒计时
-                            //     if (h == 0 && m == 0 && s == 0) { clearInterval(timeInterval); return; }
-                            //     //当秒走到0时，再次为60秒
-                            //     if (s == 0) { s = 60; }
-                            //     if (s == 60) {
-                            //         //每次当秒走到60秒时，分钟减一
-                            //         m -= 1;
-                            //         //当分等于0时并且小时还多余1个小时的时候进里面看看
-                            //         if (m == 0 && h > 0) {
-                            //             //小时减一
-                            //             h -= 1;
-                            //             //分钟自动默认为60分
-                            //             m = 60;
-                            //             //秒自动默认为60秒
-                            //             s = 60;
-                            //         }
-                            //     }
-                            //     //秒继续跳动，减一
-                            //     s -= 1;
-                            //     //小时赋值
-                            //     document.getElementById('f_hh').innerHTML = h;
-                            //     //分钟赋值
-                            //     document.getElementById('f_mm').innerHTML = m;
-                            //     //秒赋值
-                            //     document.getElementById('f_ss').innerHTML = s;
-                            // }, 1000);
-
-                            setInterval("set_time("+3+")",1000);
-                             function set_time($id){
-                                    var data=parseInt($("#showtimekill_"+$id).val());
-                                    var day=Math.floor(data/3600/24)<10?'0'+Math.floor(data/3600/24):Math.floor(data/3600/24);
-                                    var hours=Math.floor(data/3600%24)<10?'0'+Math.floor(data/3600%24):Math.floor(data/3600%24);
-                                    var minutes=Math.floor(data%3600/60)<10?'0'+Math.floor(data%3600/60):Math.floor(data%3600/60);
-                                    var seconds=(data%60)<10?'0'+(data%60):(data%60);
-                                    $("#showStartTime_"+$id).html("距离开抢："+day+"天"+hours+"时"+minutes+"分"+seconds+"秒");
-                                    data--;
-                                    $("#showtimekill_"+$id).val(data)
-                                }
-
-                        </script>
-                            <span class="ch_txt" id="ch_txt">￥<font><?php echo $v['seckill_price']?></font></span>
-                            <input type="hidden" id="time_color" value="<?php echo $v['seckill_price']?>">
+                           <span class="ch_txt" id="ch_txt">￥<font><?php echo $v['seckill_price']?></font></span>
+                            <!-- <input type="hidden" id="time_color" value="<?php echo $v['seckill_price']?>"> -->
 
                             <a href="#" class="ch_a" id="gold_btn" onclick="seckill();">立即抢购</a>
 
                         </div>
-                      
+
+
                          <div class="times" id="showStartTime_<?php echo $v['id']?>"></div>
                          <input type="hidden" id="showtimekill_<?php echo $v['id']?>" value="3600">
 
@@ -210,10 +115,9 @@
                 </ul>
             </div>
             <!--End 特卖 End-->
-
         <script type="text/javascript" src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
             <!-- 比较开场时间与结束时间 -->
-            <script type="text/javascript">
+           <!--  <script type="text/javascript">
                 // 数据库时间
                 $timed=$("#timed").attr("value");
                 
@@ -223,7 +127,7 @@
                 $nowTime=$("#nowTime").attr("value");
                 // alert($nowTime);
 
-            </script>
+            </script> -->
             <!-- 字体颜色变色 -->
             <script type="text/javascript">
                $time_color=$("#time_color").attr("value");
@@ -248,8 +152,9 @@
 
                 }
         </script>
+
       <!-- 当前时间 -->
-       <script type="text/javascript">
+      <!--  <script type="text/javascript">
           function current(){
            
           var d=new Date(),str='';
@@ -269,7 +174,7 @@
              
             },1000); 
         </script>
-     
+      -->
 
     <script type="text/javascript">
         //       $(function(){
