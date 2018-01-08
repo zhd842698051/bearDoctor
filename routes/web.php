@@ -19,6 +19,8 @@ Route::get('/login','\App\Http\Controllers\Auth\LoginController@login');
 Route::get('/logout','\App\Http\Controllers\Auth\LoginController@logout');
 //qq登录
 Route::get('/qqCallback','\App\Http\Controllers\Auth\LoginController@qqCallback');
+Route::get('/qqlogin','\App\Http\Controllers\Auth\LoginController@qqlogin');
+// Route::get('/qq','\App\Http\Controllers\Auth\LoginController@qq');
 
 //执行登录
 Route::post('/login','\App\Http\Controllers\Auth\LoginController@loginDo');
@@ -116,4 +118,3 @@ Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
 Route::get('/seckill/coupon','\App\Http\Controllers\Auth\SeckillController@coupon');
 Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
-
