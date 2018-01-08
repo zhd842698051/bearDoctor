@@ -12,6 +12,8 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
+            <form action="http://www.beardoctor.com/admin/goods" method="post" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" pjax-container>
+                <div class="box-body">
             <form action="http://www.beardoctor.com/admin/goods/add" method="post" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" >
                 <div class="box-body">
                     {{ csrf_field() }}
@@ -311,7 +313,7 @@
 
                             </div>
                         </div>
-                        <center><a href="javascript:void(0)" id="create-pro" class="btn btn-warning">生成商品</a></center>
+
                         <div id="attr-show"></div>
                     </div>
 
@@ -393,6 +395,38 @@
                 alert("请先选择属性")
                 return false;
             }
+            $.ajax({
+                url:'http://www.beardoctor.com/admin/goods/ajaxGetAttr',
+                data:{id:attribute_id},
+                dataType:'json',
+                success:function (msg) {
+
+                 console.log(msg)
+                }
+            })
+            return false;
+            var arr = new Array();
+            $.each(attribute_id,function(k,v){
+                arr.push(v.split('-'))
+            })
+            var attr = new Array();
+            $.each(arr,function(k,v){
+                attr[v[0]]=[];
+            })
+            $.each(arr,function(k,v){
+                attr[v[0]][k]=[v[1],v[2]];
+            })
+            var str = ""
+            var num='s'
+            $.each(attr,function(k,v){
+                $.each(v,function(kk,vv){
+                    if(num!=k){
+                        str += vv[1];
+                    }
+                })
+                str+='-'
+                num=k
+            })
             var str='';
             $.ajax({
                 url:'http://www.beardoctor.com/admin/goods/ajaxGetAttr',

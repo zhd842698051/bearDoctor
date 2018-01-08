@@ -10,6 +10,22 @@ class SeckillController extends Controller
     //抢购
     public function seckill()
   {
+
+    $data = \App\Brand::orderBy('created_at','update_at')->get();
+		
+    return view('seckill/seckill',compact('data'));
+  }
+
+  // public function show(){
+  // 	date_default_timezone_set('prc');//配置时差
+    
+  // 	 $time=time(request('time'));//数据库时间
+    
+  //    $now=strtotime(date("y-m-d h:i:s",time()));//当前时间戳
+     
+  // }
+
+
     $data = \App\Seckill::orderBy('created_at','update_at','seckill_price')->get()->toArray();
     // dd($data);die;
 
@@ -25,6 +41,7 @@ class SeckillController extends Controller
     // dd($data);
     return view('seckill/seckill',compact('data'));
   }
+
 
     //优惠券
     public function coupon()
