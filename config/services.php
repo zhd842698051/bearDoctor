@@ -35,4 +35,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'qq' => [
+    'client_id' => env('101445016'),
+    'client_secret' => env('ebd13d7be7a43deea19ddcbcefe959d2'),
+    'redirect' => env('http://www.shops.com/qqCallback'),
+    ],
+
 ];

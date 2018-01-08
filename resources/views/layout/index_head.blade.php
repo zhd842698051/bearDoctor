@@ -122,17 +122,28 @@
         </span>
         <!--End 所在收货地区 End-->
         <span class="fr">
-                @if($user == null)
-                    <span class="fl">你好，请<a href="{{URL('login')}}">登录</a>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
-                @elseif($user->isLogin == true)
-                    <span class="fl">欢迎<span style="color:red">{{ $user->username }}</span><span id="login">登录</span>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
-                    <script type="text/javascript" src="{{ asset('js') }}/app.js"></script>
-                    <script>
-                        $(function(){
-                            $("#login").after('&nbsp;<a href="{{ URL('/logout') }}" style="color:#ff4e00;">退出</a>')
-                        })
-                    </script>
-                @endif
+                {{--@if($user == null)--}}
+                    {{--<span class="fl">你好，请<a href="{{URL('login')}}">登录</a>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>--}}
+                {{--@elseif($user->isLogin == true)--}}
+                    {{--<span class="fl">欢迎<span style="color:red">{{ $user->username }}</span><span id="login">登录</span>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>--}}
+                    {{--<script type="text/javascript" src="{{ asset('js') }}/app.js"></script>--}}
+                    {{--<script>--}}
+                        {{--$(function(){--}}
+                            {{--$("#login").after('&nbsp;<a href="{{ URL('/logout') }}" style="color:#ff4e00;">退出</a>')--}}
+                        {{--})--}}
+                    {{--</script>--}}
+                {{--@endif--}}
+            @if(!Auth::user())
+                <span class="fl">你好，请<a href="{{URL('login')}}">登录</a>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
+            @else
+                <span class="fl">欢迎<span style="color:red">{{ Auth::user()->username}}</span><span id="login">登录</span>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
+                <script src="{{ asset('js') }}/app.js"></script>
+                <script>
+                    $(function(){
+                        $("#login").after('&nbsp;<a href="{{ URL('/logout') }}" style="color:#ff4e00;">退出</a>')
+                    })
+                </script>
+            @endif
                 <span class="ss">
                 <div class="ss_list">
                     <a href="#">收藏夹</a>

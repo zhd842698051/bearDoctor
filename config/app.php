@@ -182,7 +182,9 @@ return [
 
         Mews\Captcha\CaptchaServiceProvider::class,
 
-        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class
+        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
+
+        SocialiteProviders\Manager\ServiceProvider::class,
 
     ],
 
@@ -234,6 +236,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
 
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];
