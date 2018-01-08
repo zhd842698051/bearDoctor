@@ -25,9 +25,6 @@ class OrderController extends Controller
 		//购物车商品信息
 		$goods_list = Cart::where(['user_id' => 1])->orderBy('created_at', 'desc')->get()->toArray();
 
-		foreach ($goods_list as $key => $value) {
-			$product = Product::find($goods_list[$key]['product_id'])->toArray();
-
 			foreach ($goods_list as $key => $value) {
 				$product = Product::find($goods_list[$key]['product_id'])->toArray();
 				$goods = Goods::find($product['goods_id'])->toArray();
