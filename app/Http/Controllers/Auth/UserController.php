@@ -76,10 +76,9 @@ class UserController extends Controller
 	{
 			$address_id = request('addressId');
 			$address=Address::find($address_id)->toArray();
-			$user=auth::user();
-			//echo $address['address'];die;
 
-			return view('user/saveAddress',compact(['address',$address,'user',$user]));
+			//echo $address['address'];die;
+			return view('user/saveAddress',compact(['address',$address]));
 	}
 
 	//执行修改
@@ -117,8 +116,7 @@ class UserController extends Controller
 	//申请提现
 	public function cash()
 	{
-		$user=$this->status();
-		return view('user/cash',compact('user',$user));
+		return view('user/cash');
 	}
 
 	//我的收藏
