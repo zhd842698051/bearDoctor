@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\UserController;
 use \App\Cart;
 use App\Product;
 use App\Attribute;
@@ -17,8 +18,9 @@ use App\Order;
 class OrderController extends Controller
 {
 	public function orderInfo(){
-
+         $user=UserController::status();
 		//购物车商品信息
+         $user_id=Auth::id();
 		$goods_list=Cart::where(['user_id'=>1])->orderBy('created_at', 'desc')->get()->toArray();
 
 		foreach ($goods_list as $key => $value) {
@@ -54,8 +56,8 @@ class OrderController extends Controller
 		   $user_prop[$key]['start']=$prop['start_time'];
 		   $user_prop[$key]['end']=$prop['end_time'];
 		}
-        
-		return view('Order/orderinfo',compact('goods_list','man','user_prop'));
+
+		return view('Order/orderinfo',compact('goods_list','man','user_prop','user'));
 	}
 
 	public function delCart(){
@@ -98,7 +100,9 @@ class OrderController extends Controller
 	//联动改变收货地址
 	public function getAdd(){
 		$user=request('user');
-		$addr=Address::where(['name'=>$user])->get()->toArray();
+      
+		$addr=Address::where(['id'=>$user])->get()->toArray();
+	
 		if($addr){
 		 	$data['error']=0;
 		 	$data['content']=$addr;

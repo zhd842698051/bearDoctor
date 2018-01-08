@@ -10,6 +10,38 @@
     border: 0;
    display: none;
   }
+   #mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  background: #666;
+  opacity: 0.5;
+  filter: alpha(opacity=50)-moz-opacity: 0.5;
+  display: none;
+  }
+
+  .addre{
+    margin-top:30px;
+  }
+  .popup {
+  position: absolute;
+  left: 50%;
+  width: 700px;
+  height: 300px;
+  background: #fff;
+  z-index: 1000;
+  border: 1px solid #333;
+  display: none;
+  overflow:auto;
+  }
+  .btn_close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  }
 </style>
 <!--End Menu End--> 
 <div class="i_bg">  
@@ -34,7 +66,7 @@
 
               <tr cart_id="<?=$v['id']?>">
                 <td>
-                    <div class="c_s_img"><img src="{{asset('upload')}}/<?=$v['cover']?>" width="73" height="73" /></div>
+                    <div class="c_s_img"><img src="<?=config('app.image').'/'. $v['cover']?>" width="73" height="73" /></div>
                     <span style="margin-left:160px"><?=$v['goods']?></span>
                 </td>
                 <td align="center"><?=$v['attr']?></td>
@@ -63,7 +95,9 @@
                }
                $('.znum').html(Sprice)
                }
-               
+
+                              
+
                 $("#sp_update").toggle(function(){
                   $(".jia").show();
                   $(".jian").show();
@@ -153,100 +187,129 @@
                  $(".z_num").html(zunms-prop);
                 })
                 $("#red").html($(".jslct").val())
+                
 
-                //展示所有地址
-                $("#add_update").toggle(function(){
-                  $.get("{{url('getaddress')}}", {
+                $('.btn_show').click(function() {
+                 $('#mask').css({
+                 display: 'block',
+                 height: $(document).height()
+                 })
+                 var $Popup = $('.popup');
+                 $Popup.css({
+                 left: ($('body').width() - $Popup.width()) / 2+ 'px',
+                 top: ($(window).height() - $Popup.height()) / 2 + $(window).scrollTop() + 'px',
+                 display: 'block'
+                 })
+                 $.get("{{url('getaddress')}}", {
                     "user_id": user_id,
                   },function (msg) {
                 if(msg.error==0){
-                var man='<select class="user">';
-                var address_='<select class="addr">';
-                var amply='<select class="ampll">';
-                var postcode='<select class="posts">';
-                var bulid='<select class="build">';
-                var phone='<select class="tel">';
+               var str='';
                 //console.log(msg.content);return false;
                 $.each(msg.content,function (k,v) {
-                    man+='<option value='+v.name+' m_id='+v.id+'>'+v.name+'</option>';
-                    address_+='<option value='+v.address+'>'+v.address+'</option>';
-                    amply+='<option value='+v.amply+'>'+v.amply+'</option>';
-                    postcode+='<option value='+v.postcode+'>'+v.postcode+'</option>';
-                    bulid+='<option value='+v.bulid+'>'+v.bulid+'</option>';
-                    phone+='<option value='+v.phone+'>'+v.phone+'</option>';
+                    str+='<tr><td>';
+                    if(v.is_default==1){
+                      str+='<input type="radio" checked name="addr" value='+v.id+'>'+v.name+'</td><td>'+v.address+'</td><td>'+v.amply+'</td><td>'+v.postcode+'</td><td>'+v.bulid+'</td><td>'+v.phone+'</td><tr>';
+                    }else{
+                      str+='<input type="radio" name="addr" value='+v.id+'>'+v.name+'</td><td>'+v.address+'</td><td>'+v.amply+'</td><td>'+v.postcode+'</td><td>'+v.bulid+'</td><td>'+v.phone+'</td><tr>';
+                    }
+                    
                     })
-                    man+='</select>';
-                    address_+='</select>';
-                    amply+='</select>';
-                    postcode+='</select>';
-                    bulid+='</select>';
-                    phone+='</select>';
-                    $(".man").html(man)
-                    $(".address_").html(address_)
-                    $(".amply").html(amply)
-                    $(".postcode").html(postcode)
-                    $(".bulid").html(bulid)
-                    $(".phone").html(phone)
+                      $(".addre").html(str)
                 }
               },"json")
-              },function(){
-                var man=$(".user").val();
+                })
+                $('.btn_close').click(function() {
+                 $('#mask,.popup').css('display', 'none');
+                })
+              //   //展示所有地址
+              //   $("#add_update").toggle(function(){
+              //     $.get("{{url('getaddress')}}", {
+              //       "user_id": user_id,
+              //     },function (msg) {
+              //   if(msg.error==0){
+              //   var man='<select class="user">';
+              //   var address_='<select class="addr">';
+              //   var amply='<select class="ampll">';
+              //   var postcode='<select class="posts">';
+              //   var bulid='<select class="build">';
+              //   var phone='<select class="tel">';
+              //   //console.log(msg.content);return false;
+              //   $.each(msg.content,function (k,v) {
+              //       man+='<option value='+v.name+' m_id='+v.id+'>'+v.name+'</option>';
+              //       address_+='<option value='+v.address+'>'+v.address+'</option>';
+              //       amply+='<option value='+v.amply+'>'+v.amply+'</option>';
+              //       postcode+='<option value='+v.postcode+'>'+v.postcode+'</option>';
+              //       bulid+='<option value='+v.bulid+'>'+v.bulid+'</option>';
+              //       phone+='<option value='+v.phone+'>'+v.phone+'</option>';
+              //       })
+              //       man+='</select>';
+              //       address_+='</select>';
+              //       amply+='</select>';
+              //       postcode+='</select>';
+              //       bulid+='</select>';
+              //       phone+='</select>';
+              //       $(".man").html(man)
+              //       $(".address_").html(address_)
+              //       $(".amply").html(amply)
+              //       $(".postcode").html(postcode)
+              //       $(".bulid").html(bulid)
+              //       $(".phone").html(phone)
+              //   }
+              // },"json")
+              // },function(){
+              //   var man=$(".user").val();
             
-                var addr=$(".addr").val();
-                var ampll=$(".ampll").val();
-                var posts=$(".posts").val();
-                var build=$(".build").val();
-                var tel=$(".tel").val();
+              //   var addr=$(".addr").val();
+              //   var ampll=$(".ampll").val();
+              //   var posts=$(".posts").val();
+              //   var build=$(".build").val();
+              //   var tel=$(".tel").val();
                
-                $(".man").html(man);
-                $(".address_").html(addr);
-                $(".amply").html(ampll);
-                $(".postcode").html(posts);
-                $(".bulid").html(build);
-                $(".phone").html(tel)
-              } )
+              //   $(".man").html(man);
+              //   $(".address_").html(addr);
+              //   $(".amply").html(ampll);
+              //   $(".postcode").html(posts);
+              //   $(".bulid").html(build);
+              //   $(".phone").html(tel)
+              // } )
 
              //地址修改
-             $(document).on("click",".user option",function (){
+             $(document).on("click","input[name='addr']",function (){
                var user=$(this).val();
                 $.get("{{url('getadd')}}", {
                     "user": user,
                   },function (msg) {
                 if(msg.error==0){
-                var man='<select class="user">';
-                var address_='<select class="addr">';
-                var amply='<select class="ampll">';
-                var postcode='<select class="posts">';
-                var bulid='<select class="build">';
-                var phone='<select class="tel">';
+                var str='';
+               
                 $.each(msg.content,function (k,v) {
-                    man+='<option value='+v.name+' m_id='+v.id+'>'+v.name+'</option>';
-                    address_+='<option value='+v.address+'>'+v.address+'</option>';
-                    amply+='<option value='+v.amply+'>'+v.amply+'</option>';
-                    postcode+='<option value='+v.postcode+'>'+v.postcode+'</option>';
-                    bulid+='<option value='+v.bulid+'>'+v.bulid+'</option>';
-                    phone+='<option value='+v.phone+'>'+v.phone+'</option>';
+                   str+='<tr><td width="160" class="p_td">收货人</td><td width="395"><span class="man">'+v.name+'</span></td><td width="160" class="p_td">收货地址</td><td width="395"><span class="address_">'+v.address+'</span></td></tr><tr><td class="p_td">详细地址</td><td><span class="amply">'+v.amply+'</span></td><td class="p_td">邮政编码</td><td><span class="postcode">'+v.postcode+'</span></td></tr><tr><td class="p_td">标志建筑</td><td><span class="bulid">'+v.bulid+'</span></td><td class="p_td">联系电话</td><td><span class="phone">'+v.phone+'</span></td></tr>';
                     })
-                    man+='</select>';
-                    address_+='</select>';
-                    amply+='</select>';
-                    postcode+='</select>';
-                    bulid+='</select>';
-                    phone+='</select>';
-                    $(".man").html(man)
-                    $(".address_").html(address_)
-                    $(".amply").html(amply)
-                    $(".postcode").html(postcode)
-                    $(".bulid").html(bulid)
-                    $(".phone").html(phone)
+                 $(".peo_tab tbody").html(str);
+                }else{
+                  alert("error");
                 }
+                $(".btn_close").trigger("click");
               },"json")
             });
                                  
             })
             </script>
+
+             <div id="mask"></div>
+             <div class="popup">
+              <button class="btn_close">×</button>
+       
+                <table class="addre">
+                  <tr>
+                    
+                  </tr>
+                </table>
+             
+             </div>
             <div class="two_t">
-                <span class="fr"><a href="#" id="add_update">修改</a></span>收货人信息
+                <span class="fr"><a href="#"  class="btn_show">修改</a></span>收货人信息
             </div>
             <table border="0" class="peo_tab" style="width:1110px;" cellspacing="0" cellpadding="0">
               <tr>
