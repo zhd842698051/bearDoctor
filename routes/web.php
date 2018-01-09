@@ -44,6 +44,10 @@ Route::get('/cart/submitOrder','\App\Http\Controllers\Auth\CartController@submit
 Route::get('/cart','\App\Http\Controllers\Auth\CartController@test');
 Route::get('/cart/dataSel','\App\Http\Controllers\Auth\CartController@cartSel');
 Route::get('/cart/createOrder','\App\Http\Controllers\Auth\CartController@createOrder');
+Route::get('/cart/nav','\App\Http\Controllers\Auth\CartController@nav');
+Route::get('/cart/addData','\App\Http\Controllers\Auth\CartController@addData');
+Route::get('/cart/onlyDel','\App\Http\Controllers\Auth\CartController@onlyDel');
+
 //品牌
 Route::get('/brand','\App\Http\Controllers\Auth\BrandController@brand');
 Route::get('/brand/list','\App\Http\Controllers\Auth\BrandController@brandList');
