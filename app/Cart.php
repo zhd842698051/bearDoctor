@@ -17,7 +17,7 @@ class Cart extends Model
     //结算
     public function selNum()
     {
-    	$data = self::where("product_id",$this->product_id)->join('product','cart.product_id','=','product.id')->select('cart.id','num','')->get();
+    	$data = self::where("product_id",$this->product_id)->join('product','cart.product_id','=','product.id')->select('cart.id','cart.num','user_id','product_id','price')->first();
     	return $data;
     }
 
@@ -26,5 +26,15 @@ class Cart extends Model
     {
     	return self::where("id",$this->cart_id)->delete();
     }
+
+    //修改库存数量
+    public function updateNum($row,$num)
+    {
+    	$row->num = $row->num - $num;
+    	$sre = $row->save();
+    	return $sre;
+    }
+
+   
      
 }

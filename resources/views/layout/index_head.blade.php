@@ -187,30 +187,17 @@
         <span class="fl"><a href="#">咖啡</a><a href="#">iphone 6S</a><a href="#">新鲜美食</a><a href="#">蛋糕</a><a href="#">日用品</a><a href="#">连衣裙</a></span>
     </div>
     <div class="i_car">
-        <div class="car_t">购物车 [ <span>3</span> ]</div>
+        <input type="hidden" name='cart' value="{{$userid}}" />
+        <div class="car_t">购物车 [ <span class='count'>3</span> ]</div>
         <div class="car_bg">
             <!--Begin 购物车未登录 Begin-->
-            <div class="un_login">还未登录！<a href="Login.html" style="color:#ff4e00;">马上登录</a> 查看购物车！</div>
+            <div class="un_login">还未登录！<a href="{{URL('login')}}" style="color:#ff4e00;">马上登录</a> 查看购物车！</div>
             <!--End 购物车未登录 End-->
             <!--Begin 购物车已登录 Begin-->
-            <ul class="cars">
-                <li>
-                    <div class="img"><a href="#"><img src="{{asset('images')}}/car1.jpg" width="58" height="58" /></a></div>
-                    <div class="name"><a href="#">法颂浪漫梦境50ML 香水女士持久清新淡香 送2ML小样3只</a></div>
-                    <div class="price"><font color="#ff4e00">￥399</font> X1</div>
-                </li>
-                <li>
-                    <div class="img"><a href="#"><img src="{{asset('images')}}/car2.jpg" width="58" height="58" /></a></div>
-                    <div class="name"><a href="#">香奈儿（Chanel）邂逅活力淡香水50ml</a></div>
-                    <div class="price"><font color="#ff4e00">￥399</font> X1</div>
-                </li>
-                <li>
-                    <div class="img"><a href="#"><img src="{{asset('images')}}/car2.jpg" width="58" height="58" /></a></div>
-                    <div class="name"><a href="#">香奈儿（Chanel）邂逅活力淡香水50ml</a></div>
-                    <div class="price"><font color="#ff4e00">￥399</font> X1</div>
-                </li>
+            <ul class="cars" id='cart'>
+                
             </ul>
-            <div class="price_sum">共计&nbsp; <font color="#ff4e00">￥</font><span>1058</span></div>
+            <div class="price_sum">共计&nbsp; <font color="#ff4e00">￥</font><span id='money'>1058</span></div>
             <div class="price_a"><a href="{{URL('cart/show')}}">去购物车结算</a></div>
             <!--End 购物车已登录 End-->
         </div>
@@ -363,3 +350,108 @@
 <![endif]-->
 </html>
 <script src="{{asset('js')}}/ShopShow.js"></script>
+<script type="text/javascript" src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
+<script>
+    $(function(){
+        //用户id
+        //window.localStorage.clear();
+        var userid1 = $("input[name='cart']").val();
+        var cart1 = window.localStorage.getItem('cart');
+        // console.log(cart)
+        // return false;//
+        if(userid1=='')
+        {
+            if(cart1==null)
+            {
+                $("#cart").html('<center>购物车为空</center>');
+                $("#money").html(0);
+                $(".count").html(0);
+            }
+            else
+            {
+                //获取并展示
+                cart1 = eval(cart1);
+                var st = '';
+                len = cart1.length;
+                $.each(cart1,function(k,v){
+                    st+="<li><div class='img'><a href='#'><img src='' width='58' height='58' /></a></div><div class='name'><a href='#'>xxx</a></div><div class='price'><font color='#ff4e00'>￥<span class='sell_money'>123</span></font> X"+v['goods_num']+"</div></li>";
+
+                })
+                $("#cart").html(st)
+                countMoney();
+                $(".count").html(len)
+            }
+
+        }
+        else
+        {
+
+            //locastrage为空 只展示数据库
+            if(cart1==null)
+            {
+                dataSel(userid1)
+            }
+            else    //入库 并展示
+            {
+
+                cart1 = eval(cart1);
+                $.ajax({
+                    type:'get',
+                    url:"{{URL('cart/addData')}}",
+                    data:{
+                        data:cart1,
+                    },
+                    success:function(msg){
+                        
+                        if(msg=='ok')
+                        {
+                            dataSel(userid1)
+                            window.localStorage.removeItem('cart')
+                        }
+                        
+                    }
+                })
+            }
+        }
+        function countMoney()
+        {
+            var money = $(".sell_money")
+            var countmoney =null;
+            for(var i=0;i<money.length;i++)
+            {
+                countmoney += parseFloat(money[i].innerText);
+            }
+            $("#money").html(countmoney)
+        }
+
+        //登陆时数据展示
+        function dataSel(userid)
+        {
+            //查询数据库展示
+            $.ajax({
+                type:'get',
+                url:"{{URL('cart/nav')}}",
+                data:{
+                    user_id:userid,
+                },
+                success:function(msg){
+                    var str='';
+                    if(msg['status']=='ok')
+                    {
+
+                        $.each(msg['data'],function(k,v){
+                           str+="<li><div class='img'><a href='#'><img src='"+v['cover']+"' width='58' height='58' /></a></div><div class='name'><a href='#'>"+v['name']+"</a></div><div class='price'><font color='#ff4e00'>￥<span class='sell_money'>"+v['sell_price']+"</span></font> X"+v['num']+"</div></li>";
+                        })
+                        $(".count").html(msg['count'])
+                        $(".un_login").css({
+                            'display':'none'
+                        })
+                    }
+                    $("#cart").html(str);
+                    countMoney();
+                }
+            })
+        }
+        
+    })
+</script>
