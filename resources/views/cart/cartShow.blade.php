@@ -61,6 +61,11 @@
             <td align="center"><a onclick="ShowDiv('MyDiv','fade')">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>
           </tr> -->
           <tbody>
+        <tr height="70">
+            <td colspan="8" style="font-family:'Microsoft YaHei'; border-bottom:0;">
+                <span id='a'></span>
+            </td>
+          </tr>
           <tr height="70">
             <td colspan="8" style="font-family:'Microsoft YaHei'; border-bottom:0;">
                 <label class="r_rad"><input type="checkbox" name="clear" /></label><label class="r_txt">清空购物车</label>
@@ -95,7 +100,7 @@
                     <td>您确定要把该商品移除购物车吗？</td>
                   </tr>
                   <tr height="50" valign="bottom">
-                    <td><a href="#" class="b_sure">确定</a><a href="#" class="b_buy">取消</a></td>
+                    <td><a href="#" class="b_sure" id='dlt'>确定</a><a href="#" class="b_buy" onclick='CloseDiv("MyDiv","fade")'>取消</a></td>
                   </tr>
                 </table>
                     
@@ -118,7 +123,7 @@
                     <td><span class='gcart'>您确定要把所有商品移除购物车吗？</span></td>
                   </tr>
                   <tr height="50" valign="bottom">
-                    <td><a href="javascript:void(0)" id='sure' class="b_sure">确定</a><a href="#" class="b_buy">取消</a></td>
+                    <td><a href="javascript:void(0)" id='sure' class="b_sure">确定</a><a href="#" class="b_buy" onclick="CloseDiv('MyDiv1','fade')">取消</a></td>
                   </tr>
                 </table>
                     
@@ -144,7 +149,7 @@
         </div>
     </div>
     <!--Begin 登录 Begin-->
-    <!-- <div id="MyDiv2" class="white_content">             
+    <div id="MyDiv2" class="white_content">             
         <div class="white_d">
             <div class="notice_t">
                 <span class="fr" style="margin-top:10px; cursor:pointer;" onclick="CloseDiv('MyDiv2','fade')"><img src="{{asset('images')}}/close.gif" /></span>
@@ -168,7 +173,7 @@
                     
             </div>
         </div>
-    </div> -->
+    </div>
 @endsection
 <script src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
 <script>
@@ -176,6 +181,8 @@ $(function(){
     //window.localStorage.clear();
     //var cart = window.localStorage.setItem('cart');
     var cart = window.localStorage.getItem('cart');
+    // console.log(cart)
+    // return false;
     //获取用户id
     var userid =$("input[name='user']").val();
     //用户没登录下
@@ -184,18 +191,21 @@ $(function(){
         //如果localstrage为空
         if(cart==null)
         {
-            return '';
+            $("#a").html('<center>什么也没有</center>');
+            $("#count_money").html(0)
         }
         else
         {
             //将获取的内容进行展示
             var re = '';
-            $.each(eval(cart),function(k,v){
-                re+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.product_id+"' /><input type='hidden' name='num' value='2'></td><td><div class='c_s_img'><img src='{{asset('images')}}/c_1.jpg' width='73' height='73' /></div>哈哈哈哈哈</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.goodsnum+"' name='stock' class='car_ipt' /><input type='hidden' value='88' class='hide_money'/><input type='hidden' value='"+v.goodsid+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>88</span></td><td align='center'><a onclick='ShowDiv('MyDiv','fade')'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
-
+            var dat=eval(cart);
+            $.each(dat,function(k,v){
+                re+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.product_id+"' /><input type='hidden' name='num' value='2'></td><td><div class='c_s_img'><img src='{{asset('images')}}/c_1.jpg' width='73' height='73' /></div>哈哈哈哈哈</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.goods_num+"' name='stock' class='car_ipt' /><input type='hidden' value='88' class='hide_money'/><input type='hidden' value='"+v.product_id+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>88</span></td><td align='center'><a class='delete'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
             })
             $("#content").html(re)
             common_price();
+            //console.log(dat)
+            //return false;
             //用户没登陆 下的加减
             $(document).on('click',"input[name='jia']",function(){       
                 var c = $(this).parent().find(".car_ipt").val();
@@ -209,22 +219,23 @@ $(function(){
                 c=parseInt(c)+1;
                 var goodsid = $(this).prev().val();
                 var goodsnum = c;
-                var data = eval(cart);
-                //var st = '';
-                $.each(data,function(k,v){
-                    if(goodsid==v.goodsid)
+                //var result = eval(cart);
+                
+                var st = '[';
+                $.each(dat,function(k,v){
+                    if(goodsid==v.product_id)
                     {
-                        v.goodsnum = parseInt(v.goodsnum)+1;
-                        //st = 1;
+                        st+= "{'product_id':"+v.product_id+",'goods_num':"+c+"},";
+                        //v.goods_num = c;
+                    }
+                    else
+                    {
+                        st+= "{'product_id':"+v.product_id+",'goods_num':"+v.goods_num+"},";
                     }
                 })
-                // if(st!=1)
-                // {
-                //     data[data.length]={'goodsid':goodsid,'goodsnum':goodsnum};
-                // }
-                window.localStorage.setItem('cart',data);
+                st +=']';
+                window.localStorage.setItem('cart',st);
                 var money = $(this).parent().find(".hide_money").val();
-                
                 var count_money = $(this).parents('div').find('#count_money').html();
                 count_money = parseFloat(count_money)+parseFloat(money);
                 money = money*c;
@@ -245,21 +256,22 @@ $(function(){
                 }
                 var goodsid = $(this).prev().val();
                 var goodsnum = c;
-                var data = eval(cart);
-                //var st = '';
-                $.each(data,function(k,v){
-                    if(goodsid==v.goodsid)
+                //var da = eval(cart);
+                var st = '[';
+                $.each(dat,function(k,v){
+                    if(goodsid==v.product_id)
                     {
-                        v.goodsnum = parseInt(v.goodsnum)-1;
-                        //st = 1;
+                        st+= "{'product_id':"+v.product_id+",'goods_num':"+goodsnum+"},";
+                        //v.goods_num = c;
+                    }
+                    else
+                    {
+                        st+= "{'product_id':"+v.product_id+",'goods_num':"+v.goods_num+"},";
                     }
                 })
-
-                // if(st!=1)
-                // {
-                //     data[data.length]={'goodsid':goodsid,'goodsnum':goodsnum};
-                // }
-                window.localStorage.setItem('cart',data);
+                st +=']';
+                window.localStorage.setItem('cart',st);
+               // window.localStorage.setItem('cart',dat);
                 var money = $(this).parent().find(".hide_money").val();
                 var count_money = $(this).parents('div').find('#count_money').html();
                 count_money = parseFloat(count_money)-parseFloat(money);
@@ -267,13 +279,35 @@ $(function(){
                 $(this).parents('div').find('#count_money').html(count_money+'.00');
                 $(this).parents('tr').find('.money').html(money+'.00');
             })
-
         }
 
     }
     else //用户登录下
     {
         //发送ajax查询数据库
+        if(cart==null)
+        {
+            Dbcart(userid,'get',"{{URL('cart/dataSel')}}")
+        }
+        else
+        {
+            $.ajax({
+                type:'get',
+                url:"{{URL('cart/addData')}}",
+                data:{
+                    data:cart,
+                },
+                success:function(msg){
+                    
+                    if(msg=='ok')
+                    {
+                        window.localStorage.removeItem('cart')
+                    }
+                    Dbcart(userid,'get',"{{URL('cart/dataSel')}}")
+                    
+                }
+            })
+        }
         Dbcart(userid,'get',"{{URL('cart/dataSel')}}");
         $(document).on('click',"input[name='jia']",function(){       
             var c = $(this).parent().find(".car_ipt").val();
@@ -332,7 +366,6 @@ $(function(){
 
     //全选反选
     $("input[name='checkbox']").click(function(){
-        console.log($(this).attr('checked'))
         if($(this).attr('checked')=='checked'){
             $(".checkbox").attr('checked','true')
         }else{
@@ -350,6 +383,51 @@ $(function(){
 
     })
 
+    //单删
+    $(document).on('click','.delete',function(){
+        ShowDiv('MyDiv','fade');   
+    })
+    $("#dlt").click(function(){
+        CloseDiv('MyDiv','fade'); 
+        var cart_id = 9;
+        if(userid=='')
+        {
+            //清除locastrage中对应的数据
+            var result = eval(cart);
+            var st = '[';
+            $.each(result,function(k,v){
+                if(cart_id==v.product_id)
+                {
+                   
+                }
+                else
+                {
+                    st+= "{'product_id':"+v.product_id+",'goods_num':"+v.goods_num+"},";
+                }
+            })
+            st +=']';
+            window.localStorage.setItem('cart',st);
+        }
+        else
+        {
+            //清除数据库对应的数据
+            $.ajax({
+                type:'get',
+                url:"{{URL('cart/onlyDel')}}",
+                data:{
+                    cart_id:cart_id,
+                    //_token:"{{csrf_token()}}",
+                },
+                success:function(msg)
+                {
+                    if(msg=='ok')
+                    {
+
+                    }
+                }
+            })   
+        }
+    })
     $("#sure").click(function(){
         CloseDiv('MyDiv1','fade')
         //未登录 清空cookie
@@ -362,13 +440,12 @@ $(function(){
             //调用ajax
             Dbcart(userid,'get',"cart");
             ShowDiv('MyDiv3','fade');
-            //.show ().delay (3000).fadeOut()
         }
     })
 
 
     //库存判断
-    $(document).on('blur','input[name="stock"]',function(){
+    $(document).on('keyup','input[name="stock"]',function(){
         var val = $(this).val();
         try
         {
@@ -429,34 +506,41 @@ $(function(){
 
     //结算
     $(".settle").click(function(){
-        //获取cookie
-        if(cart!=null)
+        if(userid=='')
         {
             ShowDiv('MyDiv2','fade')
+            return false;
         }
-        else
-        {
-            //data[data.length]={'goodsid':goodsid,'goodsnum':goodsnum};
 
+        //data[data.length]={'goodsid':goodsid,'goodsnum':goodsnum};
+        
+        if(($("input:checkbox[name='fruit']:checked").length)>0)
+        {
             var fruit='[';
             //遍历
             $("input:checkbox[name='fruit']:checked").each(function() {
                 //判断cookie中是否有该商品
-                fruit+= "{'goods_id':"+$(this).val()+",'goods_num':"+$(this).parents('tr').find('input[name="stock"]').val()+"},";
+                fruit+= "{'product_id':"+$(this).val()+",'goods_num':"+$(this).parents('tr').find('input[name="stock"]').val()+"},";
             });
             fruit+=']';
+            window.localStorage.setItem('cart',"[{'product_id':9,'goods_num':1},{'product_id':10,'goods_num':2}]")
             fruit = eval(fruit);
         }
-        $.ajax({
-            type:'get',
-            url:"{{URL('cart/createOrder')}}",
-            data:{
-                data:fruit,
-            },
-            success:function(msg){
-                console.log(msg)
-            }
-        })
+        else
+        {
+            alert('请选择要购买的商品')
+        }
+        
+        // $.ajax({
+        //     type:'get',
+        //     url:"{{URL('cart/createOrder')}}",
+        //     data:{
+        //         data:fruit,
+        //     },
+        //     success:function(msg){
+        //         console.log(msg)
+        //     }
+        // })
         
         //window.localStorage.setItem('cart',fruit);//存储数据
         //alert(window.localStorage.getItem('xqy1'));//读取数据
@@ -496,14 +580,22 @@ $(function(){
                 //Database select
                 if(url=="{{URL('cart/dataSel')}}")
                 {
-
-                    var result=eval(msg);
-                    var str = '';
-                    $.each(result,function(k,v){
-                        str+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.product_id+"' /></td><td><div class='c_s_img'><img src='{{asset('images')}}/c_1.jpg' width='73' height='73' /></div>"+v.name+"</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.num+"' name='stock' class='car_ipt' /><input type='hidden' value='"+v.sell_price+"' class='hide_money'/><input type='hidden' value='"+v.goods_id+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>"+v.sell_price*v.num+"</span></td><td align='center'><a onclick='ShowDiv('MyDiv','fade')'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
-                    });
-                    $("#content").html(str)
-                    common_price();
+                    if(msg=='')
+                    {
+                        $("#a").html('<center>什么也没有</center>');
+                        $("#count_money").html(0)
+                    }
+                    else
+                    {
+                        var result=eval(msg);
+                        var str = '';
+                        $.each(result,function(k,v){
+                            str+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.product_id+"' /></td><td><div class='c_s_img'><img src='{{asset('images')}}/c_1.jpg' width='73' height='73' /></div>"+v.name+"</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.num+"' name='stock' class='car_ipt' /><input type='hidden' value='"+v.sell_price+"' class='hide_money'/><input type='hidden' value='"+v.goods_id+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>"+v.sell_price*v.num+"</span></td><td align='center'><a class='delete'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
+                        });
+                        $("#content").html(str)
+                        common_price();
+                    }
+                    
                 }
                 
             }
