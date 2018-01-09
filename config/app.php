@@ -237,6 +237,7 @@ return [
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
 
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+
     ],
 
 ];

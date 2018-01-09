@@ -10,4 +10,5 @@ class Order extends Model
         $order=Order::where('user_id','=',$user_id)->get();
         return $order;
     }
+
 }
