@@ -122,17 +122,18 @@
         </span>
         <!--End 所在收货地区 End-->
         <span class="fr">
-                @if($user == null)
-                    <span class="fl">你好，请<a href="{{URL('login')}}">登录</a>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
-                @elseif($user->isLogin == true)
-                    <span class="fl">欢迎<span style="color:red">{{ $user->username }}</span><span id="login">登录</span>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
-                    <script type="text/javascript" src="{{ asset('js') }}/app.js"></script>
-                    <script>
-                        $(function(){
-                            $("#login").after('&nbsp;<a href="{{ URL('/logout') }}" style="color:#ff4e00;">退出</a>')
-                        })
-                    </script>
-                @endif
+            @if(!Auth::user())
+                <span class="fl">你好，请<a href="{{URL('login')}}">登录</a>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
+            @else
+                <span class="fl">欢迎<span style="color:red">{{ Auth::user()->username}}</span><span id="login">登录</span>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
+                <script src="{{ asset('js') }}/app.js"></script>
+                <script>
+                    $(function(){
+                        $("#login").after('&nbsp;<a href="{{ URL('/logout') }}" style="color:#ff4e00;">退出</a>')
+                    })
+                </script>
+            @endif
+
                 <span class="ss">
                 <div class="ss_list">
                     <a href="#">收藏夹</a>
@@ -222,6 +223,7 @@
         <div class="nav">
             <div class="nav_t">全部商品分类</div>
             <div class="leftNav">
+                <ul>      
                 <ul>
                 <?php foreach($category as $key => $value){ ?>
 <!--  -->           <li>
@@ -247,20 +249,21 @@
                         </div>
                     </li>
                     <?php } ?>
+                </ul>            
+            </div>
+        </div>  
+        <!--End 商品分类详情 End-->                                                     
+        <ul class="menu_r">                                                                                         <li><a href="#">首页</a></li>
+            @foreach($visibility as $value)                                                   
+            <li><a href="Food.html">{{$value['title']}}</a></li>
+            @endforeach
+            <li><a href="{{url('groupbuy/buy')}}">团购</a></li>
+            <li><a href="{{url('seckill/seckill')}}">秒杀</a></li>                                          
                 </ul>
             </div>
         </div>
         <!--End 商品分类详情 End-->
-        <ul class="menu_r">
-            <li><a href="Index.html">首页</a></li>
-            <li><a href="Food.html">美食</a></li>
-            <li><a href="Fresh.html">生鲜</a></li>
-            <li><a href="HomeDecoration.html">家居</a></li>
-            <li><a href="SuitDress.html">女装</a></li>
-            <li><a href="MakeUp.html">美妆</a></li>
-            <li><a href="Digital.html">数码</a></li>
-            <li><a href="GroupBuying.html">团购</a></li>
-        </ul>
+    
         <div class="m_ad">中秋送好礼！</div>
     </div>
 </div>

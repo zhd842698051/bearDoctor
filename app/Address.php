@@ -24,5 +24,4 @@ class Address extends Model
           $is_default=Address::where('user_id','=',$user_id)->get();
           return $is_default;
     }
-
 }

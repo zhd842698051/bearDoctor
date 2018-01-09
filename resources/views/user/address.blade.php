@@ -14,7 +14,7 @@
                         <td width="80" align="right"><center><b>电话号码</b></center></td>
                         <td width="80" align="right"><center><b>操作</b></center></td>
                     </tr>
-										@foreach($userAddress as $k=>$v)
+                @foreach($userAddress as $k=>$v)
                     <tr>
 
                         <td><center>{{ $v->name }}</center></td>
@@ -23,18 +23,19 @@
                         <td><center>{{ $v->postcode }}</center></td>
                         <td><center>{{ $v->phone }}</center></td>
                         <td>
-													<input type="hidden" name="addressId" value="{{ $v->id }}">
+                            <input type="hidden" name="addressId" value="{{ $v->id }}">
 
-														@if($v->is_default == 1)
-															<center><a href="{{ URL('user/address/find') }}?addressId={{ $v->id }}">编辑</a> | <a href="javascript:;" class="addressDel">删除</a></center>
-																<span style="margin-left:40px; color:red">默认地址</span>
-														@else
-														<center><a href="{{ URL('user/address/find') }}?addressId={{ $v->id }}">编辑</a> | <a href="javascript:;" class="addressDel">删除</a></center>
-														@endif
+                            @if($v->is_default == 1)
+                                <center><a href="{{ URL('user/address/find') }}?addressId={{ $v->id }}">编辑</a> | <a href="javascript:;" class="addressDel">删除</a></center>
+                                <span style="margin-left:40px; color:red">默认地址</span>
+                            @else
+                                <center><a href="{{ URL('user/address/find') }}?addressId={{ $v->id }}">编辑</a> | <a href="javascript:;" class="addressDel">删除</a></center>
+                            @endif
                         </td>
                     </tr>
-										@endforeach
+                    @endforeach
                 </table>
+
 
       </div>
 
@@ -66,21 +67,21 @@
         <tr>
           <td align="right">收货人姓名</td>
           <td style="font-family:'宋体';"><input type="text" value="" name="name" class="add_ipt" />（必填）</td>
+
             <td align="right">手机</td>
             <td style="font-family:'宋体';"><input type="text" value="" name="phone" class="add_ipt" />（必填）</td>
+            <td align="right">邮政编码</td>
+            <td style="font-family:'宋体';"><input type="text" value="" name="postcode" class="add_ipt" /></td>
+
         </tr>
         <tr>
           <td align="right">详细地址</td>
           <td style="font-family:'宋体';"><input type="text" value="" name="amply" class="add_ipt" />（必填）</td>
-          <td align="right">邮政编码</td>
-          <td style="font-family:'宋体';"><input type="text" value="" name="postcode" class="add_ipt" /></td>
-        </tr>
-        <tr>
+
             <td align="right">标志建筑</td>
             <td style="font-family:'宋体';"><input type="text" value="" name="bulid" class="add_ipt" /></td>
-            <td align="right"></td>
-            <td style="font-family:'宋体';"></td>
         </tr>
+
         <tr>
 
         </tr>
@@ -143,12 +144,12 @@
             },"json")
         })
 
+
 				//删除收货地址
 				$(".addressDel").click(function(){
 					var con=confirm("您确定要删除吗?")
 					if(con==true){
 							var addressId = $(this).parents("center").prev().val();
-							alert(addressId);
 							$.get("{{ URL('/user/address/del') }}",{
 									'addressId':addressId,
 							},function(data){

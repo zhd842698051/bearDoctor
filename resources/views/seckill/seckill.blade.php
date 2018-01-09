@@ -7,7 +7,7 @@
             <div class="top_slide_wrap">
                 <ul class="slide_box bxslider">
                     <li><a href="#" style="background:url({{asset('images')}}/n_ban.jpg) no-repeat center top;">banner1</a></li>
-                    <li><a href="#" style="background:url({{asset('images')}}/n_ban.jpg) no-repeat center top;">banner2</a></li>
+                    <li><a href="#" style="background:url({{asse ('images')}}/n_ban.jpg) no-repeat center top;">banner2</a></li>
                     <li><a href="#" style="background:url({{asset('images')}}/n_ban.jpg) no-repeat center top;">banner3</a></li>
                 </ul>
                 <div class="op_btns clearfix">
@@ -32,7 +32,7 @@
             <!--Begin 特卖 Begin-->
             <div class="s_left">
                 <div class="brand_t">品牌特卖</div>
-                 <ul class="sell_brand">
+                <ul class="sell_brand">
                     <li>
                         <div class="con">
                             <div class="simg"><img src="{{asset('images')}}/sb1.jpg" width="220" height="100" /></div>
@@ -69,16 +69,14 @@
                 </ul>
 
                 <div class="brand_t" >商品特卖</div> 
-                <div id="nowTime">当前时间:</div>
-            
-                <ul class="p_sell"  #nav_now>
+                <!-- <div id="nowTime">当前时间:</div> -->
+                <ul class="p_sell">
                    <?php foreach($data as $k=>$v) {?>
                    
-                        <input type="hidden" id="timed" value="<?php echo $v['created_at']?>">
-                        
+                        <!-- <input type="hidden" id="timed" value="<?php echo $v['created_at']?>"> -->
                     <li>
-                        <div class="img"><img src="public/upload/<?php echo $v['cover']; ?>" width="150px" height="100px"/></div>
-                        <div class="name"><?php echo $v['goods']; ?></div>
+                        <div class="img"><img src="config('app.image')+xDTRT0fEm5dtskBbAP9bTLUkGcNA2niNBNgWDHFR.jpeg" width="150px" height="100px"/></div>
+                        <div class="name"><?php echo $v['name']?></div>
                         <div class="price">
                             <table border="0" style="width:100%; color:#888888;" cellspacing="0" cellpadding="0">
                                 <tr style="font-family:'宋体';">
@@ -93,15 +91,16 @@
                                 </tr>
                             </table>
                         </div>
-                      
+
                         <div class="ch_bg" id="gold_div">
-                            <span class="ch_txt" id="ch_txt">￥<font><?php echo $v['seckill_price']?></font></span>
-                            <input type="hidden" id="time_color" value="<?php echo $v['seckill_price']?>">
+                           <span class="ch_txt" id="ch_txt">￥<font><?php echo $v['seckill_price']?></font></span>
+                            <!-- <input type="hidden" id="time_color" value="<?php echo $v['seckill_price']?>"> -->
 
                             <a href="#" class="ch_a" id="gold_btn" onclick="seckill();">立即抢购</a>
 
                         </div>
-                      
+
+
                          <div class="times" id="showStartTime_<?php echo $v['id']?>"></div>
                          <input type="hidden" id="showtimekill_<?php echo $v['id']?>" value="3600">
 
@@ -116,10 +115,9 @@
                 </ul>
             </div>
             <!--End 特卖 End-->
-
         <script type="text/javascript" src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
             <!-- 比较开场时间与结束时间 -->
-            <script type="text/javascript">
+           <!--  <script type="text/javascript">
                 // 数据库时间
                 $timed=$("#timed").attr("value");
                 
@@ -129,7 +127,7 @@
                 $nowTime=$("#nowTime").attr("value");
                 // alert($nowTime);
 
-            </script>
+            </script> -->
             <!-- 字体颜色变色 -->
             <script type="text/javascript">
                $time_color=$("#time_color").attr("value");
@@ -154,8 +152,9 @@
 
                 }
         </script>
+
       <!-- 当前时间 -->
-       <script type="text/javascript">
+      <!--  <script type="text/javascript">
           function current(){
            
           var d=new Date(),str='';
@@ -175,7 +174,7 @@
              
             },1000); 
         </script>
-      
+      -->
 
     <script type="text/javascript">
         //       $(function(){

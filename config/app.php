@@ -13,7 +13,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'image' => 'http://p22vshs5l.bkt.clouddn.com',
+    'image' => 'http://p22vshs5l.bkt.clouddn.com/',
 
     /*
     |--------------------------------------------------------------------------
@@ -163,6 +163,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+       // Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
+
 
         /*
          * Package Service Providers...
@@ -182,7 +184,9 @@ return [
 
         Mews\Captcha\CaptchaServiceProvider::class,
 
-        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class
+        zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
+
+        SocialiteProviders\Manager\ServiceProvider::class,
 
     ],
 
@@ -234,6 +238,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
 
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        //'Omnipay' => Ignited\LaravelOmnipay\Facades\OmnipayFacade::class,
     ],
 
 ];

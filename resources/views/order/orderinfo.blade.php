@@ -1,6 +1,6 @@
 @extends('layout.index_head')
 @section('content')
-
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <style>
   .jia{
     border:0;
@@ -54,7 +54,7 @@
     <div class="content mar_20">
         <div class="two_bg">
             <div class="two_t">
-                <span class="fr"><a href="#" id="sp_update">修改</a></span>商品列表
+                <span class="fr"><a href="#" id="sp_update"></a></span>商品列表
             </div>
             <table border="0" class="car_tab" style="width:1110px;" cellspacing="0" cellpadding="0">
               <tr>
@@ -65,7 +65,7 @@
               </tr>
               <?php foreach($goods_list as $v){?>
 
-              <tr cart_id="<?=$v['id']?>">
+              <tr cart_id="<?=$v['id']?>" class="cart">
                 <td>
                     <div class="c_s_img"><img src="<?=config('app.image').'/'. $v['cover']?>" width="73" height="73" /></div>
                     <span style="margin-left:160px"><?=$v['goods']?></span>
@@ -225,58 +225,7 @@
                 $('.btn_close').click(function() {
                  $('#mask,.popup').css('display', 'none');
                 })
-              //   //展示所有地址
-              //   $("#add_update").toggle(function(){
-              //     $.get("{{url('getaddress')}}", {
-              //       "user_id": user_id,
-              //     },function (msg) {
-              //   if(msg.error==0){
-              //   var man='<select class="user">';
-              //   var address_='<select class="addr">';
-              //   var amply='<select class="ampll">';
-              //   var postcode='<select class="posts">';
-              //   var bulid='<select class="build">';
-              //   var phone='<select class="tel">';
-              //   //console.log(msg.content);return false;
-              //   $.each(msg.content,function (k,v) {
-              //       man+='<option value='+v.name+' m_id='+v.id+'>'+v.name+'</option>';
-              //       address_+='<option value='+v.address+'>'+v.address+'</option>';
-              //       amply+='<option value='+v.amply+'>'+v.amply+'</option>';
-              //       postcode+='<option value='+v.postcode+'>'+v.postcode+'</option>';
-              //       bulid+='<option value='+v.bulid+'>'+v.bulid+'</option>';
-              //       phone+='<option value='+v.phone+'>'+v.phone+'</option>';
-              //       })
-              //       man+='</select>';
-              //       address_+='</select>';
-              //       amply+='</select>';
-              //       postcode+='</select>';
-              //       bulid+='</select>';
-              //       phone+='</select>';
-              //       $(".man").html(man)
-              //       $(".address_").html(address_)
-              //       $(".amply").html(amply)
-              //       $(".postcode").html(postcode)
-              //       $(".bulid").html(bulid)
-              //       $(".phone").html(phone)
-              //   }
-              // },"json")
-              // },function(){
-              //   var man=$(".user").val();
             
-              //   var addr=$(".addr").val();
-              //   var ampll=$(".ampll").val();
-              //   var posts=$(".posts").val();
-              //   var build=$(".build").val();
-              //   var tel=$(".tel").val();
-               
-              //   $(".man").html(man);
-              //   $(".address_").html(addr);
-              //   $(".amply").html(ampll);
-              //   $(".postcode").html(posts);
-              //   $(".bulid").html(build);
-              //   $(".phone").html(tel)
-              // } )
-
              //地址修改
              $(document).on("click","input[name='addr']",function (){
                var user=$(this).val();
@@ -287,7 +236,7 @@
                 var str='';
                
                 $.each(msg.content,function (k,v) {
-                   str+='<tr><td width="160" class="p_td">收货人</td><td width="395"><span class="man">'+v.name+'</span></td><td width="160" class="p_td">收货地址</td><td width="395"><span class="address_">'+v.address+'</span></td></tr><tr><td class="p_td">详细地址</td><td><span class="amply">'+v.amply+'</span></td><td class="p_td">邮政编码</td><td><span class="postcode">'+v.postcode+'</span></td></tr><tr><td class="p_td">标志建筑</td><td><span class="bulid">'+v.bulid+'</span></td><td class="p_td">联系电话</td><td><span class="phone">'+v.phone+'</span></td></tr>';
+                   str+='<tr a_id="'+v.id+'"><td width="160" class="p_td">收货人</td><td width="395"><span class="man">'+v.name+'</span></td><td width="160" class="p_td">收货地址</td><td width="395"><span class="address_">'+v.address+'</span></td></tr><tr><td class="p_td">详细地址</td><td><span class="amply">'+v.amply+'</span></td><td class="p_td">邮政编码</td><td><span class="postcode">'+v.postcode+'</span></td></tr><tr><td class="p_td">标志建筑</td><td><span class="bulid">'+v.bulid+'</span></td><td class="p_td">联系电话</td><td><span class="phone">'+v.phone+'</span></td></tr>';
                     })
                  $(".peo_tab tbody").html(str);
                 }else{
@@ -297,12 +246,35 @@
               },"json")
             });
 
+            $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+            });
+
             //确认订单
             $("#sub").click(function(){
-              var user_id=<?=Auth::id()?>;
-              var money=$(".znum").html();
-              var real_money=$(".z_num").html();
-              alert(real_money)
+              if($(".jslct").val()==0){
+                var is_prop=0;
+              }else{
+                var is_prop=1;
+              }
+             var address_id=$(".peo_tab tr").attr("a_id");
+             var prop_id=$(".jslct").val().split('|')[2];
+             var postscript=$("#postscript").val();
+             if(prop_id==undefined){
+              prop_id=0;
+             }
+             $.post("{{url('addorder')}}",{
+              "address_id":address_id,
+              "is_prop":is_prop,
+              "prop_id":prop_id,
+              "postscript":postscript
+             },function(msg){
+              if(msg.error==0){
+               location.href="{{url('confirmorder')}}";
+              }
+             },"json")
             })
                                  
             })
@@ -323,7 +295,7 @@
                 <span class="fr"><a href="#"  class="btn_show">修改</a></span>收货人信息
             </div>
             <table border="0" class="peo_tab" style="width:1110px;" cellspacing="0" cellpadding="0">
-              <tr>
+              <tr a_id="<?=$man['id']?>">
                 <td class="p_td" width="160">收货人</td>
                 <td width="395"><span class="man"><?=$man['name']?></span></td>
                 <td class="p_td" width="160">收货地址</td>
@@ -356,7 +328,7 @@
                       <option value="0">请选择</option>
                      <?php foreach ($user_prop as $key => $v) {?>
                    
-                       <option value="<?=$v['price']?>|<?=$v['full']?>"><?=$v['price']?>(<span class="pull"><?=$v['prop_name']?></span>)</option>
+                       <option value="<?=$v['price']?>|<?=$v['full']?>|<?=$v['id']?>"><?=$v['price']?>(<span class="pull"><?=$v['prop_name']?></span>)</option>
 
                      <?php }?>
                     
@@ -368,7 +340,7 @@
               </tr>
               <tr valign="top">
                 <td align="right" style="padding-right:0;"><b style="font-size:14px;">订单附言：</b></td>
-                <td style="padding-left:0;"><textarea class="add_txt" style="width:860px; height:50px;" name="postscript"></textarea></td>
+                <td style="padding-left:0;"><textarea class="add_txt" style="width:860px; height:50px;" id="postscript"></textarea></td>
               </tr>
               <tr>
                 <td align="right" style="padding-right:0;"><b style="font-size:14px;">缺货处理：</b></td>
