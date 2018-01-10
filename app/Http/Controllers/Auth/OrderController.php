@@ -23,13 +23,14 @@ class OrderController extends Controller
 	use DatabaseTransactions;
 	public function orderInfo()
 	{
+		$user_id=\Auth::id();
 		$goods_list=$this->cart();
 		//收货人信息
-		$man=Address::where([['user_id', '=', '1'],['is_default', '=', '1']])->get()->toArray();
+		$man=Address::where([['user_id', '=', $user_id],['is_default', '=', '1']])->get()->toArray();
 		$man=$man[0];
 
 		//红包优惠券
-		$user_prop=User_prop::where(['user_id'=>1])->get()->toArray();
+		$user_prop=User_prop::where([['user_id', '=', $user_id],['status', '=', '0']])->get()->toArray();
 		//红包优惠券
 		foreach ($user_prop as $key => $value) {
 		   $prop=Prop::where([['id', '=', $user_prop[$key]['prop_id']],['num', '>', '0']])->first()->toArray();
@@ -86,10 +87,13 @@ class OrderController extends Controller
 			$u_id=sprintf("%04d",$user_id);
 			$order_no=substr(time(),-8).mt_rand(1000,9999).$u_id;
 			$cart=$this->cart();
+			dd($cart);
 			$address_id=request('address_id');
 			$postscript=request('postscript');
+			if($postscript==""){
+              $postscript='';
+             }
 			$money=0;
-			$prod_id=0;
 		foreach ($cart as $key => $value) {
 			 $money+=$value['price'];
 			 $num=$cart[$key]['num'];
@@ -98,8 +102,8 @@ class OrderController extends Controller
 			 $product_id=$cart[$key]['product_id'];
 			 //减库存
 			// Product::where(['id'=>$product_id])->decrement('num', $num);
-			 $order['product_id']=$product_id;
-			 $order['goods_num']=$num;
+			 $order['product_id']=$cart[$key]['product_id'];
+			 $order['goods_num']=$cart[$key]['num'];
 			 $order['goods_price']=$cart[$key]['price'];
 		}
 		$prop_id=request('prop_id');
