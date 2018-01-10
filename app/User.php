@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password','phone',
+        'username', 'email', 'password','phone','qq_auth',
     ];
 
     /**
@@ -27,4 +27,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function findQq($openId){
+        $userQQ=self::where('qq_auth','=',$openId)->get();
+        return $userQQ;
+    }
 }

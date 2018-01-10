@@ -207,8 +207,8 @@
                 <ul>
                     <li><a href="{{URL('order')}}">我的订单</a></li>
                     <li><a href="{{URL('user/address')}}">收货地址</a></li>
-                    <li><a href="#">缺货登记</a></li>
-                    <li><a href="#">跟踪订单</a></li>
+                    <li><a href="{{URL('order/tailOrder')}}">物流-跟踪订单</a></li>
+                    <li><a href="{{URL('order/alreadyBuy')}}">已购买的宝贝</a></li>
                 </ul>
             </div>
             <div class="left_m">
