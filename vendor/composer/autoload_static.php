@@ -98,6 +98,7 @@ class ComposerStaticInit8a89261464aa2b59222f9cdb2c2ca65c
         array (
             'League\\OAuth1\\' => 14,
             'League\\Flysystem\\' => 17,
+            'Latrell\\Alipay\\' => 15,
             'Laravel\\Tinker\\' => 15,
             'Laravel\\Socialite\\' => 18,
         ),
@@ -289,6 +290,10 @@ class ComposerStaticInit8a89261464aa2b59222f9cdb2c2ca65c
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
         ),
+        'Latrell\\Alipay\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/latrell/alipay/src/Latrell/Alipay',
+        ),
         'Laravel\\Tinker\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/tinker/src',
@@ -396,6 +401,10 @@ class ComposerStaticInit8a89261464aa2b59222f9cdb2c2ca65c
         'App\\Admin\\Controllers\\ExampleController' => __DIR__ . '/../..' . '/app/Admin/Controllers/ExampleController.php',
         'App\\Admin\\Controllers\\GoodsController' => __DIR__ . '/../..' . '/app/Admin/Controllers/GoodsController.php',
         'App\\Admin\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Admin/Controllers/HomeController.php',
+        'App\\Admin\\Controllers\\OrderController' => __DIR__ . '/../..' . '/app/Admin/Controllers/OrderController.php',
+        'App\\Admin\\Controllers\\PropController' => __DIR__ . '/../..' . '/app/Admin/Controllers/PropController.php',
+        'App\\Admin\\Controllers\\SeckillController' => __DIR__ . '/../..' . '/app/Admin/Controllers/SeckillController.php',
+        'App\\Admin\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Admin/Controllers/UserController.php',
         'App\\Attr' => __DIR__ . '/../..' . '/app/Attr.php',
         'App\\Attribute' => __DIR__ . '/../..' . '/app/Attribute.php',
         'App\\Brand' => __DIR__ . '/../..' . '/app/Brand.php',
@@ -424,6 +433,7 @@ class ComposerStaticInit8a89261464aa2b59222f9cdb2c2ca65c
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Model' => __DIR__ . '/../..' . '/app/Model.php',
         'App\\Order' => __DIR__ . '/../..' . '/app/Order.php',
+        'App\\Order_goods' => __DIR__ . '/../..' . '/app/Order_goods.php',
         'App\\Product' => __DIR__ . '/../..' . '/app/Product.php',
         'App\\Prop' => __DIR__ . '/../..' . '/app/Prop.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -2103,6 +2113,12 @@ class ComposerStaticInit8a89261464aa2b59222f9cdb2c2ca65c
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
         'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',
         'Laravel\\Tinker\\TinkerServiceProvider' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerServiceProvider.php',
+        'Latrell\\Alipay\\AlipayServiceProvider' => __DIR__ . '/..' . '/latrell/alipay/src/Latrell/Alipay/AlipayServiceProvider.php',
+        'Latrell\\Alipay\\Facades\\AlipayMobile' => __DIR__ . '/..' . '/latrell/alipay/src/Latrell/Alipay/Facades/AlipayMobile.php',
+        'Latrell\\Alipay\\Facades\\AlipayWeb' => __DIR__ . '/..' . '/latrell/alipay/src/Latrell/Alipay/Facades/AlipayWeb.php',
+        'Latrell\\Alipay\\Mobile\\SdkPayment' => __DIR__ . '/..' . '/latrell/alipay/src/Latrell/Alipay/Mobile/SdkPayment.php',
+        'Latrell\\Alipay\\Wap\\SdkPayment' => __DIR__ . '/..' . '/latrell/alipay/src/Latrell/Alipay/Wap/SdkPayment.php',
+        'Latrell\\Alipay\\Web\\SdkPayment' => __DIR__ . '/..' . '/latrell/alipay/src/Latrell/Alipay/Web/SdkPayment.php',
         'League\\Flysystem\\AdapterInterface' => __DIR__ . '/..' . '/league/flysystem/src/AdapterInterface.php',
         'League\\Flysystem\\Adapter\\AbstractAdapter' => __DIR__ . '/..' . '/league/flysystem/src/Adapter/AbstractAdapter.php',
         'League\\Flysystem\\Adapter\\AbstractFtpAdapter' => __DIR__ . '/..' . '/league/flysystem/src/Adapter/AbstractFtpAdapter.php',
