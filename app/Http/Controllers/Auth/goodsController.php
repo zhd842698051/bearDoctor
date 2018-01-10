@@ -17,8 +17,9 @@ class GoodsController extends Controller
         if ($Goods['is_attr'] == 1) {
             if (empty($attr_id)) {
                 $checked = $this->getChecked($goods_id);
+            } else {
+                $checked = explode(',', $attr_id);
             }
-            $checked = explode(',', $attr_id);
             $Attr = $this->getGoodsAttr($goods_id);
         }
         if (!empty($attr_id)) {
