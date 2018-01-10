@@ -18,7 +18,7 @@ class EventServiceProvider extends ServiceProvider
         ],
 
          'SocialiteProviders\Manager\SocialiteWasCalled' => [
-                'SocialiteProviders\Qq\QqExtendSocialite@handle',
+                'SocialiteProviders\QQ\QqExtendSocialite@handle',
          ],
     ];
 

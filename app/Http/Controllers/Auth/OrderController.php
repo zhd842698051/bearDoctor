@@ -48,7 +48,6 @@ class OrderController extends Controller
 		//红包优惠券
 		$user_prop=User_prop::where(['user_id'=>1])->get()->toArray();
 
-
 		$man=$man[0];
 		//红包优惠券
 		foreach ($user_prop as $key => $value) {
