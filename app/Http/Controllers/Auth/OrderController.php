@@ -182,11 +182,16 @@ class OrderController extends Controller
 	//订单列表
 	public function list()
 	{
-//		$isLogin=Auth::check();
-//		if($isLogin == false){
-//			return redirect('/login');
-//		}else{
 			return view('Order/list');
-//			}
-		}
+	}
+
+	//物流-跟踪订单
+	public function tailOrder(){
+		return view('order/tailOrder');
+	}
+
+	//已经购买的宝贝
+	public function alreadyBuy(){
+		return view('order/alreadyBuy');
+	}
 }

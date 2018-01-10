@@ -12,6 +12,7 @@
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "mews/captcha": "^2.1",
+        "nesbot/carbon": "^1.22",
         "socialiteproviders/qq": "^3.0",
         "socialiteproviders/weibo": "^3.0",
         "yansongda/pay": "^2.0",
@@ -55,5 +56,5 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
-    }
+    },
 }
