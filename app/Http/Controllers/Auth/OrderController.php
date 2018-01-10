@@ -42,15 +42,12 @@ class OrderController extends Controller
 		return view('Order/orderinfo',compact('goods_list','man','user_prop'));
 	}
 
-<<<<<<< HEAD
-=======
 	public function cart(){
 
 		//购物车商品信息
 		$cart_id=[47,48];
 		$goods_list =Cart::whereIn('id',$cart_id)->orderBy('created_at', 'desc')->get()->toArray();
-		
->>>>>>> 5d32190cc5d6ea35f7a8418ebd1fd716c6821259
+
 			foreach ($goods_list as $key => $value) {
 				$product = Product::find($goods_list[$key]['product_id'])->toArray();
 				$goods = Goods::find($product['goods_id'])->toArray();
@@ -66,30 +63,7 @@ class OrderController extends Controller
 				}
 				$goods_list[$key]['attr'] = rtrim($str, ',');
 			}
-<<<<<<< HEAD
-
-
-		//收货人信息
-		$man=Address::where([['user_id', '=', '1'],['is_default', '=', '1']])->get()->toArray();
-		$man=$man[0];
-		//红包优惠券
-		$user_prop=User_prop::where(['user_id'=>1])->get()->toArray();
-
-		$man=$man[0];
-		//红包优惠券
-		foreach ($user_prop as $key => $value) {
-		   $prop=Prop::where([['id', '=', $user_prop[$key]['prop_id']],['num', '>', '0']])->first()->toArray();
-		   $user_prop[$key]['prop_name']=$prop['name'];
-		   $user_prop[$key]['full']=$prop['full'];
-		   $user_prop[$key]['price']=$prop['price'];
-		   $user_prop[$key]['start']=$prop['start_time'];
-		   $user_prop[$key]['end']=$prop['end_time'];
-		}
-
-		return view('Order/orderinfo',compact('goods_list','man','user_prop'));
-=======
 			return $goods_list;
->>>>>>> 5d32190cc5d6ea35f7a8418ebd1fd716c6821259
 	}
 
 	public function delCart(){
