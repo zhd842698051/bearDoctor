@@ -16,11 +16,11 @@ class ComposerStaticInit8a89261464aa2b59222f9cdb2c2ca65c
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
-        'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
+        'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         '4e8671d7be9056dcd04ddd9e8e15f9cc' => __DIR__ . '/..' . '/encore/laravel-admin/src/helpers.php',
         '5e8fe2a5ffaded85af682684fe3bbf5a' => __DIR__ . '/..' . '/mews/captcha/src/helpers.php',
     );
@@ -33,6 +33,11 @@ class ComposerStaticInit8a89261464aa2b59222f9cdb2c2ca65c
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
+        ),
+        'Y' => 
+        array (
+            'Yansongda\\Supports\\' => 19,
+            'Yansongda\\Pay\\' => 14,
         ),
         'X' => 
         array (
@@ -143,6 +148,14 @@ class ComposerStaticInit8a89261464aa2b59222f9cdb2c2ca65c
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
+        'Yansongda\\Supports\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yansongda/supports/src',
+        ),
+        'Yansongda\\Pay\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yansongda/pay/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -416,6 +429,7 @@ class ComposerStaticInit8a89261464aa2b59222f9cdb2c2ca65c
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
+        'App\\Providers\\ComposerServiceProvider' => __DIR__ . '/../..' . '/app/Providers/ComposerServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Region' => __DIR__ . '/../..' . '/app/Region.php',
@@ -3891,6 +3905,40 @@ class ComposerStaticInit8a89261464aa2b59222f9cdb2c2ca65c
         'UpdateBrandCateName' => __DIR__ . '/../..' . '/database/migrations/2017_12_29_033157_update_brand_cate_name.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
         'XdgBaseDir\\Xdg' => __DIR__ . '/..' . '/dnoegel/php-xdg-base-dir/src/Xdg.php',
+        'Yansongda\\Pay\\Contracts\\GatewayApplicationInterface' => __DIR__ . '/..' . '/yansongda/pay/src/Contracts/GatewayApplicationInterface.php',
+        'Yansongda\\Pay\\Contracts\\GatewayInterface' => __DIR__ . '/..' . '/yansongda/pay/src/Contracts/GatewayInterface.php',
+        'Yansongda\\Pay\\Exceptions\\Exception' => __DIR__ . '/..' . '/yansongda/pay/src/Exceptions/Exception.php',
+        'Yansongda\\Pay\\Exceptions\\GatewayException' => __DIR__ . '/..' . '/yansongda/pay/src/Exceptions/GatewayException.php',
+        'Yansongda\\Pay\\Exceptions\\InvalidArgumentException' => __DIR__ . '/..' . '/yansongda/pay/src/Exceptions/InvalidArgumentException.php',
+        'Yansongda\\Pay\\Exceptions\\InvalidConfigException' => __DIR__ . '/..' . '/yansongda/pay/src/Exceptions/InvalidConfigException.php',
+        'Yansongda\\Pay\\Exceptions\\InvalidSignException' => __DIR__ . '/..' . '/yansongda/pay/src/Exceptions/InvalidSignException.php',
+        'Yansongda\\Pay\\Gateways\\Alipay' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Alipay.php',
+        'Yansongda\\Pay\\Gateways\\Alipay\\AppGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Alipay/AppGateway.php',
+        'Yansongda\\Pay\\Gateways\\Alipay\\PosGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Alipay/PosGateway.php',
+        'Yansongda\\Pay\\Gateways\\Alipay\\ScanGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Alipay/ScanGateway.php',
+        'Yansongda\\Pay\\Gateways\\Alipay\\Support' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Alipay/Support.php',
+        'Yansongda\\Pay\\Gateways\\Alipay\\TransferGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Alipay/TransferGateway.php',
+        'Yansongda\\Pay\\Gateways\\Alipay\\WapGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Alipay/WapGateway.php',
+        'Yansongda\\Pay\\Gateways\\Alipay\\WebGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Alipay/WebGateway.php',
+        'Yansongda\\Pay\\Gateways\\Wechat' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Wechat.php',
+        'Yansongda\\Pay\\Gateways\\Wechat\\AppGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Wechat/AppGateway.php',
+        'Yansongda\\Pay\\Gateways\\Wechat\\Gateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Wechat/Gateway.php',
+        'Yansongda\\Pay\\Gateways\\Wechat\\GroupRedpackGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Wechat/GroupRedpackGateway.php',
+        'Yansongda\\Pay\\Gateways\\Wechat\\MiniappGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Wechat/MiniappGateway.php',
+        'Yansongda\\Pay\\Gateways\\Wechat\\MpGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Wechat/MpGateway.php',
+        'Yansongda\\Pay\\Gateways\\Wechat\\PosGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Wechat/PosGateway.php',
+        'Yansongda\\Pay\\Gateways\\Wechat\\RedpackGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Wechat/RedpackGateway.php',
+        'Yansongda\\Pay\\Gateways\\Wechat\\ScanGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Wechat/ScanGateway.php',
+        'Yansongda\\Pay\\Gateways\\Wechat\\Support' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Wechat/Support.php',
+        'Yansongda\\Pay\\Gateways\\Wechat\\TransferGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Wechat/TransferGateway.php',
+        'Yansongda\\Pay\\Gateways\\Wechat\\WapGateway' => __DIR__ . '/..' . '/yansongda/pay/src/Gateways/Wechat/WapGateway.php',
+        'Yansongda\\Pay\\Log' => __DIR__ . '/..' . '/yansongda/pay/src/Log.php',
+        'Yansongda\\Pay\\Pay' => __DIR__ . '/..' . '/yansongda/pay/src/Pay.php',
+        'Yansongda\\Supports\\Arr' => __DIR__ . '/..' . '/yansongda/supports/src/Arr.php',
+        'Yansongda\\Supports\\Collection' => __DIR__ . '/..' . '/yansongda/supports/src/Collection.php',
+        'Yansongda\\Supports\\Config' => __DIR__ . '/..' . '/yansongda/supports/src/Config.php',
+        'Yansongda\\Supports\\Str' => __DIR__ . '/..' . '/yansongda/supports/src/Str.php',
+        'Yansongda\\Supports\\Traits\\HasHttpRequest' => __DIR__ . '/..' . '/yansongda/supports/src/Traits/HasHttpRequest.php',
         'phpDocumentor\\Reflection\\DocBlock' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlock.php',
         'phpDocumentor\\Reflection\\DocBlockFactory' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactory.php',
         'phpDocumentor\\Reflection\\DocBlockFactoryInterface' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactoryInterface.php',
