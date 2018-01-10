@@ -15,8 +15,11 @@ class GoodsController extends Controller
         $Attr  = [];
         $Goods = $this->getGoodsInfo($goods_id);
         if ($Goods['is_attr'] == 1) {
-            $checked = $this->getChecked($goods_id);
-            $Attr    = $this->getGoodsAttr($goods_id);
+            if (empty($attr_id)) {
+                $checked = $this->getChecked($goods_id);
+            }
+            $checked = explode(',', $attr_id);
+            $Attr = $this->getGoodsAttr($goods_id);
         }
         if (!empty($attr_id)) {
             $Product = $this->getProduct($goods_id, 1, $attr_id);
@@ -69,7 +72,7 @@ class GoodsController extends Controller
             ->toArray();
         $arr = [];
         foreach ($goodsAttr as $k => $v) {
-            $arr[$v->name][]           = $v;
+            $arr[$v->name][] = $v;
         }
         return $arr;
     }

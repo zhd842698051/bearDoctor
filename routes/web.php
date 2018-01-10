@@ -21,6 +21,14 @@ Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/qqCallback', '\App\Http\Controllers\Auth\LoginController@qqCallback');
 Route::get('/qqlogin', '\App\Http\Controllers\Auth\LoginController@qqlogin');
 // Route::get('/qq','\App\Http\Controllers\Auth\LoginController@qq');
+Route::get('/qqCallback','\App\Http\Controllers\Auth\LoginController@qqCallback');
+//Route::get('/qqlogin','\App\Http\Controllers\Auth\LoginController@qqlogin');
+Route::get('/qq','\App\Http\Controllers\Auth\LoginController@qq');
+Route::get('/login/binbing','\App\Http\Controllers\Auth\LoginController@binbing');
+Route::post('/login/qqlogin','\App\Http\Controllers\Auth\LoginController@qqbinbing');
+//微博登录
+Route::get('/wbCallback','\App\Http\Controllers\Auth\LoginController@wbCallback');
+Route::get('/wb','\App\Http\Controllers\Auth\LoginController@wb');
 
 //执行登录
 Route::post('/login', '\App\Http\Controllers\Auth\LoginController@loginDo');
@@ -39,6 +47,16 @@ Route::get('/cart/submitOrder', '\App\Http\Controllers\Auth\CartController@submi
 Route::get('/cart', '\App\Http\Controllers\Auth\CartController@test');
 Route::get('/cart/dataSel', '\App\Http\Controllers\Auth\CartController@cartSel');
 Route::get('/cart/createOrder', '\App\Http\Controllers\Auth\CartController@createOrder');
+Route::get('/cart/show','\App\Http\Controllers\Auth\CartController@cartShow');
+Route::get('/cart/order_info','\App\Http\Controllers\Auth\CartController@cartOrderInfo');
+Route::get('/cart/submitOrder','\App\Http\Controllers\Auth\CartController@submitOrder');
+Route::get('/cart','\App\Http\Controllers\Auth\CartController@test');
+Route::get('/cart/dataSel','\App\Http\Controllers\Auth\CartController@cartSel');
+Route::get('/cart/createOrder','\App\Http\Controllers\Auth\CartController@createOrder');
+Route::get('/cart/nav','\App\Http\Controllers\Auth\CartController@nav');
+Route::get('/cart/addData','\App\Http\Controllers\Auth\CartController@addData');
+Route::get('/cart/onlyDel','\App\Http\Controllers\Auth\CartController@onlyDel');
+
 //品牌
 Route::get('/brand', '\App\Http\Controllers\Auth\BrandController@brand');
 Route::get('/brand/list', '\App\Http\Controllers\Auth\BrandController@brandList');
@@ -87,6 +105,17 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/delCart', '\App\Http\Controllers\Auth\OrderController@delCart');
     Route::get('/getaddress', '\App\Http\Controllers\Auth\OrderController@getAddress');
     Route::get('/getadd', '\App\Http\Controllers\Auth\OrderController@getAdd');
+    Route::get('/order','\App\Http\Controllers\Auth\OrderController@list');
+    Route::get('/orderno','\App\Http\Controllers\Auth\OrderController@orderNo');
+    Route::get('/orderinfo','\App\Http\Controllers\Auth\OrderController@orderInfo');
+    Route::post('/addorder','\App\Http\Controllers\Auth\OrderController@addOrder');
+     Route::get('/confirmorder','\App\Http\Controllers\Auth\OrderController@confirmOrder');
+    Route::get('/delCart','\App\Http\Controllers\Auth\OrderController@delCart');
+    Route::get('/cartorder','\App\Http\Controllers\Auth\OrderController@cart');
+    Route::get('/getaddress','\App\Http\Controllers\Auth\OrderController@getAddress');
+    Route::get('/getadd','\App\Http\Controllers\Auth\OrderController@getAdd');
+    Route::get('/order/tailOrder','\App\Http\Controllers\Auth\OrderController@tailOrder');
+    Route::get('/order/alreadyBuy','\App\Http\Controllers\Auth\OrderController@alreadyBuy');
 });
 
 //商品

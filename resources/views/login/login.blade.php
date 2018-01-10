@@ -28,8 +28,16 @@
                     <span class="fr"><a href="#" style="color:#ff4e00;">忘记密码</a></span>
                 </td>
               </tr>
+                <tr height="40">
+                    <td></td>
+                    <td>
+                        <a href="{{ URL('/qq') }}"><img src="{{ asset('images') }}/qq.png" alt="" style="cursor:pointer"></a>
+                        <a href="{{ URL('/wb') }}"><img src="{{ asset('images') }}/wb.png" alt=""></a>
+                    </td>
+                </tr>
               <tr height="60">
               	<td>&nbsp;</td>
+
                 <td><input type="submit" value="登录" class="log_btn" id="submit" /></td>
               </tr>
             </table>

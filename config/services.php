@@ -41,4 +41,11 @@ return [
     'redirect' => env('http://www.shops.com/qqCallback'),
     ],
 
+
+    'weibo' => [
+        'client_id' => env('901265935'),
+        'client_secret' => env('657fc40e23af670c10b59a7a9ebab11a '),
+        'redirect' => env('http://www.shops.com/wbCallback'),
+    ],
+
 ];

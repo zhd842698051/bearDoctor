@@ -6,6 +6,7 @@ use App\Category;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\View;
+use App\Cart;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -18,8 +19,13 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         $visibility = $this->getVisibility();
         $category   = $this->getOrderCategory();
-
         view()->share(compact('visibility','category'));
+        view()->composer('layout/index_head',function($view){
+            $category = $this->getOrderCategory();
+            $visibility = $this->getVisibility();
+            $userid = \Auth::id();
+            $view->with(compact('category','visibility','userid'));
+        });
     }
 
     /**
