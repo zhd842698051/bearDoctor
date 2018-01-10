@@ -1,6 +1,5 @@
 @extends('layout.index_head')
 @section('content')
- 
 <div class="i_bg">
     <div class="postion">
         <span class="fl">全部 > 美妆个护 > 香水 > 迪奥 > 迪奥真我香水</span>
@@ -8,19 +7,14 @@
     <div class="content">
                             
         <div id="tsShopContainer">
-            <div id="tsImgS"><a href="{{asset('images')}}/p_big.jpg" title="Images" class="MagicZoom" id="MagicZoom"><img src="{{asset('images')}}/p_big.jpg" width="390" height="390" /></a></div>
+            <div id="tsImgS"><a href="{{config('app.image').$Goods['cover']}}" title="Images" class="MagicZoom" id="MagicZoom"><img src="{{config('app.image').$Goods['cover']}}" width="390" height="390" /></a></div>
             <div id="tsPicContainer">
                 <div id="tsImgSArrL" onclick="tsScrollArrLeft()"></div>
                 <div id="tsImgSCon">
                     <ul>
-                        <li onclick="showPic(0)" rel="MagicZoom" class="tsSelectImg"><img src="{{asset('images')}}/ps1.jpg" tsImgS="{{asset('images')}}/ps1.jpg" width="79" height="79" /></li>
-                        <li onclick="showPic(1)" rel="MagicZoom"><img src="{{asset('images')}}/ps2.jpg" tsImgS="{{asset('images')}}/ps2.jpg" width="79" height="79" /></li>
-                        <li onclick="showPic(2)" rel="MagicZoom"><img src="{{asset('images')}}/ps3.jpg" tsImgS="{{asset('images')}}/ps3.jpg" width="79" height="79" /></li>
-                        <li onclick="showPic(3)" rel="MagicZoom"><img src="{{asset('images')}}/ps4.jpg" tsImgS="{{asset('images')}}/ps4.jpg" width="79" height="79" /></li>
-                        <li onclick="showPic(4)" rel="MagicZoom"><img src="{{asset('images')}}/ps1.jpg" tsImgS="{{asset('images')}}/ps1.jpg" width="79" height="79" /></li>
-                        <li onclick="showPic(5)" rel="MagicZoom"><img src="{{asset('images')}}/ps2.jpg" tsImgS="{{asset('images')}}/ps2.jpg" width="79" height="79" /></li>
-                        <li onclick="showPic(6)" rel="MagicZoom"><img src="{{asset('images')}}/ps3.jpg" tsImgS="{{asset('images')}}/ps3.jpg" width="79" height="79" /></li>
-                        <li onclick="showPic(7)" rel="MagicZoom"><img src="{{asset('images')}}/ps4.jpg" tsImgS="{{asset('images')}}/ps4.jpg" width="79" height="79" /></li>
+                        @foreach($Goods['images'] as $image)
+                        <li onclick="showPic(0)" rel="MagicZoom" class="tsSelectImg"><img src="{{config('app.image').$image}}" tsImgS="{{config('app.image').$image}}" width="79" height="79" /></li>
+                        @endforeach
                     </ul>
                 </div>
                 <div id="tsImgSArrR" onclick="tsScrollArrRight()"></div>
@@ -30,38 +24,33 @@
         
         <div class="pro_des">
             <div class="des_name">
-                <p>Dior/迪奥 真我香水EDP 克丽丝汀迪奥 全新 30ml</p>
+                <p>{{$Goods['name']}}</p>
                 “开业巨惠，北京专柜直供”，不光低价，“真”才靠谱！
             </div>
             <div class="des_price">
-                本店价格：<b>￥589</b><br />
+                本店价格：<b>￥{{$Product['price']}}</b><br />
                 消费积分：<span>28R</span>
             </div>
+            @foreach($Attr as $k => $v)
             <div class="des_choice">
-                <span class="fl">型号选择：</span>
+                <span class="fl">{{$k}}选择：</span>
                 <ul>
-                    <li class="checked">30ml<div class="ch_img"></div></li>
-                    <li>50ml<div class="ch_img"></div></li>
-                    <li>100ml<div class="ch_img"></div></li>
+                    @foreach($v as $k1 => $v1)
+                    <li id='{{$v1->id}}' {{in_array($v1->id,$checked) ? 'class=checked' : '' }}>{{$v1->value}}
+<!--                         <input type="radio" name="{{$v1->attr_id}}" id="{{$v1->id}}">
+ -->                        <div class="ch_img"></div></li>
+                    @endforeach
                 </ul>
             </div>
-            <div class="des_choice">
-                <span class="fl">颜色选择：</span>
-                <ul>
-                    <li>红色<div class="ch_img"></div></li>
-                    <li class="checked">白色<div class="ch_img"></div></li>
-                    <li>黑色<div class="ch_img"></div></li>
-                </ul>
-            </div>
+            @endforeach
+
             <div class="des_share">
                 <div class="d_sh">
                     分享
                     <div class="d_sh_bg">
-                        <a href="#"><img src="{{asset('images')}}/sh_1.gif" /></a>
-                        <a href="#"><img src="{{asset('images')}}/sh_2.gif" /></a>
-                        <a href="#"><img src="{{asset('images')}}/sh_3.gif" /></a>
-                        <a href="#"><img src="{{asset('images')}}/sh_4.gif" /></a>
-                        <a href="#"><img src="{{asset('images')}}/sh_5.gif" /></a>
+                        @foreach($Goods['images'] as $image)
+                        <a href="#"><img src="{{config('app.image').$image}}" /></a>
+                        @endforeach
                     </div>
                 </div>
                 <div class="d_care"><a onclick="ShowDiv('MyDiv','fade')">关注商品</a></div>
@@ -379,4 +368,23 @@
     </div>    
     <!--End 弹出层-加入购物车 End-->
 </div>
+
 @endsection
+<script type="text/javascript" src="{{asset('js')}}/app.js"></script>
+<script>
+    $(function(){
+        $('.des_choice ul li').click(function(){
+            if($(this).attr('class')=='checked'){
+                return false
+            }
+            $(this).siblings().removeClass()
+            $(this).addClass('checked')
+            var attr_id = ''       
+            for(var i=0 ; i < $('.checked').length ; i++){
+                attr_id += document.getElementsByClassName('checked')[i].getAttribute('id') + ','
+            }
+            attr_id = attr_id.substring(0,attr_id.length-1)
+            window.location.href='/showinfo/'+{{$Goods['id']}}+'/'+attr_id
+        })
+    })
+</script>

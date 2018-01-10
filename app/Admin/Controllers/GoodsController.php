@@ -2,25 +2,26 @@
 
 namespace App\Admin\Controllers;
 
-use App\Goods;
-use App\Category;
-use App\Brand;
 use App\Attr;
 use App\Attribute;
-
+use App\Brand;
+use App\Category;
+use App\Goods;
+use App\GoodsAttr;
+use App\Http\Controllers\Controller;
 use App\Product;
+use Encore\Admin\Controllers\ModelForm;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
-use App\Http\Controllers\Controller;
-use Encore\Admin\Controllers\ModelForm;
-use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Psr7\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request as sRequset;
-use Illuminate\Http\UploadedFile;
+<<<<<<< HEAD
+use Illuminate\Support\Facades\DB;
+=======
 use App\GoodsAttr;
+>>>>>>> f3fc9235ece74a286f468cc0b3e4ce8d3d7d492b
 
 class GoodsController extends Controller
 {
@@ -72,7 +73,7 @@ class GoodsController extends Controller
             $cate = Category::selectOptions();
             unset($cate[0]);
             $brand = Brand::all()->pluck('name', 'id');
-            $content->body(view('admin/goods_add',compact('cate','brand'))->render());
+            $content->body(view('admin/goods_add', compact('cate', 'brand'))->render());
             //$content->body($this->form());
         });
     }
@@ -88,22 +89,22 @@ class GoodsController extends Controller
             //config('app.images');展示商品图片
             $grid->id('ID')->sortable();
             $grid->name("商品名称")->badge('success');
-            $grid->cover("封面图片")->image('','50','50');
-            $grid->is_hot('是否热销')->radio([1=>'是',0=>'否']);
-            $grid->is_attr('是否有属性')->display(function($status){
-                if($status==1){
+            $grid->cover("封面图片")->image('', '50', '50');
+            $grid->is_hot('是否热销')->radio([1 => '是', 0 => '否']);
+            $grid->is_attr('是否有属性')->display(function ($status) {
+                if ($status == 1) {
                     return '是';
-                }else{
+                } else {
                     return '否';
                 }
             });
             $grid->descript("描述");
-            $grid->created_at()
+            $grid->created_at();
             $grid->updated_at();
             // 显示多图
             $grid->images()->display(function ($pictures) {
 
-                return explode(',',$pictures);
+                return explode(',', $pictures);
 
             })->image('', 50, 50);
             $grid->created_at('添加时间');
@@ -121,170 +122,322 @@ class GoodsController extends Controller
 
             $form->display('id', 'ID');
             $form->text('name', '商品名称');
-            $form->currency('sell_price','商品价格')->symbol("¥");
+            $form->currency('sell_price', '商品价格')->symbol("¥");
             $form->image('cover', '封面图片');
-            $form->multipleImage('images','商品图片');
+            $form->multipleImage('images', '商品图片');
             $res = Category::selectOptions();
             unset($res[0]);
-            $form->select("category_id",'所属分类')->options($res);
-            $form->select("brand_id",'所属品牌')->options(Brand::all()->pluck('name', 'id'));
-            $form->radio("is_hot","是否热销")->options([1=>'是',0=>'否']);
-            $form->radio("is_son","是否上架")->options([1=>'是',0=>'否']);
-            $form->radio("is_promotion","是否促销")->options([1=>'是',0=>'否']);
-            $form->currency('promotion_price','促销价格')->symbol("¥");
-            $form->radio("is_attr","是否有属性")->options([1=>'是',0=>'否']);
-            $form->multipleSelect("attr",'属性')->options(Attr::all()->pluck('name','id'));
-            $form->multipleSelect("attribute",'属性值')->options(Attribute::all()->where('attr_id',request()->input('attr') )->pluck('value','id'));
-            $form->number("num",'库存');
-            $form->text("keywords",'关键词')->help("多个关键词,隔开");
+            $form->select("category_id", '所属分类')->options($res);
+            $form->select("brand_id", '所属品牌')->options(Brand::all()->pluck('name', 'id'));
+            $form->radio("is_hot", "是否热销")->options([1 => '是', 0 => '否']);
+            $form->radio("is_son", "是否上架")->options([1 => '是', 0 => '否']);
+            $form->radio("is_promotion", "是否促销")->options([1 => '是', 0 => '否']);
+            $form->currency('promotion_price', '促销价格')->symbol("¥");
+            $form->radio("is_attr", "是否有属性")->options([1 => '是', 0 => '否']);
+            $form->multipleSelect("attr", '属性')->options(Attr::all()->pluck('name', 'id'));
+            $form->multipleSelect("attribute", '属性值')->options(Attribute::all()->where('attr_id', request()->input('attr'))->pluck('value', 'id'));
+            $form->number("num", '库存');
+            $form->text("keywords", '关键词')->help("多个关键词,隔开");
             $form->textarea('descript', '商品描述');
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
         });
     }
-    public function getAttr(){
-        $id = request('id');
-        $id=1;
+<<<<<<< HEAD
+    public function getAttr()
+    {
+        $id  = request('id');
+        $id  = 1;
         $res = Db::select('select a.id,a.name from xbs_attr_category as c INNER JOIN xbs_attr as a on c.attr_id=a.id where category_id =1');
+    }
+    public function add(sRequset $request)
+    {
+        $cover = $request->file('cover')->store('', 'qiniu');
 
-    public function add(sRequset $request){
-        $cover = $request->file('cover')->store('','qiniu');
-       
         $image = $request->file('images');
-        if(is_array($image)){
-            foreach ($image as $v){
-                $images[] = $v->store("",'qiniu');
+        if (is_array($image)) {
+            foreach ($image as $v) {
+                $images[] = $v->store("", 'qiniu');
             }
-            $images = implode(',',$images);
-        }else{
-            $images = $image->store("",'qiniu');
+            $images = implode(',', $images);
+        } else {
+            $images = $image->store("", 'qiniu');
         }
         $data = $request->input();
         $attr = $data['attribute'];
         unset($data['_token']);unset($data['attr']);unset($data['attribute']);unset($data['aprice']);unset($data['anum']);
         $data['images'] = $images;
-        $data['cover'] = $cover;
-        $res = Goods::create($data);
-        $goods_id = $res->id;
-       $num = $request->input('anum');
-       if($data['is_attr']==0){
-           Product::create(['goods_id'=>$goods_id,'num'=>$data['num']]);
-       }else{
-           foreach ($request->input('aprice') as $k=>$v){
-               $arr = [
-                   'attribute_id'=>$k,
-                   'price' => $v,
-                   'num' => $num[$k],
-                   'goods_id' => $goods_id
-               ];
-               Product::create($arr);
-           }
-           unset($attr[count($attr)-1]);
-           foreach ($attr as $key => $value) {
-               if($value){
-                   $attribute=['attribute_id' => explode('-',$value)[1],'goods_id'=>$goods_id];
-               }
+        $data['cover']  = $cover;
+        $res            = Goods::create($data);
+        $goods_id       = $res->id;
+        $num            = $request->input('anum');
+        if ($data['is_attr'] == 0) {
+            Product::create(['goods_id' => $goods_id, 'num' => $data['num']]);
+        } else {
+            foreach ($request->input('aprice') as $k => $v) {
+                $arr = [
+                    'attribute_id' => $k,
+                    'price'        => $v,
+                    'num'          => $num[$k],
+                    'goods_id'     => $goods_id,
+                ];
+                Product::create($arr);
+            }
+            unset($attr[count($attr) - 1]);
+            foreach ($attr as $key => $value) {
+                if ($value) {
+                    $attribute = ['attribute_id' => explode('-', $value)[1], 'goods_id' => $goods_id];
+                }
 
-               GoodsAttr::create($attribute);
-           }
-           foreach ($request->input('aprice') as $k=>$v){
-               $arr = [
-                   'attribute_id'=>$k,
-                   'price' => $v,
-                   'num' => $num[$k],
-                   'goods_id' => $goods_id
-               ];
-               Product::create($arr);
-           }
-           unset($attr[count($attr)-1]);
-           foreach ($attr as $key => $value) {
-               if($value){
-                   $attribute=['attribute_id' => explode('-',$value)[1],'goods_id'=>$goods_id];
-               }
+                GoodsAttr::create($attribute);
+            }
+            foreach ($request->input('aprice') as $k => $v) {
+                $arr = [
+                    'attribute_id' => $k,
+                    'price'        => $v,
+                    'num'          => $num[$k],
+                    'goods_id'     => $goods_id,
+                ];
+                Product::create($arr);
+            }
+            unset($attr[count($attr) - 1]);
+            foreach ($attr as $key => $value) {
+                if ($value) {
+                    $attribute = ['attribute_id' => explode('-', $value)[1], 'goods_id' => $goods_id];
+                }
 
-               GoodsAttr::create($attribute);
-           }
-       }
+                GoodsAttr::create($attribute);
+            }
+        }
 
         return redirect('admin/goods');
     }
-    public function getAttr(){
-        $id = request('id');
 
-        $res = Db::select('select a.id,a.name from xbs_attr_category as c INNER JOIN xbs_attr as a on c.attr_id=a.id where category_id =$id');
-        echo json_encode($res);
-    }
-
-    public function getAttribute(){
-        $id = request('id');
-        $id = implode(",",$id);
+    public function getAttribute()
+    {
+        $id  = request('id');
+        $id  = implode(",", $id);
         $res = Db::select("select id,`value`,attr_id from xbs_attribute where attr_id in ($id)");
         echo json_encode($res);
     }
 
-    public function ajaxGetAttr(){
+    public function ajaxGetAttr()
+    {
         $id = request('id');
-        foreach ($id as $k=>$v){
-            $id[$k]=explode("-",$v);
+        foreach ($id as $k => $v) {
+            $id[$k] = explode("-", $v);
         }
-        foreach ($id as $k=>$v){
-            $arr[$v[0]][$v[1]]=$v[2];
+        foreach ($id as $k => $v) {
+            $arr[$v[0]][$v[1]] = $v[2];
         }
-        foreach ($arr as $k=>$v){
-            $newArray[]=$v;
+        foreach ($arr as $k => $v) {
+            $newArray[] = $v;
         }
         //print_r($newArray);die;
-        $len = count($newArray);
+        $len  = count($newArray);
         $html = array();
-        $str = "";
-        foreach ($newArray[0] as $k=>$v){
-          foreach ($newArray[1] as $kk=>$vv){
-              $str ="";
-              $str.=$vv.'-'.$v;
+        $str  = "";
+        foreach ($newArray[0] as $k => $v) {
+            foreach ($newArray[1] as $kk => $vv) {
+                $str = "";
+                $str .= $vv . '-' . $v;
 
-              if(isset($newArray[2])){
-                  foreach ($newArray[2] as $kkk=>$vvv){
-                      $str ="";
-                      $str.=$vvv.'-'.$vv.'-'.$v;
-                      $str .="<br>";
-                      echo $str;
-                      if(isset($newArray[3])){
-                          foreach ($newArray[3] as $kkkk=>$vvvv){
-                              $str ="";
-                                $str.=$vvvv.'-'.$vvv.'-'.$vv.'-'.$v;
-                              $str .="<br>";
-                              echo $str;
-                          }
-                      }
-                  }
-              }
-          }
+                if (isset($newArray[2])) {
+                    foreach ($newArray[2] as $kkk => $vvv) {
+                        $str = "";
+                        $str .= $vvv . '-' . $vv . '-' . $v;
+                        $str .= "<br>";
+                        echo $str;
+                        if (isset($newArray[3])) {
+                            foreach ($newArray[3] as $kkkk => $vvvv) {
+                                $str = "";
+                                $str .= $vvvv . '-' . $vvv . '-' . $vv . '-' . $v;
+                                $str .= "<br>";
+                                echo $str;
+                            }
+                        }
+                    }
+                }
+            }
+=======
 
-        }
-
-        if(count($newArray)==1){
-          exit(json_encode($newArray[0]));
-        }
-        $arr=[];
-        foreach ($newArray[0] as $k=>$v){
-          foreach ($newArray[1] as $kk=>$vv){
-              $str=$vv.'-'.$v;
-              $key=$kk.','.$k;
-              if(isset($newArray[2])){
-                  foreach ($newArray[2] as $kkk=>$vvv){
-                      $str=$vvv.'-'.$vv.'-'.$v;
-                      $key=$kkk.','.$kk.','.$k;
-                      if(isset($newArray[3])){
-                          foreach ($newArray[3] as $kkkk=>$vvvv){
-                              $str=$vvvv.'-'.$vvv.'-'.$vv.'-'.$v;
-                              $key=$kkkk.','.$kkk.','.$kk.','.$k;
-                              $arr[$key]=$str;
-                          }
-                      }else{$arr[$key]=$str;}
-                  }
-              }else{$arr[$key] = $str;}
-          }
-        }
-        exit(json_encode($arr));
+    public function getAttr()
+    {
+        $id = request('id');
+        $res = Db::select('select a.id,a.name from xbs_attr_category as c INNER JOIN xbs_attr as a on c.attr_id=a.id where category_id =1');
+        exit(json_encode($res));
     }
+    public function add(sRequset $request)
+    {
+            $cover = $request->file('cover')->store('', 'qiniu');
+
+            $image = $request->file('images');
+            if (is_array($image)) {
+                foreach ($image as $v) {
+                    $images[] = $v->store("", 'qiniu');
+                }
+                $images = implode(',', $images);
+            } else {
+                $images = $image->store("", 'qiniu');
+            }
+            $data = $request->input();
+            $attr = $data['attribute'];
+            unset($data['_token']);
+            unset($data['attr']);
+            unset($data['attribute']);
+            unset($data['aprice']);
+            unset($data['anum']);
+            $data['images'] = $images;
+            $data['cover'] = $cover;
+            $res = Goods::create($data);
+            $goods_id = $res->id;
+            $num = $request->input('anum');
+            if ($data['is_attr'] == 0) {
+                Product::create(['goods_id' => $goods_id, 'num' => $data['num']]);
+            } else {
+                foreach ($request->input('aprice') as $k => $v) {
+                    $arr = [
+                        'attribute_id' => $k,
+                        'price' => $v,
+                        'num' => $num[$k],
+                        'goods_id' => $goods_id
+                    ];
+                    Product::create($arr);
+                }
+                unset($attr[count($attr) - 1]);
+                foreach ($attr as $key => $value) {
+                    if ($value) {
+                        $attribute = ['attribute_id' => explode('-', $value)[1], 'goods_id' => $goods_id];
+                    }
+
+                    GoodsAttr::create($attribute);
+                }
+                foreach ($request->input('aprice') as $k => $v) {
+                    $arr = [
+                        'attribute_id' => $k,
+                        'price' => $v,
+                        'num' => $num[$k],
+                        'goods_id' => $goods_id
+                    ];
+                    Product::create($arr);
+                }
+                unset($attr[count($attr) - 1]);
+                foreach ($attr as $key => $value) {
+                    if ($value) {
+                        $attribute = ['attribute_id' => explode('-', $value)[1], 'goods_id' => $goods_id];
+                    }
+
+                    GoodsAttr::create($attribute);
+                }
+            }
+
+            return redirect('admin/goods');
+        }
+
+
+
+        public function getAttribute()
+        {
+            $id = request('id');
+            $id = implode(",", $id);
+            $res = Db::select("select id,`value`,attr_id from xbs_attribute where attr_id in ($id)");
+            echo json_encode($res);
+        }
+
+        public function ajaxGetAttr()
+        {
+            $id = request('id');
+            foreach ($id as $k => $v) {
+                $id[$k] = explode("-", $v);
+            }
+            foreach ($id as $k => $v) {
+                $arr[$v[0]][$v[1]] = $v[2];
+            }
+            foreach ($arr as $k => $v) {
+                $newArray[] = $v;
+            }
+            $len = count($newArray);
+            $html = array();
+            $str = "";
+            foreach ($newArray[0] as $k => $v) {
+                foreach ($newArray[1] as $kk => $vv) {
+                    $str = "";
+                    $str .= $vv . '-' . $v;
+>>>>>>> f3fc9235ece74a286f468cc0b3e4ce8d3d7d492b
+
+                    if (isset($newArray[2])) {
+                        foreach ($newArray[2] as $kkk => $vvv) {
+                            $str = "";
+                            $str .= $vvv . '-' . $vv . '-' . $v;
+                            $str .= "<br>";
+                            echo $str;
+                            if (isset($newArray[3])) {
+                                foreach ($newArray[3] as $kkkk => $vvvv) {
+                                    $str = "";
+                                    $str .= $vvvv . '-' . $vvv . '-' . $vv . '-' . $v;
+                                    $str .= "<br>";
+                                    echo $str;
+                                }
+                            }
+                        }
+                    }
+                }
+
+<<<<<<< HEAD
+        if (count($newArray) == 1) {
+            exit(json_encode($newArray[0]));
+        }
+        $arr = [];
+        foreach ($newArray[0] as $k => $v) {
+            foreach ($newArray[1] as $kk => $vv) {
+                $str = $vv . '-' . $v;
+                $key = $kk . ',' . $k;
+                if (isset($newArray[2])) {
+                    foreach ($newArray[2] as $kkk => $vvv) {
+                        $str = $vvv . '-' . $vv . '-' . $v;
+                        $key = $kkk . ',' . $kk . ',' . $k;
+                        if (isset($newArray[3])) {
+                            foreach ($newArray[3] as $kkkk => $vvvv) {
+                                $str       = $vvvv . '-' . $vvv . '-' . $vv . '-' . $v;
+                                $key       = $kkkk . ',' . $kkk . ',' . $kk . ',' . $k;
+                                $arr[$key] = $str;
+                            }
+                        } else { $arr[$key] = $str;}
+                    }
+                } else { $arr[$key] = $str;}
+            }
+=======
+            }
+
+            if (count($newArray) == 1) {
+                exit(json_encode($newArray[0]));
+            }
+            $arr = [];
+            foreach ($newArray[0] as $k => $v) {
+                foreach ($newArray[1] as $kk => $vv) {
+                    $str = $vv . '-' . $v;
+                    $key = $kk . ',' . $k;
+                    if (isset($newArray[2])) {
+                        foreach ($newArray[2] as $kkk => $vvv) {
+                            $str = $vvv . '-' . $vv . '-' . $v;
+                            $key = $kkk . ',' . $kk . ',' . $k;
+                            if (isset($newArray[3])) {
+                                foreach ($newArray[3] as $kkkk => $vvvv) {
+                                    $str = $vvvv . '-' . $vvv . '-' . $vv . '-' . $v;
+                                    $key = $kkkk . ',' . $kkk . ',' . $kk . ',' . $k;
+                                    $arr[$key] = $str;
+                                }
+                            } else {
+                                $arr[$key] = $str;
+                            }
+                        }
+                    } else {
+                        $arr[$key] = $str;
+                    }
+                }
+            }
+            exit(json_encode($arr));
+>>>>>>> f3fc9235ece74a286f468cc0b3e4ce8d3d7d492b
+        }
+
 }
