@@ -47,7 +47,7 @@ class OrderController extends Controller
 		//购物车商品信息
 		$cart_id=[47,48];
 		$goods_list =Cart::whereIn('id',$cart_id)->orderBy('created_at', 'desc')->get()->toArray();
-		
+
 			foreach ($goods_list as $key => $value) {
 				$product = Product::find($goods_list[$key]['product_id'])->toArray();
 				$goods = Goods::find($product['goods_id'])->toArray();
