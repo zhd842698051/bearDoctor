@@ -101,6 +101,11 @@ Route::group(['middleware'=>'auth:web'],function (){
     Route::get('/getadd','\App\Http\Controllers\Auth\OrderController@getAdd');
     Route::get('/order/tailOrder','\App\Http\Controllers\Auth\OrderController@tailOrder');
     Route::get('/order/alreadyBuy','\App\Http\Controllers\Auth\OrderController@alreadyBuy');
+
+    //支付宝支付
+    Route::get('/alipay','\App\Http\Controllers\Auth\PayController@index');
+    //微信支付
+    Route::get('/wechatpay','\App\Http\Controllers\Auth\WechatController@index');
 });
 
 

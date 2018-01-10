@@ -14,7 +14,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
     'image' => 'http://p22vshs5l.bkt.clouddn.com/',
-
+    
     /*
     |--------------------------------------------------------------------------
     | Application Environment
