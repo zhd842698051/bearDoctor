@@ -93,8 +93,10 @@ Route::group(['middleware'=>'auth:web'],function (){
     Route::get('/order','\App\Http\Controllers\Auth\OrderController@list');
     Route::get('/orderno','\App\Http\Controllers\Auth\OrderController@orderNo');
     Route::get('/orderinfo','\App\Http\Controllers\Auth\OrderController@orderInfo');
-    Route::get('/addorder','\App\Http\Controllers\Auth\OrderController@addOrder');
+    Route::post('/addorder','\App\Http\Controllers\Auth\OrderController@addOrder');
+     Route::get('/confirmorder','\App\Http\Controllers\Auth\OrderController@confirmOrder');
     Route::get('/delCart','\App\Http\Controllers\Auth\OrderController@delCart');
+    Route::get('/cartorder','\App\Http\Controllers\Auth\OrderController@cart');
     Route::get('/getaddress','\App\Http\Controllers\Auth\OrderController@getAddress');
     Route::get('/getadd','\App\Http\Controllers\Auth\OrderController@getAdd');
     Route::get('/order/tailOrder','\App\Http\Controllers\Auth\OrderController@tailOrder');
