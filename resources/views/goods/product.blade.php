@@ -66,7 +66,7 @@
         </div>    
         
         <div class="s_brand">
-            <div class="s_brand_img"><img src="{{asset('images')}}/sbrand.jpg" width="188" height="132" /></div>
+            <div class="s_brand_img"><img src="{{config('app.image').$Brand['logo']}}" width="188" height="132" /></div>
             <div class="s_brand_c"><a href="#">进入品牌专区</a></div>
         </div>    
         

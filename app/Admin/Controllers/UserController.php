@@ -74,14 +74,14 @@ class UserController extends Controller
         return Admin::grid(User::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->username('用户名');
-            $grid->integral('积分');
+            $grid->username('用户名')->label();
+            $grid->integral('积分')->label('primary');
             $grid->image('头像');
             $grid->phone('电话');
             $grid->email('邮箱');
-            $grid->last_time('上一次登录的时间');
-            $grid->last_ip('上一次登录的ip');
-            $grid->created_at('创建时间');
+            $grid->last_time('上一次登录的时间')->label('warning');
+            $grid->last_ip('上一次登录的ip')->label('danger');
+            $grid->created_at('创建时间')->label('info');
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
                 $actions->disableEdit();

@@ -60,8 +60,7 @@ Route::get('/cart/onlyDel','\App\Http\Controllers\Auth\CartController@onlyDel');
 
 //品牌
 Route::get('/brand', '\App\Http\Controllers\Auth\BrandController@brand');
-Route::get('/brand/list', '\App\Http\Controllers\Auth\BrandController@brandList');
-Route::get('/brand/list', '\App\Http\Controllers\Auth\BrandController@brandList');
+Route::get('/brand/list/{brand_id}', '\App\Http\Controllers\Auth\BrandController@brandList');
 //分类
 Route::get('/category', '\App\Http\Controllers\Auth\CategoryController@category');
 Route::get('/category/list', '\App\Http\Controllers\Auth\CategoryController@list');
@@ -95,7 +94,9 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::post('/user/address/update', '\App\Http\Controllers\Auth\UserController@update');
 
     //营销（秒杀-优惠券-团购）
-    Route::get('/seckill/seckill', '\App\Http\Controllers\Auth\SeckillController@seckill');
+    Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
+    Route::get('/seckill/show','\App\Http\Controllers\Auth\SeckillController@show');
+    Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
     Route::get('/groupbuy/buy', '\App\Http\Controllers\Auth\GroupbuyController@buy');
 
@@ -119,7 +120,16 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/order/tailOrder','\App\Http\Controllers\Auth\OrderController@tailOrder');
     Route::get('/order/alreadyBuy','\App\Http\Controllers\Auth\OrderController@alreadyBuy');
     Route::get('/order/save_goods_status','\App\Http\Controllers\Auth\OrderController@save_goods_status');
-    Route::get('/order/save_order_status','\App\Http\Controllers\Auth\OrderController@save_order_status');
+
+//支付宝支付
+Route::post('/alipay','\App\Http\Controllers\Auth\alipayController@Alipay'); 
+
+Route::any('notify','\App\Http\Controllers\Auth\alipayController@AliPayNotify'); //服务器异步通知页面路径
+Route::any('return','\App\Http\Controllers\Auth\alipayController@AliPayReturn');  //页面跳转同步通知页面路径
+
+
+    //微信支付
+Route::get('/wechatpay','\App\Http\Controllers\Auth\WechatController@index');
 });
 
 //商品
