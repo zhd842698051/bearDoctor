@@ -187,6 +187,7 @@ return [
         zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
 
         SocialiteProviders\Manager\ServiceProvider::class,
+        //Latrell\Alipay\AlipayServiceProvider::class,
 
     ],
 
