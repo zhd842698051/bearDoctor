@@ -23,13 +23,14 @@ class OrderController extends Controller
 	use DatabaseTransactions;
 	public function orderInfo()
 	{
+		$user_id=\Auth::id();
 		$goods_list=$this->cart();
 		//收货人信息
-		$man=Address::where([['user_id', '=', '1'],['is_default', '=', '1']])->get()->toArray();
+		$man=Address::where([['user_id', '=', $user_id],['is_default', '=', '1']])->get()->toArray();
 		$man=$man[0];
 
 		//红包优惠券
-		$user_prop=User_prop::where(['user_id'=>1])->get()->toArray();
+		$user_prop=User_prop::where([['user_id', '=', $user_id],['status', '=', '0']])->get()->toArray();
 		//红包优惠券
 		foreach ($user_prop as $key => $value) {
 		   $prop=Prop::where([['id', '=', $user_prop[$key]['prop_id']],['num', '>', '0']])->first()->toArray();
@@ -88,19 +89,19 @@ class OrderController extends Controller
 			$cart=$this->cart();
 			$address_id=request('address_id');
 			$postscript=request('postscript');
+			if($postscript==""){
+              $postscript='';
+             }
 			$money=0;
-			$prod_id=0;
 		foreach ($cart as $key => $value) {
 			 $money+=$value['price'];
 			 $num=$cart[$key]['num'];
 			 $cart_id=$cart[$key]['id'];
-			 //Cart::where(['id'=>$cart_id])->delete();
 			 $product_id=$cart[$key]['product_id'];
+			 //Cart::where(['id'=>$cart_id])->delete();
 			 //减库存
 			// Product::where(['id'=>$product_id])->decrement('num', $num);
-			 $order['product_id']=$product_id;
-			 $order['goods_num']=$num;
-			 $order['goods_price']=$cart[$key]['price'];
+
 		}
 		$prop_id=request('prop_id');
 		if($prop_id){
@@ -124,7 +125,9 @@ class OrderController extends Controller
 		if($res){
 			$orders=Order::where([['user_id','=',$user_id],['status','=','0']])->orderBy('created_at', 'desc')->first()->toArray();
 			$order['order_id']=$orders['id'];
-		    Order_goods::create($order);
+			$arr = $this->getOrderProduct($cart,$orders['id']);
+			Order_goods::insert($arr);
+		    
 			$msg['error']=0;
 		}else{
 			$msg['error']=1;
@@ -137,6 +140,7 @@ class OrderController extends Controller
 	public function confirmOrder(){
 		$user_id=\Auth::id();
 		$data=Order::where([['user_id','=',$user_id],['status','=','0']])->orderBy('created_at', 'desc')->first()->toArray();
+
 		return view('Order/addorder',compact('data'));
 	}
 
@@ -210,5 +214,18 @@ class OrderController extends Controller
 	public function alreadyBuy(){
 		$order=Order::alreadyBuy(\Auth::id());
 		return view('order/alreadyBuy',compact('order'));
+		}
+
+	public function getOrderProduct($cart,$id){
+		$arr = [];
+		foreach($cart as $k => $v){
+			$arr[$k]['order_id'] = $id;
+			$arr[$k]['goods_num'] = $v['num'];
+			$arr[$k]['goods_price'] = $v['price'];
+			$arr[$k]['product_id'] = $v['product_id'];
+			$arr[$k]['created_at']=date("Y-m-d H:i:s",time());
+			$arr[$k]['updated_at']=date("Y-m-d H:i:s",time());
+		}
+		return $arr;
 	}
 }
