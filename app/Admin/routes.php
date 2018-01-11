@@ -16,6 +16,10 @@ Route::group([
     $router->resource('attribute', AttributeController::class);
     $router->resource('brand', BrandController::class);
     $router->resource('category', CategoryController::class);
+    $router->resource('order', OrderController::class);
+    $router->resource('seckill', SeckillController::class);
+    $router->resource('user', UserController::class);
+    $router->resource('prop', PropController::class);
 
 });
 

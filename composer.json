@@ -9,6 +9,7 @@
         "encore/laravel-admin": "1.4.x-dev",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
+        "latrell/alipay": "dev-master",
         "mews/captcha": "^2.1",
         "socialiteproviders": "^3.0",
         "socialiteproviders/weibo": "^3.0",
@@ -53,4 +54,8 @@
         "sort-packages": true,
         "optimize-autoloader": true
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e723b743db112a2014297c6f943b8a72a47246ef

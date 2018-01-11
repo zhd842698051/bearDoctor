@@ -262,9 +262,7 @@
              var address_id=$(".peo_tab tr").attr("a_id");
              var prop_id=$(".jslct").val().split('|')[2];
              var postscript=$("#postscript").val();
-             if(postscript==""){
-              postscript='';
-             }
+             
              if(prop_id==undefined){
               prop_id=0;
              }

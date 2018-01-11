@@ -58,7 +58,11 @@
                 <td style="font-size:14px; font-family:'宋体'; padding:10px 0 20px 0; border-bottom:1px solid #b6b6b6;">
 
                    请选择支付方式:
-                     <img src="{{asset('upload/image')}}/alipay_50.png" id="alipay" /> 
+                   <form action="{{url('alipay')}}" method="post">
+                    <input type="hidden" value="<?=$data['order_no']?>" name="order_no">
+                    <input type="hidden" value="<?=$data['real_money']?>" name="money">
+                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
+                     <img src="{{asset('upload/image')}}/alipay_50.png" id="alipay" /><input type="submit" value="alipay"></form>
                      <img src="{{asset('upload/image')}}/timg.jpg" id="wechatpay"/> 
                 </td>
               </tr>

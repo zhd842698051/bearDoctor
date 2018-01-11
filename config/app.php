@@ -14,7 +14,13 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
     'image' => 'http://p22vshs5l.bkt.clouddn.com/',
-    
+    'providers' => [
+         /*
+          * Laravel Framework Service Providers...
+          */
+          
+          'Latrell\Alipay\AlipayServiceProvider',
+     ],
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -65,7 +71,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Shanghai',
 
     /*
     |--------------------------------------------------------------------------
@@ -187,6 +193,7 @@ return [
         zgldh\QiniuStorage\QiniuFilesystemServiceProvider::class,
 
         SocialiteProviders\Manager\ServiceProvider::class,
+        Latrell\Alipay\AlipayServiceProvider::class,
 
     ],
 
