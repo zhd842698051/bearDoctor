@@ -26,13 +26,13 @@ class LoginController extends Controller
     		'password'	=>	'required|min:6|max:16',
     	]);
 
-    	$user = request(['username','password']);
-    	if(\Auth::attempt($user)){
-            $res=self::now();
-    		return redirect('/');
-    	}else{
-    		echo "<script>alert('账号或密码错误');</script>";
-    	}
+//    	$user = request(['username','password']);
+//    	if(\Auth::attempt($user)){
+//            $res=self::now();
+//    		return redirect('/');
+//    	}else{
+//    		echo "<script>alert('账号或密码错误');location.href='/login'</script>";
+//    	}
     	//return \Redirect::back()->withErrors("用户名和密码不匹配");
 
     	$user = request(['username','password']);
@@ -41,7 +41,7 @@ class LoginController extends Controller
             if(\Auth::attempt($user)){
                 return redirect('/');
             }else{
-                echo "<script>alert('账号或密码错误');</script>";
+                echo "<script>alert('账号或密码错误');location.href='/login'</script>";
             }
             }else{
                 if (\Auth::attempt(['username' => $user['username'], 'password' => $user['password']], $remember)) {
@@ -92,10 +92,20 @@ class LoginController extends Controller
         $username = $user['username'];
         $password = $user['password'];
         $qq_auth = $user['qq_auth'];
-        $qquser = User::create(['username'=>$username,'password'=>$password,'qq_auth'=>$qq_auth]);
-
-        auth()->login($qquser);
+        //查询输入的用户名是否存在
+        $res=User::findUsername($username);
+        if(!isset($res[0]['username'])){
+            $qquser = User::create(['username'=>$username,'password'=>$password,'qq_auth'=>$qq_auth]);
+            auth()->login($qquser);
+            self::now();
+        }else{
+            $qquser = User::save_qq_auth($username,$qq_auth);
+            $userQQ=User::findQq($qq_auth);
+            \Auth::login($userQQ[0]);
+            self::now();
+        }
         return redirect('/');
+
     }
 
     //微博授权页面

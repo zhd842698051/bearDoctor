@@ -182,12 +182,38 @@ class OrderController extends Controller
 	//订单列表
 	public function list()
 	{
-//		$isLogin=Auth::check();
-//		if($isLogin == false){
-//			return redirect('/login');
-//		}else{
-			return view('Order/list');
-//			}
+			$order=Order::orderList(\Auth::id());
+			return view('Order/list',compact('order'));
+	}
+
+	//删除订单
+	public function save_order_status(Request $request){
+		$id=request('id');
+		$res=Order::save_order_status(\Auth::id(),$id);
+		if($res){
+			echo "<script>location.href='/order'</script>";
+		}
+	}
+
+	//删除订单中的商品
+	public function save_goods_status(Request $request){
+		$id = request('id');
+		$goods_id = request('goods_id');
+		$res=Order::save_goods_status(\Auth::id(),$id,$goods_id);
+		if($res){
+			echo "<script>location.href='/order/alreadyBuy'</script>";
+		}
+	}
+
+	//物流-跟踪订单
+	public function tailOrder(){
+		return view('order/tailOrder');
+	}
+
+	//已经购买的宝贝
+	public function alreadyBuy(){
+		$order=Order::alreadyBuy(\Auth::id());
+		return view('order/alreadyBuy',compact('order'));
 		}
 
 	public function getOrderProduct($cart,$id){
