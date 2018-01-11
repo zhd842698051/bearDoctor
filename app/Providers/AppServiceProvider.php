@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 use App\Category;
-
+use App\Cart;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -20,7 +20,8 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('layout/index_head',function($view){
             $category = $this->getOrderCategory();
             $visibility = $this->getVisibility();
-            $view->with(compact('category','visibility'));
+            $userid = \Auth::id();
+            $view->with(compact('category','visibility','userid'));
         });
     }
 

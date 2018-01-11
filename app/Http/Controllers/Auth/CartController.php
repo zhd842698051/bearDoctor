@@ -8,15 +8,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cookie;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Order;
 class CartController extends Controller
 {
 	//购物车列表
 	public function cartShow()
 	{
 		//判断用户是否登录 并验证
-		
 		//逻辑处理
-		$userid = 1;
+		$userid = \Auth::id();
 		return view('cart/cartShow',['user_id'=>$userid]);
 	}
 
@@ -44,10 +44,26 @@ class CartController extends Controller
 			$status = 'no';
 		}
 		return $status;
-		
-		
 	}
 
+	//单删
+	public function onlyDel()
+	{
+		if(request::ajax() && request::isMethod('get'))
+		{
+			$cartid = request('cart_id');
+			$this->validate(request(),['cart_id'=>'required']);
+			$sre = Cart::where('id',$cartid)->delete();
+			if($sre)
+			{
+				return 'ok';
+			}
+			else
+			{
+				return 'no';
+			}
+		}
+	}
 	//查询
 	public function cartSel()
 	{
@@ -70,20 +86,97 @@ class CartController extends Controller
 	public function createOrder()
 	{
 		$data = request('data');
-		foreach($data as $k=>$v)
+		return $data;
+		// $model = new Cart();
+		// $order = new Order();
+		// foreach($data as $k=>$v)
+		// {
+		// 	//
+		// 	//查询库存
+		// 	//$row = Db::table('cart')->where('cart.product_id',$v['goods_id'])->join('product','cart.product_id','=','product.id')->get()->toArray();
+		// 	$model ->product_id = $v['goods_id'];
+		// 	$row = $model->selNum();
+		// 	return $row;
+		// 	if($row->num<$v['goods_num'])
+		// 	{
+		// 		return $row->goods_id.' 库存不足';
+		// 	}
+		// 	else
+		// 	{
+		// 		try{
+		// 			$model ->cart_id = $row->id;
+		// 			$sre = $model ->del();
+		// 			if($sre)
+		// 			{
+		// 				//库存减少
+		// 				//$row->num = $row->num-$v['goods_num'];
+		// 				$sr = $model->updateNum($row,$v['goods_num']);
+		// 				if($sr)
+		// 				{
+		// 					//加入订单
+		// 					$order->goods_id = $row['goods_id'];
+		// 					$order->num = $v['goods_num']+$row['num'];
+		// 					//$order->user_id = Auth::id();
+		// 				}
+		// 				else
+		// 				{
+		// 					throw new Expection;
+		// 				}
+		// 				return $sr;
+		// 			}
+		// 			else
+		// 			{
+		// 				throw new Exception;
+		// 			}
+		// 		}
+		// 		catch(Exception $e)
+		// 		{
+		// 			return 2;
+		// 		}
+		// 	}
+			
+		// }
+	}
+
+	public function nav()
+	{
+		$userid = \Auth::id();
+		$data = Db::table('cart')->where('user_id',$userid)->join('product','cart.product_id','=','product.id')->join('goods','product.goods_id','=','goods.id')->select('cart.num','user_id','price','sell_price','cover','goods_id','name','product_id','sell_price')->get();
+		if($data)
 		{
-			//
-			//查询库存
-			$row = Db::table('cart')->where('cart.product_id',$v['goods_id'])->join('product','cart.product_id','=','product.id')->get()->toArray();
-			
-			if($row[0]->num<$v['goods_num'])
+			$result['count'] = count(Db::table('cart')->where('user_id',$userid)->get());
+			$result['data'] = $data;
+			$result['status'] = 'ok';
+		}
+		else
+		{
+			$result['status'] = 'no';
+			$result['result'] = [];
+		}
+        return $result;
+	}
+
+	//添加
+	public function addData()
+	{
+		if(request::ajax() && request::isMethod('get'))
+		{
+			$data = request('data');
+			$userid = \Auth::id();
+			foreach($data as $k=>$v)
 			{
-				return $row[0]->goods_id.' 库存不足';
-				// 1库存不足
-				// $msg = $row[0]['goods_id'].' 1';
-				// return $msg;
+				$sre=DB::table('cart')->insert(['user_id'=>$userid,'product_id'=>$v['product_id'],'num'=>$v['goods_num']]); 
+				//$sql .="(".$userid.",".$v['goods_num'].",".$v['product_id'].")";
+				//$sre = Db::insert('insert into cart(user_id,num,product_id) values(?,?,?)',[$userid,$v['goods_num'],$v['product_id']]);
+				if(!$sre)
+				{
+					return 'no';
+				}
 			}
+			return 'ok';
 			
+			//$query =	"insert into cart(`user_id`,`num`,`product_id`) values".$sql;
+			//$sre = Db::insert($query);
 		}
 	}
 
