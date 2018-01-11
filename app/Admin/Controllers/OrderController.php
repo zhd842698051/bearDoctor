@@ -71,7 +71,7 @@ class OrderController extends Controller
         return Admin::grid(Order::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->order_no('订单号');
+            $grid->order_no('订单号')->label('primary');
             $grid->order_money('订单金额');
             $grid->real_money('实付金额');
             $grid->status('订单状态')->display(function($status){
