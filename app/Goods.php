@@ -18,4 +18,8 @@ class Goods extends Model
             $this->attributes['images'] = implode(',',$pictures);
         }
     }
+
+    public function goodsAttrs(){
+        return $this->hasMany('App\GoodsAttr','goods_id','id');
+    }
 }

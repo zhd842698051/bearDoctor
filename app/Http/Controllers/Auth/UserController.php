@@ -9,6 +9,8 @@ use App\Http\Controllers\Auth\IndexController;
 use Illuminate\Http\Request;
 use App\Region;
 use App\Address;
+use App\Collect;
+use App\User_prop;
 
 class UserController extends Controller
 {
@@ -52,10 +54,6 @@ class UserController extends Controller
 		$data['user_id']=Auth::id();
 
 		$data['address']=$city;
-
-		
-		$res = Address::create(['name'=>$data['name'],'amply'=>$data['amply'],'postcode'=>$data['postcode'],'phone'=>$data['phone'],'address'=>$data['address'],'user_id'=>$data['user_id'],'bulid'=>$data['bulid']]);
-
 
 		if(!isset($data['is_default'])){
 			$res = Address::create(['name'=>$data['name'],'amply'=>$data['amply'],'postcode'=>$data['postcode'],'phone'=>$data['phone'],'address'=>$data['address'],'user_id'=>$data['user_id'],'bulid'=>$data['bulid']]);
@@ -118,7 +116,18 @@ class UserController extends Controller
 	//我的收藏
 	public function collect()
 	{
-		return view('user/collect');
+		$collect=Collect::collect(\Auth::id());
+		$num=\DB::table('collect')->count();
+		return view('user/collect',compact('collect','num'));
+	}
+
+	//删除我的收藏
+	public function collectDel(Request $request){
+		$data=request();
+		$res=Collect::delCollect(\Auth::id(),$data->id);
+		if($res){
+			echo "<script>location.href='/user/collect'</script>";
+		}
 	}
 
 	//我的佣金
@@ -172,7 +181,8 @@ class UserController extends Controller
 	//我的红包
 	public function packet()
 	{
-		return view('user/packet');
+		$data=User_prop::prop(\Auth::id());
+		return view('user/packet',compact('data'));
 	}
 
 	//我的业绩

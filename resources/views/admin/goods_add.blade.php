@@ -295,6 +295,8 @@
                             </div>
 
                         </div>
+                        <center><span id="create-pro" class="btn btn-warning">生成</span></center>
+                        <div id="attr-show"></div>
                         <div class="form-group 1">
 
                             <label for="num" class="col-sm-2 control-label">库存</label>
@@ -358,7 +360,7 @@
             }
             var str=''
             $.ajax({
-                url:'http://www.beardoctor.com/admin/goods/getAttr',
+                url:'http://www.shops.com/admin/goods/getAttr',
                 data:{id:cate_id},
                 dataType:'json',
                 success:function (msg) {
@@ -378,7 +380,7 @@
             }
             var str=''
             $.ajax({
-                url:'http://www.beardoctor.com/admin/goods/getAttribute',
+                url:'http://www.shops.com/admin/goods/getAttribute',
                 data:{id:attr_id},
                 dataType:'json',
                 success:function (msg) {
@@ -396,7 +398,7 @@
                 return false;
             }
             $.ajax({
-                url:'http://www.beardoctor.com/admin/goods/ajaxGetAttr',
+                url:'http://www.shops.com/admin/goods/ajaxGetAttr',
                 data:{id:attribute_id},
                 dataType:'json',
                 success:function (msg) {
@@ -429,13 +431,13 @@
             })
             var str='';
             $.ajax({
-                url:'http://www.beardoctor.com/admin/goods/ajaxGetAttr',
+                url:'http://www.shops.com/admin/goods/ajaxGetAttr',
                 type:'get',
                 data:{id:attribute_id},
                 dataType:'json',
                 success:function (msg) {
                     $.each(msg,function(k,v){
-                       str+='<div class="form-group 1"><label for="promotion_price" class="col-sm-2 control-label">'+v+'</label><div class="col-sm-8"><div class="input-group"><span class="input-group-addon">¥</span><input style="width: 120px" type="text" id="promotion_price" name="aprice['+k+']" value="" class="form-control promotion_price" placeholder="输入 价格" /><input style="width: 100px" type="text"  name="anum['+k+']"  class="form-control num" placeholder="输入 库存" /><span class="del-attr" style="cursor: pointer">X</span> </div></div></div>';
+                       str+='<div class="form-group 1"><label for="promotion_price" class="col-sm-2 control-label">'+v+'</label><div class="col-sm-8"><div class="input-group"><span class="input-group-addon">¥</span><input style="width: 120px" type="text" id="promotion_price" name="aprice['+k+']" value="" class="form-control promotion_price" placeholder="输入 价格" /><input style="width: 100px" type="text"  name="anum['+k+']"  class="form-control num" placeholder="输入 库存" /><label for="aa" class="col-sm-2 control-label">选择</label><input type="radio" name="aa" value="1" class="minimal aa"  />&nbsp;是&nbsp;&nbsp;<input type="radio" name="aa" value="0" class="minimal aa" checked />&nbsp;否&nbsp;&nbsp;<span class="del-attr" style="cursor: pointer">X</span> </div></div></div>';
                     })
                    $("#num").parents(".form-group").remove()
                     $("#attr-show").html(str)
