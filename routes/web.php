@@ -115,6 +115,16 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/getadd','\App\Http\Controllers\Auth\OrderController@getAdd');
     Route::get('/order/tailOrder','\App\Http\Controllers\Auth\OrderController@tailOrder');
     Route::get('/order/alreadyBuy','\App\Http\Controllers\Auth\OrderController@alreadyBuy');
+
+//支付宝支付
+Route::post('/alipay','\App\Http\Controllers\Auth\alipayController@Alipay'); 
+
+Route::any('notify','\App\Http\Controllers\Auth\alipayController@AliPayNotify'); //服务器异步通知页面路径
+Route::any('return','\App\Http\Controllers\Auth\alipayController@AliPayReturn');  //页面跳转同步通知页面路径
+
+
+    //微信支付
+Route::get('/wechatpay','\App\Http\Controllers\Auth\WechatController@index');
 });
 
 //商品
