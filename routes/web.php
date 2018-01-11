@@ -93,7 +93,9 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::post('/user/address/update', '\App\Http\Controllers\Auth\UserController@update');
 
     //营销（秒杀-优惠券-团购）
-    Route::get('/seckill/seckill', '\App\Http\Controllers\Auth\SeckillController@seckill');
+    Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
+    Route::get('/seckill/show','\App\Http\Controllers\Auth\SeckillController@show');
+    Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
     Route::get('/groupbuy/buy', '\App\Http\Controllers\Auth\GroupbuyController@buy');
 
