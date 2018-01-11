@@ -29,6 +29,7 @@ Route::post('/login/qqlogin','\App\Http\Controllers\Auth\LoginController@qqbinbi
 //微博登录
 Route::get('/wbCallback','\App\Http\Controllers\Auth\LoginController@wbCallback');
 Route::get('/wb','\App\Http\Controllers\Auth\LoginController@wb');
+Route::post('/login/wblogin','\App\Http\Controllers\Auth\LoginController@wbbinbing');
 
 //执行登录
 Route::post('/login', '\App\Http\Controllers\Auth\LoginController@loginDo');
