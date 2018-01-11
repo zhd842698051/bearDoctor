@@ -11,59 +11,32 @@
                 <td width="25%">订单状态</td>
                 <td width="15%">操作</td>
               </tr>
+              @foreach($order as $k=>$v)
               <tr>
-                <td><font color="#ff4e00">2015092823056</font></td>
-                <td>2015-09-26   16:45:20</td>
-                <td>￥456.00</td>
-                <td>未确认，未付款，未发货</td>
-                <td>取消订单</td>
+                <td><font color="#ff4e00">{{ $v->order_no }}</font></td>
+                <td>{{ $v->created_at }}</td>
+                <td>{{ $v->order_money }}</td>
+                @if($v->status == 0 )
+                  <td>订单过期</td>
+                @elseif($v->status == 1 )
+                  <td>待支付</td>
+                @elseif($v->status == 2 )
+                  <td>已支付</td>
+                @elseif($v->status == 3 )
+                  <td>已完成</td>
+                @else
+                  <td>退款</td>
+                @endif
+                <td><a href="{{ URL('/order') }}/save_order_status?id={{ $v->id }}"><font color="#ff4e00">删除订单</font></a></td>
               </tr>
-              <tr>
-                <td><font color="#ff4e00">2015092823056</font></td>
-                <td>2015-09-26   16:45:20</td>
-                <td>￥456.00</td>
-                <td>已确认，已付款，已发货</td>
-                <td><font color="#ff4e00">已确认</font></td>
-              </tr>
-              <tr>
-                <td><font color="#ff4e00">2015092823056</font></td>
-                <td>2015-09-26   16:45:20</td>
-                <td>￥456.00</td>
-                <td>未确认，未付款，未发货</td>
-                <td>取消订单</td>
-              </tr>
-              <tr>
-                <td><font color="#ff4e00">2015092823056</font></td>
-                <td>2015-09-26   16:45:20</td>
-                <td>￥456.00</td>
-                <td>已确认，已付款，已发货</td>
-                <td><font color="#ff4e00">已确认</font></td>
-              </tr>
-              <tr>
-                <td><font color="#ff4e00">2015092823056</font></td>
-                <td>2015-09-26   16:45:20</td>
-                <td>￥456.00</td>
-                <td>未确认，未付款，未发货</td>
-                <td>取消订单</td>
-              </tr>
-              <tr>
-                <td><font color="#ff4e00">2015092823056</font></td>
-                <td>2015-09-26   16:45:20</td>
-                <td>￥456.00</td>
-                <td>已确认，已付款，已发货</td>
-                <td><font color="#ff4e00">已确认</font></td>
-              </tr>
-              <tr>
-                <td><font color="#ff4e00">2015092823056</font></td>
-                <td>2015-09-26   16:45:20</td>
-                <td>￥456.00</td>
-                <td>未确认，未付款，未发货</td>
-                <td>取消订单</td>
-              </tr>
+                @endforeach
             </table>
-
-
-
+          <link rel="stylesheet" href="{{ asset('css') }}/page.css">
+          <div id="pull_right">
+            <div class="pull-right">
+              {!! $order->render() !!}
+            </div>
+          </div>
         </div>
 	<!--End 用户中心 End-->
 @endsection
