@@ -59,8 +59,7 @@ Route::get('/cart/onlyDel','\App\Http\Controllers\Auth\CartController@onlyDel');
 
 //品牌
 Route::get('/brand', '\App\Http\Controllers\Auth\BrandController@brand');
-Route::get('/brand/list', '\App\Http\Controllers\Auth\BrandController@brandList');
-Route::get('/brand/list', '\App\Http\Controllers\Auth\BrandController@brandList');
+Route::get('/brand/list/{brand_id}', '\App\Http\Controllers\Auth\BrandController@brandList');
 //分类
 Route::get('/category', '\App\Http\Controllers\Auth\CategoryController@category');
 Route::get('/category/list', '\App\Http\Controllers\Auth\CategoryController@list');

@@ -53,138 +53,16 @@
             <div class="list_c">
             	
                 <ul class="brand">
+                    @foreach($Brand as $b)
                 	<li>
-                    	<div class="img"><img src="{{asset('images')}}/brand1.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>普拉达</span>（20）</div>
+                    	<a href="/brand/list/{{$b->id}}"><div class="img"><img src="{{config('app.image').$b->logo}}" width="226" height="108" /></div></a>
+                        <div class="name"><span>{{$b->name}}</span>（20）</div>
                     </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand2.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>劳力士</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand3.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>古奇</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand4.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>迪奥</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand1.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>普拉达</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand2.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>劳力士</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand3.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>古奇</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand4.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>迪奥</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand1.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>普拉达</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand2.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>劳力士</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand3.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>古奇</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand4.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>迪奥</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand1.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>普拉达</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand2.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>劳力士</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand3.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>古奇</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand4.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>迪奥</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand1.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>普拉达</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand2.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>劳力士</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand3.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>古奇</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand4.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>迪奥</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand1.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>普拉达</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand2.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>劳力士</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand3.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>古奇</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand4.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>迪奥</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand1.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>普拉达</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand2.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>劳力士</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand3.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>古奇</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand4.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>迪奥</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand1.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>普拉达</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand2.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>劳力士</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand3.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>古奇</span>（20）</div>
-                    </li>
-                    <li>
-                    	<div class="img"><img src="{{asset('images')}}/brand4.jpg" width="226" height="108" /></div>
-                        <div class="name"><span>迪奥</span>（20）</div>
-                    </li>
+                    @endforeach
                 </ul>
                 
                 <div class="pages">
-                	<a href="#" class="p_pre">上一页</a><a href="#" class="cur">1</a><a href="#">2</a><a href="#">3</a>...<a href="#">20</a><a href="#" class="p_pre">下一页</a>
+<!--                 	<a href="#" class="p_pre">上一页</a><a href="#" class="cur">1</a><a href="#">2</a><a href="#">3</a>...<a href="#">20</a><a href="#" class="p_pre">下一页</a> -->
                 </div>
                 
                 
