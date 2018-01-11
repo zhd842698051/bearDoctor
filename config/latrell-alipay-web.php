@@ -13,3 +13,4 @@ return [
    // 页面跳转同步通知页面路径。根据自己项目路径做相应的修改
    'return_url' => 'http://web.wan.com/return'
 ];
+
