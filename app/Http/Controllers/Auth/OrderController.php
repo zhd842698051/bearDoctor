@@ -21,7 +21,6 @@ class OrderController extends Controller
 {
 	public function orderInfo()
 	{
-
 		//购物车商品信息
 		$goods_list = Cart::where(['user_id' => 1])->orderBy('created_at', 'desc')->get()->toArray();
 
@@ -43,7 +42,6 @@ class OrderController extends Controller
 				}
 				$goods_list[$key]['attr'] = rtrim($str, ',');
 			}
-
 
 		//收货人信息
 		$man=Address::where([['user_id', '=', '1'],['is_default', '=', '1']])->get()->toArray();
@@ -70,7 +68,6 @@ class OrderController extends Controller
 	  $user_id=request('user_id');
 	  $cart_id=request('cart_id');
 	  $res=Cart::where([['user_id','=',$user_id],['id','=',$cart_id]])->delete();
-
 	  if($res){
 	  	$data['error']=0;
 	  }else{

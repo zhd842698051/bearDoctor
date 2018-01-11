@@ -33,7 +33,6 @@
   top: 5px;
   right: 5px;
   }
-
   .ch_c{
     width: 60px;
     height: 35px;
@@ -117,12 +116,14 @@
 
 
                 <div class="brand_t" >商品特卖</div> 
-               
+                
                 <ul class="p_sell">
                    <?php foreach($data as $k=>$v) {?>
                     <li>
-                         <input type="hidden" id="timed_<?php echo $v['id']?>" value="<?php echo $v['start_time']?>">
-                        
+                        <input type="hidden" id="timed_<?php echo $v['id']?>" value="<?php echo $v['start_time']?>">
+                        <!-- <input type="hidden" id="start_<?php echo $v['id']?>" value="<?php echo $v['start_time']?>"> -->
+                        <!-- <input type="hidden" id="end_<?php echo $v['id']?>" value="<?php echo $v['end_time']?>"> -->
+                        <input type="hidden" id="ids" value="<?php echo $v['id']?>" name="<?php echo $v['id']?>">
                         <div class="img"><img src="config('app.image')+xDTRT0fEm5dtskBbAP9bTLUkGcNA2niNBNgWDHFR.jpeg" width="150px" height="100px"/></div>
                         <div class="name"><?php echo $v['name']?></div>
                         <div class="price">
@@ -142,7 +143,7 @@
 
                         <div class="ch_bg" id="gold_div">
                            <span class="ch_txt" id="ch_txt">￥<font><?php echo $v['seckill_price']?></font></span>
-                            <a href="order" class="ch_c" id="gold_btn_{{$v['id']}}">准备</a>
+                            <a href="#" class="ch_c" aa="ready" id="gold_btn_{{$v['id']}}">准备</a>
                         </div>
                          <div class="times" id="showStartTime_<?php echo $v['id']?>"></div>
                          <input type="hidden" id="showtimekill_<?php echo $v['id']?>" value="<?php echo $v['start_time']?>">
@@ -155,7 +156,7 @@
                          <div class="popup">开没开始，先等等哦...
                           <button class="btn_close">x</button>
                          </div>
-                          
+                         
                     </li>
                         <?php } ?>
                     
@@ -164,12 +165,33 @@
             <!--End 特卖 End-->
         <script type="text/javascript" src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
         <script type="text/javascript">
+            $(function(){
+                 var id =$("#ids").val();
+                $(".ch_c").click(function(){
+                  $.get("{{url('seckill/show')}}",{
+                    "id":id
+                    },function(msg){
+                    if(msg.error==0){
+                        
+                    }else{
+                        alert('库存不足');
+                    }
+                },"json");
+                })
+                
+            })
+           
+        </script>
+        <script type="text/javascript">
          function begin_time($id){
              var res=parseInt($("#timed_"+$id).val());
+             // alert(res)
              if(3600<res && res<=7200){
                  $(function() {
+                    // alert(11)
                   $('a').click(function() {
                    var $Popup = $('.popup');
+                   // alert($Popup)
                    $Popup.css({
                    left: ($('body').width() - $Popup.width()) / 2+ 'px',
                    top: ($(window).height() - $Popup.height()) / 2 + $(window).scrollTop() + 'px',
@@ -184,20 +206,32 @@
                 })
              }else if(res>0 && res<=3600){
                 $("#gold_btn_"+$id).html('立即抢购');
-                 $("#gold_btn_"+$id).attr("href", "border"); 
-
-                $("#gold_btn_"+$id).click(function(){
-                    
-
-                    alert(11)
-
-
-                })
-
+                // alert($res)
+                $("#gold_btn_"+$id).attr("href", "javascript:;"); 
              }else if(res<0){
                 
                     $("#gold_btn_"+$id).html('已结束');
-                    $("#gold_btn_"+$id).removeAttr('href');  
+                    // alert($rr)
+                    $("#gold_btn_"+$id).removeAttr('href'); 
+               
+             }else if(res>7200){
+                $(function() {
+                  $('a').click(function() {
+                    // alert(11)
+                   var $Popup = $('.popup');
+                   // alert($Popup)
+                   $Popup.css({
+                   left: ($('body').width() - $Popup.width()) / 2+ 'px',
+                   top: ($(window).height() - $Popup.height()) / 2 + $(window).scrollTop() + 'px',
+                   display: 'block'
+                   })
+                     $("#gold_btn_"+$id).removeAttr('href');  
+                   
+                  })
+                  $('.btn_close').click(function() {
+                   $('.popup').css('display', 'none');
+                  })
+                })
              }
          }
         </script>

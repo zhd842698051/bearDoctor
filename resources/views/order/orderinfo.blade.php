@@ -140,7 +140,7 @@
                    if(res<1){
                     var r=window.confirm("您确定要删除选中商品吗")
                     if(r==true){
-                       $.get("{{url('delCart')}}", {
+                      $.get("{{url('delCart')}}", {
                     "user_id": user_id,
                     "cart_id":cart_id
                 }, function (data) {
@@ -199,7 +199,6 @@
                 })
                 $("#red").html($(".jslct").val())
                 
-
                 $('.btn_show').click(function() {
                  $('#mask').css({
                  display: 'block',

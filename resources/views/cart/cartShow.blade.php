@@ -197,7 +197,7 @@ $(function(){
             $("#content").html(re)
             common_price();
             //用户没登陆 下的加减
-            $(document).on('click',"input[name='jia']",function(){       
+            $(document).on('click',"input[name='jia']",function(){      
                 var c = $(this).parent().find(".car_ipt").val();
                 if(c>100){
                     c = 100;
