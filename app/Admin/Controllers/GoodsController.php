@@ -65,7 +65,6 @@ class GoodsController extends Controller
     public function create()
     {
         return Admin::content(function (Content $content) {
-            Redis::set('name','aaa');die;
             $content->header('header');
             $content->description('description');
             $cate = Category::selectOptions();
