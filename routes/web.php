@@ -80,6 +80,7 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/user/packet', '\App\Http\Controllers\Auth\UserController@packet');
     Route::get('/user/results', '\App\Http\Controllers\Auth\UserController@results');
     Route::get('/user/safe', '\App\Http\Controllers\Auth\UserController@safe');
+    Route::get('/user/collect/{id}/del', '\App\Http\Controllers\Auth\UserController@collectDel');
     //收货地址四级联动
     Route::get('/user/address/country', '\App\Http\Controllers\Auth\UserController@country');
     Route::post('/user/address/add', '\App\Http\Controllers\Auth\UserController@add');
@@ -92,7 +93,9 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::post('/user/address/update', '\App\Http\Controllers\Auth\UserController@update');
 
     //营销（秒杀-优惠券-团购）
-    Route::get('/seckill/seckill', '\App\Http\Controllers\Auth\SeckillController@seckill');
+    Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
+    Route::get('/seckill/show','\App\Http\Controllers\Auth\SeckillController@show');
+    Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
 
     Route::get('/groupbuy/buy', '\App\Http\Controllers\Auth\GroupbuyController@buy');
 
@@ -115,6 +118,7 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/getadd','\App\Http\Controllers\Auth\OrderController@getAdd');
     Route::get('/order/tailOrder','\App\Http\Controllers\Auth\OrderController@tailOrder');
     Route::get('/order/alreadyBuy','\App\Http\Controllers\Auth\OrderController@alreadyBuy');
+    Route::get('/order/save_goods_status','\App\Http\Controllers\Auth\OrderController@save_goods_status');
 
 //支付宝支付
 Route::post('/alipay','\App\Http\Controllers\Auth\alipayController@Alipay'); 

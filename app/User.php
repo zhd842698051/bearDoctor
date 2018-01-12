@@ -32,4 +32,14 @@ class User extends Authenticatable
         $userQQ=self::where('qq_auth','=',$openId)->get();
         return $userQQ;
     }
+
+    //查找当前的用户名是否绑定openid
+    public static function findUsername($username){
+        return self::where('username','=',$username)->get()->toArray();
+    }
+
+    //修改当前用户名绑定的openID
+    public static function save_qq_auth($username,$qq_auth){
+        return  self::where('username','=',$username)->update(['qq_auth' => $qq_auth]);
+    }
 }
