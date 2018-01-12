@@ -98,13 +98,21 @@ class LoginController extends Controller
             $qquser = User::create(['username'=>$username,'password'=>$password,'qq_auth'=>$qq_auth]);
             auth()->login($qquser);
             self::now();
+            return redirect('/');
         }else{
-            $qquser = User::save_qq_auth($username,$qq_auth);
-            $userQQ=User::findQq($qq_auth);
-            \Auth::login($userQQ[0]);
-            self::now();
+            $newUser=['username'=>$username,'password'=>$password];
+            $res=\Auth::attempt($newUser);
+            if($res == true) {
+                $qquser = User::save_qq_auth($username, $qq_auth);
+                $userQQ = User::findQq($qq_auth);
+                \Auth::login($userQQ[0]);
+                self::now();
+                return redirect('/');
+            }else{
+                echo "<script>alert('账号或密码有误');location.href='/login'</script>";
+            }
         }
-        return redirect('/');
+
 
     }
 
@@ -136,7 +144,7 @@ class LoginController extends Controller
         $output = curl_exec($ch);
         curl_close($ch);
         $user=json_decode($output,true);
-        
+
         if(!empty($user)){
             $openid = $user['uid'];
             //先去判断当前openid是否绑定用户名
@@ -164,13 +172,20 @@ class LoginController extends Controller
             $sina_user = User::create(['username'=>$username,'password'=>$password,'sina_auth'=>$sina_auth]);
             auth()->login($sina_user);
             self::now();
+            return redirect('/');
         }else{
-            $sina_user = User::save_sina_auth($username,$sina_auth);
-            $userWb=User::findWb($sina_auth);
-            \Auth::login($userWb[0]);
-            self::now();
+            $newUser=['username'=>$username,'password'=>$password];
+            $res=\Auth::attempt($newUser);
+            if($res == true) {
+                $sina_user = User::save_sina_auth($username,$sina_auth);
+                $userWb=User::findWb($sina_auth);
+                \Auth::login($userWb[0]);
+                self::now();
+                return redirect('/');
+            }else{
+                echo "<script>alert('账号或密码有误');location.href='/login'</script>";
+            }
         }
-        return redirect('/');
     }
 
     //退出

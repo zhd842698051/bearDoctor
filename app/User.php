@@ -54,4 +54,9 @@ class User extends Authenticatable
     public static function save_sina_auth($username,$sina_auth){
         return  self::where('username','=',$username)->update(['sina_auth' => $sina_auth]);
     }
+
+    //修改用户密码
+    public static function save_user_password($user_id,$password){
+        return self::Where('id','=',$user_id)->update(['password' => $password]);
+    }
 }
