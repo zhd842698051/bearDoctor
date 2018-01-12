@@ -100,10 +100,9 @@ Route::group(['middleware' => 'auth:web'], function () {
     //营销（秒杀-优惠券-团购）
     Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
     Route::get('/seckill/show','\App\Http\Controllers\Auth\SeckillController@show');
+    Route::get('/seckill/ticket','\App\Http\Controllers\Auth\SeckillController@ticket');
     Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
-
-    Route::get('/groupbuy/buy', '\App\Http\Controllers\Auth\GroupbuyController@buy');
-
+   
     //订单
     Route::get('/order', '\App\Http\Controllers\Auth\OrderController@list');
     Route::get('/orderno', '\App\Http\Controllers\Auth\OrderController@orderNo');

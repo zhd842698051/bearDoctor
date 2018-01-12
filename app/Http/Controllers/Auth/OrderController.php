@@ -178,8 +178,8 @@ class OrderController extends Controller
 	//订单列表
 	public function list()
 	{
-			$order=Order::orderList(\Auth::id());
-			return view('Order/list',compact('order'));
+		$order=Order::orderList(\Auth::id());
+		return view('Order/list',compact('order'));
 	}
 
 	//删除订单

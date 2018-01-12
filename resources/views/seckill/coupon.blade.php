@@ -30,28 +30,82 @@
             <!--Begin 特卖 Begin-->
             <div class="brand_t">商品特卖</div>
             <ul class="p_sell">
+                <?php foreach($data as $k=>$v) {?>
                 <li>
+                    <input type="hidden" id="ids" value="<?php echo $v['id']?>">
                     <div class="img"><img src="{{asset('images')}}/t1.jpg" width="160" height="140" /></div>
-                    <div class="name">苹果 Iphone 6S</div>
+                    <div class="name"><?php echo $v['name']?></div>
                     <div class="price">
                         <table border="0" style="width:100%; color:red; font-size:15px" cellspacing="0" cellpadding="0">
                             <div style="font-family:'宋体'">
-                                <td>满50可用</td>
-                                <td width="33%">领取进度</td>
-                                <td width="33%">50%</td>
+                                <td>满<?php echo $v['full']?>可用</td>
+                                <td width="33%">剩余<?php echo $v['num']?>张</td>
                             </div>
                         </table>
                     </div>
                     <div class="ch_bg">
-                        <span class="ch_txt">￥<font>88</font></span>
-                        <a href="优惠券页面" class="ch_a">立即领取</a>
+                        <span class="ch_txt">￥<font><?php echo $v['price']?></font></span>
+                        <a href="javascript:;" id="take" class="ch_a">立即领取</a>
                     </div>
-                    <div class="times">倒计时：1200 时 30 分 28 秒</div>
+                        <div class="times" id="showStartTime_<?php echo $v['id']?>"></div>
+                        <input type="hidden" id="showtimekill_<?php echo $v['id']?>" value="<?php echo $v['start_time']?>">
+                        <script type="text/javascript">
+                        setInterval("set_time("+<?php echo $v['id']?>+")",1000);
+                        </script>
                 </li>
+                <?php }?>
             </ul>
         </div>
             <!--End 特卖 End-->
+            <script type="text/javascript" src="{{asset('js')}}/jquery-1.8.2.min.js"></script>
+            <script type="text/javascript">
+                $(function(){
+                    var id=$("#ids").val();
+                    $(".ch_a").click(function(){
+                        $.get("{{url('seckill/coupon')}}",{
+                            "id":id
+                        },function(msg){
+                            if(msg.error==0){
 
+                            }else{
+                                alert("已经领完了");
+                            }
+                        },"json");
+                    })
+                })
+            </script>
+
+            <script type="text/javascript">
+                   function set_time($id){
+                    var data=parseInt($("#showtimekill_"+$id).val());
+                    // alert(data)
+                    if(0<data && data<3600){
+                         var day=Math.floor(data/3600/24)<10?'0'+Math.floor(data/3600/24):Math.floor(data/3600/24);
+                        var hours=Math.floor(data/3600%24)<10?'0'+Math.floor(data/3600%24):Math.floor(data/3600%24);
+                        var minutes=Math.floor(data%3600/60)<10?'0'+Math.floor(data%3600/60):Math.floor(data%3600/60);
+                        var seconds=(data%60)<10?'0'+(data%60):(data%60);
+                        $("#showStartTime_"+$id).html("领券倒计时："+day+"天"+hours+"时"+minutes+"分"+seconds+"秒");
+                        data--;
+                        $("#showtimekill_"+$id).val(data);
+                    }else if(data>3600){
+                        var day=Math.floor(data/3600/24)<10?'0'+Math.floor(data/3600/24):Math.floor(data/3600/24);
+                        var hours=Math.floor(data/3600%24)<10?'0'+Math.floor(data/3600%24):Math.floor(data/3600%24);
+                        var minutes=Math.floor(data%3600/60)<10?'0'+Math.floor(data%3600/60):Math.floor(data%3600/60);
+                        var seconds=(data%60)<10?'0'+(data%60):(data%60);
+                        $("#showStartTime_"+$id).html("活动未开始");
+                        data--;
+                        $("#showtimekill_"+$id).val();
+                     }else if(data<0){
+                         var day=Math.floor(data/3600/24)<10?'0'+Math.floor(data/3600/24):Math.floor(data/3600/24);
+                        var hours=Math.floor(data/3600%24)<10?'0'+Math.floor(data/3600%24):Math.floor(data/3600%24);
+                        var minutes=Math.floor(data%3600/60)<10?'0'+Math.floor(data%3600/60):Math.floor(data%3600/60);
+                        var seconds=(data%60)<10?'0'+(data%60):(data%60);
+                        $("#showStartTime_"+$id).html("活动已结束");
+                        data--;
+                        $("#showtimekill_"+$id).val();
+                     }
+                 }
+            </script>
             <div class="s_right">
                 <div class="sell_ban">
                     <div id="imgPlays">
