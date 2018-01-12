@@ -46,7 +46,7 @@ class OrderController extends Controller
 	public function cart(){
 
 		//购物车商品信息
-		$cart_id=[47,48];
+		$cart_id=[57,51];
 		$goods_list =Cart::whereIn('id',$cart_id)->orderBy('created_at', 'desc')->get()->toArray();
 
 			foreach ($goods_list as $key => $value) {
@@ -78,6 +78,12 @@ class OrderController extends Controller
 	  	$data['error']=1;
 	  }
 	  echo json_encode($data);
+	}
+
+	public function goodsinfo($goods_list){
+
+			
+			return $goods_list;
 	}
 
 
@@ -121,11 +127,11 @@ class OrderController extends Controller
 		$data['real_money']=$real_money;
 		$data['address_id']=$address_id;
 		$data['postscript']=$postscript;
+		$data['status']=1;
 		$res=Order::create($data);
+
 		if($res){
-			$orders=Order::where([['user_id','=',$user_id],['status','=','0']])->orderBy('created_at', 'desc')->first()->toArray();
-			$order['order_id']=$orders['id'];
-			$arr = $this->getOrderProduct($cart,$orders['id']);
+			$arr = $this->getOrderProduct($cart,$res->id);
 			Order_goods::insert($arr);
 		    
 			$msg['error']=0;
@@ -137,10 +143,39 @@ class OrderController extends Controller
 		
 	}
 
+	//取消订单
+	public function saveOrder(){
+		$order_id=request('order_id');
+		$res=Order::where(['id'=>$order_id])->update(['status'=>5]);
+		if($res){
+			Order_goods::where(['order_id'=>$order_id])->delete();
+			$data['error']=0;
+		}else{
+			$data['error']=1;
+		}
+		echo json_encode($data);
+	}
+
 	public function confirmOrder(){
 		$user_id=\Auth::id();
-		$data=Order::where([['user_id','=',$user_id],['status','=','0']])->orderBy('created_at', 'desc')->first()->toArray();
+		$data=Order::where([['user_id','=',$user_id],['status','=','1']])->orderBy('created_at', 'desc')->first()->toArray();
 
+		$order_id=$data['id'];
+		$goods_list=Order_goods::where(['order_id'=>$order_id])->get()->toArray();
+		$str='';
+		foreach ($goods_list as $key => $value) {
+				$product = Product::find($goods_list[$key]['product_id'])->toArray();
+				$goods = Goods::find($product['goods_id'])->toArray();
+				$str.= $goods['name']. ",";
+			}
+             $str=rtrim($str, ',');
+             $data['goods']=$str;
+             $data['create_time']=strtotime($data['created_at']);
+             $t=$data['count_time']=$data['create_time']+1800;
+
+             if(time()>$t){
+             	echo "<script>alert('订单超时！');location.href='/order'</script>";
+             }
 		return view('Order/addorder',compact('data'));
 	}
 
