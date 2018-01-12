@@ -24,7 +24,7 @@ class Cart extends Model
     //删除结算内容
     public function del()
     {
-    	return self::where("id",$this->cart_id)->delete();
+    	return self::where(['product_id'=>$this->product_id,'user_id'=>\Auth::id()])->delete();
     }
 
     //修改库存数量

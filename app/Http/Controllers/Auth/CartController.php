@@ -51,9 +51,10 @@ class CartController extends Controller
 	{
 		if(request::ajax() && request::isMethod('get'))
 		{
-			$cartid = request('cart_id');
+			$cart = new Cart();
+			$cart->product_id = request('cart_id');
 			$this->validate(request(),['cart_id'=>'required']);
-			$sre = Cart::where('id',$cartid)->delete();
+			$sre = $cart->del();
 			if($sre)
 			{
 				return 'ok';
@@ -142,7 +143,7 @@ class CartController extends Controller
 	{
 		$userid = \Auth::id();
 		$data = Db::table('cart')->where('user_id',$userid)->join('product','cart.product_id','=','product.id')->join('goods','product.goods_id','=','goods.id')->select('cart.num','user_id','price','sell_price','cover','goods_id','name','product_id','sell_price')->get();
-		if($data)
+		if(!empty($data[0]))
 		{
 			$result['count'] = count(Db::table('cart')->where('user_id',$userid)->get());
 			$result['data'] = $data;
@@ -165,18 +166,24 @@ class CartController extends Controller
 			$userid = \Auth::id();
 			foreach($data as $k=>$v)
 			{
-				$sre=DB::table('cart')->insert(['user_id'=>$userid,'product_id'=>$v['product_id'],'num'=>$v['goods_num']]); 
-				//$sql .="(".$userid.",".$v['goods_num'].",".$v['product_id'].")";
-				//$sre = Db::insert('insert into cart(user_id,num,product_id) values(?,?,?)',[$userid,$v['goods_num'],$v['product_id']]);
-				if(!$sre)
+				$row = Db::table('cart')->where(['product_id'=>$v['product_id'],'user_id'=>$userid])->get();
+				if(!empty($row[0]))
 				{
-					return 'no';
+					$num = $row[0]->num+$v['goods_num'];
+					$sre = DB::table('cart')->where(['user_id'=>$userid,'product_id'=>$v['product_id']])->update(['num'=>$num]);
+					//$sre = Db::table('cart')->query("update cart set num=$num where user_id =$userid and product_id=".$v['product_id']);
+					//$row[0]->save();
+				}
+				else
+				{
+					$sre=DB::table('cart')->insert(['user_id'=>$userid,'product_id'=>$v['product_id'],'num'=>$v['goods_num']]);
+					if(!$sre)
+					{
+						return 'no';
+					}
 				}
 			}
 			return 'ok';
-			
-			//$query =	"insert into cart(`user_id`,`num`,`product_id`) values".$sql;
-			//$sre = Db::insert($query);
 		}
 	}
 

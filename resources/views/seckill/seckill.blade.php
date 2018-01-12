@@ -53,7 +53,8 @@
             <div class="top_slide_wrap">
                 <ul class="slide_box bxslider">
                     <li><a href="#" style="background:url({{asset('images')}}/n_ban.jpg) no-repeat center top;">banner1</a></li>
-                    <li><a href="#" style="background:url({{asset ('images')}}/n_ban.jpg) no-repeat center top;">banner2</a></li>
+                    <li><a href="#" style="background:url({{asset('images')}}/n_ban.jpg) no-repeat center top;">banner2</a></li>
+
                     <li><a href="#" style="background:url({{asset('images')}}/n_ban.jpg) no-repeat center top;">banner3</a></li>
                 </ul>
                 <div class="op_btns clearfix">
