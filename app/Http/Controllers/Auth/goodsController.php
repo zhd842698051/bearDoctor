@@ -29,6 +29,7 @@ class GoodsController extends Controller
             $Product = $this->getProduct($goods_id, 0);
         }
 
+        var_dump($Attr);die;
         $Brand = $this->getBrand($Goods['brand_id']);
         return view('goods/product', compact('Goods', 'Attr', 'Product', 'checked', 'Brand'));
     }
@@ -69,8 +70,8 @@ class GoodsController extends Controller
     public function getGoodsAttr($goods_id)
     {
         $goodsAttr = Db::table('goods_attr')
+            ->join('attribute','goods_attr.attribute_id','=','attribute.id')
             ->join('attr', 'goods_attr.attribute_id', '=', 'attr.id')
-            ->join('attribute', 'attr.id', '=', 'attribute.attr_id')
             ->where('goods_attr.goods_id', $goods_id)
             ->get()
             ->toArray();
