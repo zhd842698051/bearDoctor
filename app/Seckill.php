@@ -21,4 +21,6 @@ class Seckill extends Model
         $data['attr'] = $str;
         return $data;
     }
+
+    
 }

@@ -65,6 +65,7 @@
                         <div class="img"><img src="{{asset('images')}}/tm3.jpg" width="530" height="190" /></div>
                     </li>
                 </ul>
+                
                 <div class="brand_t">商品团购</div>
                 <ul class="p_sell">
                     <li>

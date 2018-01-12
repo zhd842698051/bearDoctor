@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-use Request;
+// use Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 // use App\Http\Controllers\Auth\UserController;
 use App\Seckill;
+use Illuminate\Http\Request;
 
 class SeckillController extends Controller
 {
@@ -13,7 +14,7 @@ class SeckillController extends Controller
     public function seckill()
   {
     // $user = UserController::status();
-    $data = \App\Seckill::orderBy('start_time','end_time','seckill_price')->get()->toArray();
+    $data = \App\Seckill::orderBy('created_at','updated_at','start_time','end_time','seckill_price')->get()->toArray();
     // dd($data);
 
     //获取本地时间
@@ -22,8 +23,7 @@ class SeckillController extends Controller
 
     foreach ($data as $key => $value) {
       $data[$key]['start_time'] = strtotime($value['start_time'])-$nowtime;
-      $data[$key]['end_time'] = $value['end_time'];
-       $data[$key]['start_time'] = $value['start_time'];
+      
        $data[$key]['seckill_stock']=$value['seckill_stock'];
       // dd($data[$key]);
       $goods=\App\Goods::where(['id'=>$data[$key]['product_id']])->first();
@@ -39,10 +39,10 @@ class SeckillController extends Controller
 
   //判断库存
   public function show(){
-        $id=8;
-        // dd($id);
+       $id=$request('id');
+       dd($id);
+        
        $res=Seckill::where([['id','=',$id],['seckill_stock','>','0']])->first()->toArray();
-       
        if($res){
         $data['error']=0;
         $data['seckill_stock']=$res;
@@ -55,7 +55,18 @@ class SeckillController extends Controller
     //优惠券
     public function coupon()
     {
-        return view('seckill/coupon');
+        $data = \App\Prop::orderBy('name','full','price','start_time','end_time')->get()->toArray();
+            date_default_timezone_set("PRC");
+            $nowtime=time();
+            foreach($data as $key=>$value){
+              $data[$key]['start_time']= strtotime($value['start_time'])-$nowtime;
+            }
+        return view('seckill/coupon',compact('data'));
+    }
+
+    public function ticket(){   
+
+
     }
 
 
