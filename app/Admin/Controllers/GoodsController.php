@@ -69,8 +69,8 @@ class GoodsController extends Controller
             $cate = Category::selectOptions();
             unset($cate[0]);
             $brand = Brand::all()->pluck('name', 'id');
-            //$content->body(view('admin/goods_add', compact('cate', 'brand'))->render());
-            $content->body($this->form());
+            $content->body(view('admin/goods_add', compact('cate', 'brand'))->render());
+           // $content->body($this->form());
         });
     }
 
@@ -143,8 +143,9 @@ class GoodsController extends Controller
     public function getAttr()
     {
         $id  = request('id');
-        $id  = 1;
+        $id=1;
         $res = Db::select('select a.id,a.name from xbs_attr_category as c INNER JOIN xbs_attr as a on c.attr_id=a.id where category_id =1');
+        exit(json_encode($res));
     }
     public function add(sRequset $request)
     {

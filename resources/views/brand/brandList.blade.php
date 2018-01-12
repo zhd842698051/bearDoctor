@@ -52,7 +52,7 @@
         <div class="l_list">
         	<table border="0" style="width:100%; margin-bottom:30px; border:1px solid #eaeaea;" cellspacing="0" cellpadding="0">
               <tr valign="top">
-                <td width="248"><div class="brand_img"><img src="{{asset('images')}}/brand5.jpg" width="226" height="108" /></div></td>
+                <td width="248"><div class="brand_img"><img src="{{config('app.image').$Brand['logo']}}" width="226" height="108" /></div></td>
                 <td class="td_b" style="padding:15px 40px;">
                 	所有分类<br />
                     <a href="#" class="now">香水（10）</a><a href="#">彩妆套装（2）</a><a href="#">洁面（1）</a><a href="#">精华（1）</a><a href="#">化妆水（2）</a><a href="#">嫩肤（3）</a>

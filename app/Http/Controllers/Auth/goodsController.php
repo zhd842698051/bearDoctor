@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Brand;
 use App\Goods;
 use App\Http\Controllers\Controller;
 use App\Product;
@@ -27,7 +28,9 @@ class GoodsController extends Controller
         } else {
             $Product = $this->getProduct($goods_id, 0);
         }
-        return view('goods/product', compact('Goods', 'Attr', 'Product', 'checked'));
+
+        $Brand = $this->getBrand($Goods['brand_id']);
+        return view('goods/product', compact('Goods', 'Attr', 'Product', 'checked', 'Brand'));
     }
 
     //商品团购特卖
@@ -82,6 +85,11 @@ class GoodsController extends Controller
     {
         $checked = Product::where(['goods_id' => $goods_id, 'checked' => 1])->first(['attribute_id'])->toArray();
         return explode(',', $checked['attribute_id']);
+    }
 
+    public function getBrand($brand_id)
+    {
+        $Brand = Brand::where('id', $brand_id)->first()->toArray();
+        return $Brand;
     }
 }
