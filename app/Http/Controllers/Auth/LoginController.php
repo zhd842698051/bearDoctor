@@ -98,13 +98,21 @@ class LoginController extends Controller
             $qquser = User::create(['username'=>$username,'password'=>$password,'qq_auth'=>$qq_auth]);
             auth()->login($qquser);
             self::now();
+            return redirect('/');
         }else{
-            $qquser = User::save_qq_auth($username,$qq_auth);
-            $userQQ=User::findQq($qq_auth);
-            \Auth::login($userQQ[0]);
-            self::now();
+            $newUser=['username'=>$username,'password'=>$password];
+            $res=\Auth::attempt($newUser);
+            if($res == true) {
+                $qquser = User::save_qq_auth($username, $qq_auth);
+                $userQQ = User::findQq($qq_auth);
+                \Auth::login($userQQ[0]);
+                self::now();
+                return redirect('/');
+            }else{
+                echo "<script>alert('账号或密码有误');location.href='/login'</script>";
+            }
         }
-        return redirect('/');
+
 
     }
 
@@ -124,21 +132,60 @@ class LoginController extends Controller
             "redirect_uri"=>"http://www.shops.com/wbCallback");
         //print_r($post_data);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,'https://api.weibo.com/oauth2/access_token');
-        //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,2);
 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
         // post数据
         curl_setopt($ch, CURLOPT_POST, 1);
         // post的变量
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($post_data));
         $output = curl_exec($ch);
-        var_dump(curl_error($ch));
         curl_close($ch);
-        dd($output);
-//        $oauthUser = \Socialite::with('weibo')->user();
-//        dd($oauthUser);
+        $user=json_decode($output,true);
+
+        if(!empty($user)){
+            $openid = $user['uid'];
+            //先去判断当前openid是否绑定用户名
+            $userWb=User::findWb($openid);
+            if(isset($userWb[0]->username)){
+                \Auth::login($userWb[0]);
+                self::now();
+                return redirect('/');
+            }else{
+                //跳转到openid和用户名绑定页面
+                return view('login/wbbinbing',['openid'=>$openid]);
+            }
+        }
+
+    }
+
+    public function wbbinbing(Request $request){
+        $user = $request->all();
+        $username = $user['username'];
+        $password = $user['password'];
+        $sina_auth = $user['sina_auth'];
+        //查询输入的用户名是否存在
+        $res=User::findUsername($username);
+        if(!isset($res[0]['username'])){
+            $sina_user = User::create(['username'=>$username,'password'=>$password,'sina_auth'=>$sina_auth]);
+            auth()->login($sina_user);
+            self::now();
+            return redirect('/');
+        }else{
+            $newUser=['username'=>$username,'password'=>$password];
+            $res=\Auth::attempt($newUser);
+            if($res == true) {
+                $sina_user = User::save_sina_auth($username,$sina_auth);
+                $userWb=User::findWb($sina_auth);
+                \Auth::login($userWb[0]);
+                self::now();
+                return redirect('/');
+            }else{
+                echo "<script>alert('账号或密码有误');location.href='/login'</script>";
+            }
+        }
     }
 
     //退出

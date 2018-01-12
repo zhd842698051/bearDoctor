@@ -7,6 +7,7 @@
     <div class="content">
                             
         <div id="tsShopContainer">
+            <input type="hidden" value="{{config('app.image').$Goods['cover']}}" name='image'>
             <div id="tsImgS"><a href="{{config('app.image').$Goods['cover']}}" title="Images" class="MagicZoom" id="MagicZoom"><img src="{{config('app.image').$Goods['cover']}}" width="390" height="390" /></a></div>
             <div id="tsPicContainer">
                 <div id="tsImgSArrL" onclick="tsScrollArrLeft()"></div>
@@ -24,11 +25,12 @@
         
         <div class="pro_des">
             <div class="des_name">
-                <p>{{$Goods['name']}}</p>
+                <p class='goodsname'>{{$Goods['name']}}</p>
                 “开业巨惠，北京专柜直供”，不光低价，“真”才靠谱！
             </div>
+            <input type="hidden" name='product' value="{{$Product['id']}}">
             <div class="des_price">
-                本店价格：<b>￥{{$Product['price']}}</b><br />
+                本店价格：<b>￥<span id='price'>{{$Product['price']}}</span></b><br />
                 消费积分：<span>28R</span>
             </div>
             @foreach($Attr as $k => $v)
@@ -43,7 +45,7 @@
                 </ul>
             </div>
             @endforeach
-
+            <input type="hidden" name='userid' value="{{\Auth::id()}}">
             <div class="des_share">
                 <div class="d_sh">
                     分享
@@ -57,17 +59,17 @@
             </div>
             <div class="des_join">
                 <div class="j_nums">
-                    <input type="text" value="1" name="" class="n_ipt" />
-                    <input type="button" value="" onclick="addUpdate(jq(this));" class="n_btn_1" />
-                    <input type="button" value="" onclick="jianUpdate(jq(this));" class="n_btn_2" />   
+                    <input type="text" value="1" name="val" class="n_ipt" />
+                    <input type="button" value="" class="n_btn_1" id='jia'/>
+                    <input type="button" value="" class="n_btn_2" id='jian'/>   
                 </div>
-                <span class="fl"><a onclick="ShowDiv_1('MyDiv1','fade1')"><img src="{{asset('images')}}/j_car.png" /></a></span>
+                <span class="fl"><a href="#"><img src="{{asset('images')}}/j_car.png" id='addcart' /></a></span>
             </div>            
         </div>    
         
         <div class="s_brand">
-            <div class="s_brand_img"><img src="{{config('app.image').$Brand['logo']}}" width="188" height="132" /></div>
-            <div class="s_brand_c"><a href="#">进入品牌专区</a></div>
+            <div class="s_brand_img"><a href="/brand/list/{{$Goods['brand_id']}}"><img src="{{config('app.image').$Brand['logo']}}" width="188" height="132" /></a></div>
+            <div class="s_brand_c"><a href="/brand/list/{{$Goods['brand_id']}}">进入品牌专区</a></div>
         </div>    
         
         
@@ -345,7 +347,7 @@
     <div id="MyDiv1" class="white_content">             
         <div class="white_d">
             <div class="notice_t">
-                <span class="fr" style="margin-top:10px; cursor:pointer;" onclick="CloseDiv_1('MyDiv1','fade1')"><img src="{{asset('images')}}/close.gif" /></span>
+                <span class="fr" style="margin-top:10px; cursor:pointer;" class=b'_buy'><img src="{{asset('images')}}/close.gif" /></span>
             </div>
             <div class="notice_c">
                 
@@ -354,12 +356,11 @@
                     <td width="40"><img src="{{asset('images')}}/suc.png" /></td>
                     <td>
                         <span style="color:#3e3e3e; font-size:18px; font-weight:bold;">宝贝已成功添加到购物车</span><br />
-                        购物车共有1种宝贝（3件） &nbsp; &nbsp; 合计：1120元
                     </td>
                   </tr>
                   <tr height="50" valign="bottom">
                     <td>&nbsp;</td>
-                    <td><a href="#" class="b_sure">去购物车结算</a><a href="#" class="b_buy">继续购物</a></td>
+                    <td><a href="{{URL('cart/show')}}" class="b_sure">去购物车结算</a><a href="#" class="b_buy">继续购物</a></td>
                   </tr>
                 </table>
                     
@@ -373,6 +374,8 @@
 <script type="text/javascript" src="{{asset('js')}}/app.js"></script>
 <script>
     $(function(){
+        //window.localStorage.clear();
+        var cart = window.localStorage.getItem('cart');
         $('.des_choice ul li').click(function(){
             if($(this).attr('class')=='checked'){
                 return false
@@ -385,6 +388,75 @@
             }
             attr_id = attr_id.substring(0,attr_id.length-1)
             window.location.href='/showinfo/'+{{$Goods['id']}}+'/'+attr_id
+        })
+        // $("#jia").click(function(){
+        //     var price = $("#price").html();
+        //     var num = $("input[name='val']").val();
+
+        // })
+        $("#addcart").click(function(){
+            var userid = $("input[name='userid']").val();
+            var image = $("input[name='image']").val();
+            var price = $("#price").html();
+            var product_id = $("input[name='product']").val();
+            var goodsname = $(".goodsname").html();
+            var num = parseInt($("input[name='val']").val());
+            if(userid=='')
+            {
+                if(cart==null)
+                {
+                    var fruit = "[{'product_id':"+product_id+",'goods_num':"+num+",'goods_image':'"+image+"','goods_name':'"+goodsname+"','goods_price':'"+price+"'}]";
+                    window.localStorage.setItem('cart',fruit);
+                    ShowDiv_1('MyDiv1','fade1')
+                }
+                else{
+                    var data = eval(cart);
+                    var status = -1;
+                    var st = '[';
+                    $.each(data,function(k,v){
+                        if(product_id==v.product_id)
+                        {
+                            goodsnum = parseInt(v.goods_num)+1;
+                            st+= "{'product_id':"+product_id+",'goods_num':"+goodsnum+",'goods_image':'"+image+"','goods_name':'"+goodsname+"','goods_price':'"+price+"'},";
+                            status = 1;
+                        }else{
+                            st+= "{'product_id':"+v.product_id+",'goods_num':"+v.goods_num+",'goods_image':'"+v.goods_image+"','goods_name':'"+v.goods_name+"','goods_price':'"+v.goods_price+"'},";
+                        }
+                    })
+                    if(status==-1)
+                    {
+                        st+= "{'product_id':"+product_id+",'goods_num':"+num+",'goods_image':'"+image+"','goods_name':'"+goodsname+"','goods_price':'"+price+"'},";
+                    }
+                    st +=']';
+                    window.localStorage.setItem('cart',st);
+                    ShowDiv_1('MyDiv1','fade1')
+                }
+            }
+            else
+            {
+                var fruit = "[{'product_id':"+product_id+",'goods_num':"+num+",'goods_image':'"+image+"','goods_name':'"+goodsname+"','goods_price':'"+price+"'}]";
+                var result = eval(fruit);
+
+                $.ajax({
+                    type:'get',
+                    url:"{{URL('cart/addData')}}",
+                    data:{
+                        data:result,
+                    },
+                    success:function(msg){
+                        if(msg=='ok')
+                        {
+                            ShowDiv_1('MyDiv1','fade1')
+                        }
+                        //Dbcart(userid,'get',"{{URL('cart/dataSel')}}")
+                        
+                    }
+                })
+            }
+        })
+
+        $(".b_buy").click(function(){
+            window.history.go(0)
         })
     })
 </script>

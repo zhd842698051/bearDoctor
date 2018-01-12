@@ -53,7 +53,8 @@
             <div class="top_slide_wrap">
                 <ul class="slide_box bxslider">
                     <li><a href="#" style="background:url({{asset('images')}}/n_ban.jpg) no-repeat center top;">banner1</a></li>
-                    <li><a href="#" style="background:url({{asse ('images')}}/n_ban.jpg) no-repeat center top;">banner2</a></li>
+                    <li><a href="#" style="background:url({{asset('images')}}/n_ban.jpg) no-repeat center top;">banner2</a></li>
+
                     <li><a href="#" style="background:url({{asset('images')}}/n_ban.jpg) no-repeat center top;">banner3</a></li>
                 </ul>
                 <div class="op_btns clearfix">
@@ -78,40 +79,20 @@
             <!--Begin 特卖 Begin-->
             <div class="s_left">
                 <div class="brand_t">品牌特卖</div>
+                <?php foreach($data as $k=>$v) {?>
                 <ul class="sell_brand">
                     <li>
                         <div class="con">
                             <div class="simg"><img src="{{asset('images')}}/sb1.jpg" width="220" height="100" /></div>
                             <div class="ch_bg">
                                 <span class="ch_txt">先领券再消费</span>
-                                <a href="#" class="ch_a">查看</a>
+                                <a href="{{url('seckill/coupon')}}" class="ch_a">查看</a>
                             </div>
-                            09月12日 — 10月20日
+                            结束时间：<?php echo $v['updated_at']?>
                         </div>
-                        <div class="img"><img src="{{asset('images')}}/tm1.jpg" width="530" height="190" /></div>
+                        <div class="img"><img src="{{asset('images')}}/tm1.jpg" width="530" height="190"/></div>
                     </li>
-                    <li>
-                        <div class="con">
-                            <div class="simg"><img src="{{asset('images')}}/sb2.jpg" width="220" height="100" /></div>
-                            <div class="ch_bg">
-                                <span class="ch_txt">先领券再消费</span>
-                                <a href="#" class="ch_a">查看</a>
-                            </div>
-                            09月12日 — 10月20日
-                        </div>
-                        <div class="img"><img src="{{asset('images')}}/tm2.jpg" width="530" height="190" /></div>
-                    </li>
-                    <li>
-                        <div class="con">
-                            <div class="simg"><img src="{{asset('images')}}/sb3.jpg" width="220" height="100" /></div>
-                            <div class="ch_bg">
-                                <span class="ch_txt">先领券再消费</span>
-                                <a href="#" class="ch_a">查看</a>
-                            </div>
-                            09月12日 — 10月20日
-                        </div>
-                        <div class="img"><img src="{{asset('images')}}/tm3.jpg" width="530" height="190" /></div>
-                    </li>
+                    <?php }?>
                 </ul>
 
 
@@ -121,20 +102,18 @@
                    <?php foreach($data as $k=>$v) {?>
                     <li>
                         <input type="hidden" id="timed_<?php echo $v['id']?>" value="<?php echo $v['start_time']?>">
-                        <!-- <input type="hidden" id="start_<?php echo $v['id']?>" value="<?php echo $v['start_time']?>"> -->
-                        <!-- <input type="hidden" id="end_<?php echo $v['id']?>" value="<?php echo $v['end_time']?>"> -->
                         <input type="hidden" id="ids" value="<?php echo $v['id']?>" name="<?php echo $v['id']?>">
-                        <div class="img"><img src="config('app.image')+xDTRT0fEm5dtskBbAP9bTLUkGcNA2niNBNgWDHFR.jpeg" width="150px" height="100px"/></div>
+                        <div class="img"><img src="{{config('app.image').$v['cover']}}" width="150px" height="100px"/></div>
                         <div class="name"><?php echo $v['name']?></div>
                         <div class="price">
                             <table border="0" style="width:100%; color:#888888;" cellspacing="0" cellpadding="0">
                                 <tr style="font-family:'宋体';">
-                                    <td width="33%">市场价 </td>
+                                    <td width="33%">剩余数量</td>
                                     <td width="33%">折扣</td>
                                     <td width="33%">为您节省</td>
                                 </tr>
                                 <tr>
-                                    <td style="text-decoration:line-through;"><?php echo $v['sell_price']?></td>
+                                    <td style="text-decoration:line-through;"><span class="num"><?php echo $v['seckill_num']?></span></td>
                                     <td>8.0</td>
                                     <td>￥100</td>
                                 </tr>
@@ -143,7 +122,7 @@
 
                         <div class="ch_bg" id="gold_div">
                            <span class="ch_txt" id="ch_txt">￥<font><?php echo $v['seckill_price']?></font></span>
-                            <a href="#" class="ch_c" aa="ready" id="gold_btn_{{$v['id']}}">准备</a>
+                            <a href="orderinfo" class="ch_c" aa="ready" id="gold_btn_{{$v['id']}}"><span class="bttn">准备</span></a>
                         </div>
                          <div class="times" id="showStartTime_<?php echo $v['id']?>"></div>
                          <input type="hidden" id="showtimekill_<?php echo $v['id']?>" value="<?php echo $v['start_time']?>">
@@ -167,12 +146,15 @@
         <script type="text/javascript">
             $(function(){
                  var id =$("#ids").val();
+                 var num = $(".num").html();
                 $(".ch_c").click(function(){
                   $.get("{{url('seckill/show')}}",{
                     "id":id
+                    "seckill_num":seckill_num
                     },function(msg){
                     if(msg.error==0){
-                        
+                      
+                      location.href="{{url('orderinfo')}}";
                     }else{
                         alert('库存不足');
                     }
@@ -180,16 +162,15 @@
                 })
                 
             })
-           
         </script>
         <script type="text/javascript">
          function begin_time($id){
-             var res=parseInt($("#timed_"+$id).val());
+             var res=parseInt($("#timed_"+$id).val());            
              // alert(res)
              if(3600<res && res<=7200){
                  $(function() {
                     // alert(11)
-                  $('a').click(function() {
+                  $('.bttn').click(function() {
                    var $Popup = $('.popup');
                    // alert($Popup)
                    $Popup.css({
@@ -205,15 +186,17 @@
                   })
                 })
              }else if(res>0 && res<=3600){
-                $("#gold_btn_"+$id).html('立即抢购');
+                $("#gold_btn_"+$id).html('<span class="btn">立即抢购</span>');
+  
                 // alert($res)
                 $("#gold_btn_"+$id).attr("href", "javascript:;"); 
+                
              }else if(res<0){
                 
-                    $("#gold_btn_"+$id).html('已结束');
+                    $("#gold_btn_"+$id).html('<span class="btnn">已结束</span>');
                     // alert($rr)
                     $("#gold_btn_"+$id).removeAttr('href'); 
-               
+                      
              }else if(res>7200){
                 $(function() {
                   $('a').click(function() {

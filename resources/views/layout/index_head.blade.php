@@ -125,7 +125,7 @@
             @if(!Auth::user())
                 <span class="fl">你好，请<a href="{{URL('login')}}">登录</a>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
             @else
-                <span class="fl">欢迎<span style="color:red">{{ Auth::user()->username}}</span><span id="login">登录</span>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
+                <span class="fl">欢迎<a href="/user"><span style="color:red">{{ Auth::user()->username}}</span></a><span id="login">登录</span>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
                 <script src="{{ asset('js') }}/app.js"></script>
                 <script>
                     $(function(){
@@ -374,7 +374,7 @@
                 var st = '';
                 len = cart1.length;
                 $.each(cart1,function(k,v){
-                    st+="<li><div class='img'><a href='#'><img src='' width='58' height='58' /></a></div><div class='name'><a href='#'>xxx</a></div><div class='price'><font color='#ff4e00'>￥<span class='sell_money'>123</span></font> X"+v['goods_num']+"</div></li>";
+                    st+="<li><div class='img'><a href='#'><img src='"+v['goods_image']+"' width='58' height='58' /></a></div><div class='name'><a href='#'>"+v['goods_name']+"</a></div><div class='price'><font color='#ff4e00'>￥<span class='sell_money'>"+v['goods_price']+'X'+v['goods_num']+"</span></font></div></li>";
 
                 })
                 $("#cart").html(st)
@@ -417,9 +417,12 @@
         {
             var money = $(".sell_money")
             var countmoney =null;
+
             for(var i=0;i<money.length;i++)
             {
-                countmoney += parseFloat(money[i].innerText);
+                //console.log(money[i])
+                a = (money[i].innerText).split('X');
+               countmoney += parseFloat(a[0])*parseInt(a[1]);
             }
             $("#money").html(countmoney)
         }
@@ -438,17 +441,23 @@
                     var str='';
                     if(msg['status']=='ok')
                     {
-
                         $.each(msg['data'],function(k,v){
-                           str+="<li><div class='img'><a href='#'><img src='"+v['cover']+"' width='58' height='58' /></a></div><div class='name'><a href='#'>"+v['name']+"</a></div><div class='price'><font color='#ff4e00'>￥<span class='sell_money'>"+v['sell_price']+"</span></font> X"+v['num']+"</div></li>";
+                           str+="<li><div class='img'><a href='#'><img src='http://p22vshs5l.bkt.clouddn.com/"+v['cover']+"' width='58' height='58' /></a></div><div class='name'><a href='#'>"+v['name']+"</a></div><div class='price'><font color='#ff4e00'>￥<span class='sell_money'>"+v['sell_price']+'X'+v['num']+"</span></font> </div></li>";
                         })
                         $(".count").html(msg['count'])
                         $(".un_login").css({
                             'display':'none'
                         })
+                        $("#cart").html(str);
+                        countMoney();
                     }
-                    $("#cart").html(str);
-                    countMoney();
+                    else
+                    {
+                        $("#cart").html('<center>购物车为空</center>');
+                        $("#money").html(0);
+                        $(".count").html(0);
+                    }
+                    
                 }
             })
         }
