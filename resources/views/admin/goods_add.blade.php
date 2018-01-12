@@ -4,7 +4,7 @@
 
                 <div class="box-tools">
                     <div class="btn-group pull-right" style="margin-right: 10px">
-                        <a href="http://www.beardoctor.com/admin/goods" class="btn btn-sm btn-default"><i class="fa fa-list"></i>&nbsp;列表</a>
+                        <a href="http://www.shops.com/admin/goods" class="btn btn-sm btn-default"><i class="fa fa-list"></i>&nbsp;列表</a>
                     </div> <div class="btn-group pull-right" style="margin-right: 10px">
                         <a class="btn btn-sm btn-default form-history-back"><i class="fa fa-arrow-left"></i>&nbsp;返回</a>
                     </div>
@@ -12,9 +12,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form action="http://www.beardoctor.com/admin/goods" method="post" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" pjax-container>
-                <div class="box-body">
-            <form action="http://www.beardoctor.com/admin/goods/add" method="post" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" >
+            <form action="http://www.shops.com/admin/goods/add" method="post" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" >
                 <div class="box-body">
                     {{ csrf_field() }}
                     <div class="fields-group">
@@ -322,8 +320,6 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-
-                    <input type="hidden" name="_token" value="KcT01ny0TGOoZozACEHQ81nPqz8KbaBg1vpJSgXa">
                     <div class="col-sm-2">
 
                     </div>
@@ -397,7 +393,7 @@
                 alert("请先选择属性")
                 return false;
             }
-            $.ajax({
+            /*$.ajax({
                 url:'http://www.shops.com/admin/goods/ajaxGetAttr',
                 data:{id:attribute_id},
                 dataType:'json',
@@ -428,7 +424,7 @@
                 })
                 str+='-'
                 num=k
-            })
+            })*/
             var str='';
             $.ajax({
                 url:'http://www.shops.com/admin/goods/ajaxGetAttr',
@@ -437,7 +433,7 @@
                 dataType:'json',
                 success:function (msg) {
                     $.each(msg,function(k,v){
-                       str+='<div class="form-group 1"><label for="promotion_price" class="col-sm-2 control-label">'+v+'</label><div class="col-sm-8"><div class="input-group"><span class="input-group-addon">¥</span><input style="width: 120px" type="text" id="promotion_price" name="aprice['+k+']" value="" class="form-control promotion_price" placeholder="输入 价格" /><input style="width: 100px" type="text"  name="anum['+k+']"  class="form-control num" placeholder="输入 库存" /><label for="aa" class="col-sm-2 control-label">选择</label><input type="radio" name="aa" value="1" class="minimal aa"  />&nbsp;是&nbsp;&nbsp;<input type="radio" name="aa" value="0" class="minimal aa" checked />&nbsp;否&nbsp;&nbsp;<span class="del-attr" style="cursor: pointer">X</span> </div></div></div>';
+                       str+='<div class="form-group 1"><label for="promotion_price" class="col-sm-2 control-label">'+v+'</label><div class="col-sm-8"><div class="input-group"><span class="input-group-addon">¥</span><input style="width: 120px" type="text" id="promotion_price" name="aprice['+k+']" value="" class="form-control promotion_price" placeholder="输入 价格" /><input style="width: 100px" type="text"  name="anum['+k+']"  class="form-control num" placeholder="输入 库存" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="checked" value="'+k+'" class="minimal aa"  />&nbsp;设为默认&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="del-attr" style="cursor: pointer">X</span> </div></div></div>'
                     })
                    $("#num").parents(".form-group").remove()
                     $("#attr-show").html(str)
@@ -460,9 +456,9 @@
         $('.sell_price').inputmask({"alias":"currency","radixPoint":".","prefix":"","removeMaskOnSubmit":true});
 
 
-        $("input.cover").fileinput({"overwriteInitial":false,"initialPreviewAsData":true,"browseLabel":"\u6d4f\u89c8","showRemove":false,"showUpload":false,"initialCaption":"","deleteExtraData":{"cover":"_file_del_","_file_del_":"","_token":"KcT01ny0TGOoZozACEHQ81nPqz8KbaBg1vpJSgXa","_method":"PUT"},"deleteUrl":"http:\/\/www.beardoctor.com\/admin\/","allowedFileTypes":["image"]});
+        $("input.cover").fileinput({"overwriteInitial":false,"initialPreviewAsData":true,"browseLabel":"\u6d4f\u89c8","showRemove":false,"showUpload":false,"initialCaption":"","deleteExtraData":{"cover":"_file_del_","_file_del_":"","_token":"KcT01ny0TGOoZozACEHQ81nPqz8KbaBg1vpJSgXa","_method":"PUT"},"deleteUrl":"http:\/\/www.shops.com\/admin\/","allowedFileTypes":["image"]});
 
-        $("input.images").fileinput({"overwriteInitial":false,"initialPreviewAsData":true,"browseLabel":"\u6d4f\u89c8","showRemove":false,"showUpload":false,"initialCaption":"","deleteExtraData":{"images":"_file_del_","_file_del_":"","_token":"KcT01ny0TGOoZozACEHQ81nPqz8KbaBg1vpJSgXa","_method":"PUT"},"deleteUrl":"http:\/\/www.beardoctor.com\/admin\/","allowedFileTypes":["image"]});
+        $("input.images").fileinput({"overwriteInitial":false,"initialPreviewAsData":true,"browseLabel":"\u6d4f\u89c8","showRemove":false,"showUpload":false,"initialCaption":"","deleteExtraData":{"images":"_file_del_","_file_del_":"","_token":"KcT01ny0TGOoZozACEHQ81nPqz8KbaBg1vpJSgXa","_method":"PUT"},"deleteUrl":"http:\/\/www.shops.com\/admin\/","allowedFileTypes":["image"]});
         $(".category_id").select2({
             allowClear: true,
             placeholder: "所属分类"

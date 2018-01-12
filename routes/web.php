@@ -29,7 +29,10 @@ Route::post('/login/qqlogin','\App\Http\Controllers\Auth\LoginController@qqbinbi
 //微博登录
 Route::get('/wbCallback','\App\Http\Controllers\Auth\LoginController@wbCallback');
 Route::get('/wb','\App\Http\Controllers\Auth\LoginController@wb');
-
+Route::post('/login/wblogin','\App\Http\Controllers\Auth\LoginController@wbbinbing');
+//微信登录
+Route::get('/wxCallback','\App\Http\Controllers\Auth\LoginController@wxCallback');
+Route::get('/wx','\App\Http\Controllers\Auth\LoginController@wx');
 //执行登录
 Route::post('/login', '\App\Http\Controllers\Auth\LoginController@loginDo');
 //注册
@@ -40,6 +43,8 @@ Route::post('/register', '\App\Http\Controllers\Auth\RegisterController@register
 Route::get('/checkUsername', '\App\Http\Controllers\Auth\RegisterController@checkUsername');
 //验证验证码
 Route::get('/checkCaptcha', '\App\Http\Controllers\Auth\RegisterController@checkCaptcha');
+Route::get('/checkPassword', '\App\Http\Controllers\Auth\UserController@checkPassword');
+Route::post('/user/save_password', '\App\Http\Controllers\Auth\UserController@save_password');
 //购物车
 Route::get('/cart/show', '\App\Http\Controllers\Auth\CartController@cartShow');
 Route::get('/cart/order_info', '\App\Http\Controllers\Auth\CartController@cartOrderInfo');
@@ -95,10 +100,9 @@ Route::group(['middleware' => 'auth:web'], function () {
     //营销（秒杀-优惠券-团购）
     Route::get('/seckill/seckill','\App\Http\Controllers\Auth\SeckillController@seckill');
     Route::get('/seckill/show','\App\Http\Controllers\Auth\SeckillController@show');
+    Route::get('/seckill/ticket','\App\Http\Controllers\Auth\SeckillController@ticket');
     Route::get('/groupbuy/buy','\App\Http\Controllers\Auth\GroupbuyController@buy');
-
-    Route::get('/groupbuy/buy', '\App\Http\Controllers\Auth\GroupbuyController@buy');
-
+   
     //订单
     Route::get('/order', '\App\Http\Controllers\Auth\OrderController@list');
     Route::get('/orderno', '\App\Http\Controllers\Auth\OrderController@orderNo');

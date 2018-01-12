@@ -13,7 +13,9 @@
         "mews/captcha": "^2.1",
         "socialiteproviders": "^3.0",
         "socialiteproviders/weibo": "^3.0",
-        "zgldh/qiniu-laravel-storage": "^0.9.0"
+        "zgldh/qiniu-laravel-storage": "^0.9.0",
+        "laravel/socialite": "^2.0",
+        "socialiteproviders/weixin": "3.0.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -54,8 +56,5 @@
         "sort-packages": true,
         "optimize-autoloader": true
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> e723b743db112a2014297c6f943b8a72a47246ef
+
