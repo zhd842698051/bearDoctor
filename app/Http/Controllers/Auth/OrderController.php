@@ -71,17 +71,8 @@ class OrderController extends Controller
 	  }
 	  echo json_encode($data);
 	}
-<<<<<<< HEAD
-
-	public function goodsinfo($goods_list){
-
-			
-			return $goods_list;
-	}
 
 
-=======
->>>>>>> d06d857a511ca695470b77c485dcde64941068cf
 	public function addOrder(Request $request){
 		if($request->isMethod('post')){
 			$user_id = \Auth::id();
@@ -133,10 +124,10 @@ class OrderController extends Controller
 			$msg['error']=1;
 		}
 		echo json_encode($msg);
-	}
+	 }
 		
 	}
-<<<<<<< HEAD
+
 
 	//取消订单
 	public function saveOrder(){
@@ -171,13 +162,11 @@ class OrderController extends Controller
              if(time()>$t){
              	echo "<script>alert('订单超时！');location.href='/order'</script>";
              }
-=======
-	public function confirmOrder(){
-		$user_id=\Auth::id();
-		$data=Order::where([['user_id','=',$user_id],['status','=','0']])->orderBy('created_at', 'desc')->first()->toArray();
->>>>>>> d06d857a511ca695470b77c485dcde64941068cf
-		return view('Order/addorder',compact('data'));
-	}
+             return view('Order/addorder',compact('data'));
+         }
+
+
+	
 	//获取收货地址信息
 	public function getAddress(){
 		 $user_id=request('user_id');
