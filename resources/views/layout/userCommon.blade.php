@@ -102,7 +102,7 @@
             @if(!Auth::user())
             <span class="fl">你好，请<a href="{{URL('login')}}">登录</a>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
             @else
-            <span class="fl">欢迎<span style="color:red">{{ Auth::user()->username}}</span><span id="login">登录</span>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
+            <span class="fl">欢迎<a href="/user"><span style="color:red">{{ Auth::user()->username}}</span></a><span id="login">登录</span>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
                 <script src="{{ asset('js') }}/app.js"></script>
                 <script>
                     $(function(){
@@ -207,7 +207,7 @@
                 <ul>
                     <li><a href="{{URL('order')}}">我的订单</a></li>
                     <li><a href="{{URL('user/address')}}">收货地址</a></li>
-                    <li><a href="{{URL('order/tailOrder')}}">物流-跟踪订单</a></li>
+                    {{--<li><a href="{{URL('order/tailOrder')}}">物流-跟踪订单</a></li>--}}
                     <li><a href="{{URL('order/alreadyBuy')}}">已购买的宝贝</a></li>
                 </ul>
             </div>
@@ -216,9 +216,9 @@
                 <ul>
                     <li><a href="{{URL('user')}}">用户信息</a></li>
                     <li><a href="{{URL('user/collect')}}">我的收藏</a></li>
-                    <li><a href="{{URL('user/message')}}">我的留言</a></li>
-                    <li><a href="{{URL('user/links')}}">推广链接</a></li>
-                    <li><a href="#">我的评论</a></li>
+                    {{--<li><a href="{{URL('user/message')}}">我的留言</a></li>--}}
+                    {{--<li><a href="{{URL('user/links')}}">推广链接</a></li>--}}
+                    {{--<li><a href="#">我的评论</a></li>--}}
                 </ul>
             </div>
             <div class="left_m">
@@ -226,7 +226,7 @@
                 <ul>
                     <li><a href="{{URL('user/safe')}}">账户安全</a></li>
                     <li><a href="{{URL('user/packet')}}">我的红包</a></li>
-                    <li><a href="{{URL('user/memberCharge')}}">资金管理</a></li>
+                    {{--<li><a href="{{URL('user/memberCharge')}}">资金管理</a></li>--}}
                 </ul>
             </div>
             <div class="left_m">

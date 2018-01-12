@@ -125,7 +125,7 @@
             @if(!Auth::user())
                 <span class="fl">你好，请<a href="{{URL('login')}}">登录</a>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
             @else
-                <span class="fl">欢迎<span style="color:red">{{ Auth::user()->username}}</span><span id="login">登录</span>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
+                <span class="fl">欢迎<a href="/user"><span style="color:red">{{ Auth::user()->username}}</span></a><span id="login">登录</span>&nbsp; <a href="{{URL('register')}}" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="{{URL('order')}}">我的订单</a>&nbsp;|</span>
                 <script src="{{ asset('js') }}/app.js"></script>
                 <script>
                     $(function(){

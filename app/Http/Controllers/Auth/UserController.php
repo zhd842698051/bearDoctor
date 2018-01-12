@@ -11,6 +11,7 @@ use App\Region;
 use App\Address;
 use App\Collect;
 use App\User_prop;
+use App\User;
 
 class UserController extends Controller
 {
@@ -127,6 +128,29 @@ class UserController extends Controller
 		$res=Collect::delCollect(\Auth::id(),$data->id);
 		if($res){
 			echo "<script>location.href='/user/collect'</script>";
+		}
+	}
+
+	//账户安全检测密码是否正确
+	public function checkPassword(Request $request){
+		$user=$request->all();
+		$res=\Auth::attempt($user);
+		if($res == true){
+			echo json_encode($res);
+		}else{
+			echo json_encode($res);
+		}
+	}
+
+	//账户安全修改密码
+	public function save_password(Request $request){
+		$user=$request->all();
+		$password = bcrypt($user['new_password']);
+		$res=User::save_user_password(\Auth::id(),$password);
+		if($res){
+			echo "<script>alert('修改成功,请重新登录');location.href='/login'</script>";
+		}else{
+			echo "<script>alert('修改失败');location.href='/user/save'</script>";
 		}
 	}
 
