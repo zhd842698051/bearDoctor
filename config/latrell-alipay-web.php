@@ -11,11 +11,8 @@ return [
    'notify_url' => 'http://www.bshop.com/notify',
 
    // 页面跳转同步通知页面路径。根据自己项目路径做相应的修改
-<<<<<<< HEAD
+
    'return_url' => 'http://www.bshop.com/return'
 ];
-=======
-   'return_url' => 'http://web.wan.com/return'
-];
 
->>>>>>> 2d4d2c00f4e8ef53372b94509d2c779ab76ab7ac
+
