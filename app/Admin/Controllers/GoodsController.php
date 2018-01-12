@@ -18,6 +18,7 @@ use Encore\Admin\Layout\Content;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Http\Request as sRequset;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class GoodsController extends Controller
 {
@@ -64,6 +65,7 @@ class GoodsController extends Controller
     public function create()
     {
         return Admin::content(function (Content $content) {
+            Redis::set('name','aaa');die;
             $content->header('header');
             $content->description('description');
             $cate = Category::selectOptions();
@@ -86,7 +88,13 @@ class GoodsController extends Controller
             $grid->id('ID')->sortable();
             $grid->name("商品名称")->badge('success');
             $grid->cover("封面图片")->image('', '50', '50');
-            $grid->is_hot('是否热销')->radio([1 => '是', 0 => '否']);
+            $grid->is_hot('是否热销')->display(function ($status) {
+                if ($status == 1) {
+                    return '是';
+                } else {
+                    return '否';
+                }
+            });
             $grid->is_attr('是否有属性')->display(function ($status) {
                 if ($status == 1) {
                     return '是';
@@ -143,7 +151,6 @@ class GoodsController extends Controller
     public function getAttr()
     {
         $id  = request('id');
-        $id=1;
         $res = Db::select('select a.id,a.name from xbs_attr_category as c INNER JOIN xbs_attr as a on c.attr_id=a.id where category_id =1');
         exit(json_encode($res));
     }
@@ -162,38 +169,26 @@ class GoodsController extends Controller
         }
         $data = $request->input();
         $attr = $data['attribute'];
-        unset($data['_token']);unset($data['attr']);unset($data['attribute']);unset($data['aprice']);unset($data['anum']);
+        unset($data['_token']);unset($data['attr']);unset($data['attribute']);unset($data['aprice']);unset($data['anum']);unset($data['checked']);
         $data['images'] = $images;
         $data['cover']  = $cover;
         $res            = Goods::create($data);
         $goods_id       = $res->id;
         $num            = $request->input('anum');
         if ($data['is_attr'] == 0) {
-            Product::create(['goods_id' => $goods_id, 'num' => $data['num']]);
+            Product::create(['goods_id' => $goods_id, 'num' => $data['num'],'checked'=>1]);
         } else {
             foreach ($request->input('aprice') as $k => $v) {
-                $arr = [
-                    'attribute_id' => $k,
-                    'price'        => $v,
-                    'num'          => $num[$k],
-                    'goods_id'     => $goods_id,
-                ];
-                Product::create($arr);
-            }
-            unset($attr[count($attr) - 1]);
-            foreach ($attr as $key => $value) {
-                if ($value) {
-                    $attribute = ['attribute_id' => explode('-', $value)[1], 'goods_id' => $goods_id];
+                $checked = 0;
+                if($k==$request->input('checked')){
+                    $checked = 1;
                 }
-
-                GoodsAttr::create($attribute);
-            }
-            foreach ($request->input('aprice') as $k => $v) {
                 $arr = [
                     'attribute_id' => $k,
                     'price'        => $v,
                     'num'          => $num[$k],
                     'goods_id'     => $goods_id,
+                    'checked'      =>$checked
                 ];
                 Product::create($arr);
             }
@@ -230,6 +225,9 @@ class GoodsController extends Controller
             foreach ($arr as $k => $v) {
                 $newArray[] = $v;
             }
+            if (count($newArray) == 1) {
+                exit(json_encode($newArray[0]));
+            }
             $len = count($newArray);
             $html = array();
             $str = "";
@@ -237,7 +235,6 @@ class GoodsController extends Controller
                 foreach ($newArray[1] as $kk => $vv) {
                     $str = "";
                     $str .= $vv . '-' . $v;
-
                     if (isset($newArray[2])) {
                         foreach ($newArray[2] as $kkk => $vvv) {
                             $str = "";
@@ -255,63 +252,32 @@ class GoodsController extends Controller
                         }
                     }
                 }
-
-                if (count($newArray) == 1) {
-                    exit(json_encode($newArray[0]));
-                }
-                $arr = [];
-                foreach ($newArray[0] as $k => $v) {
-                    foreach ($newArray[1] as $kk => $vv) {
-                        $str = $vv . '-' . $v;
-                        $key = $kk . ',' . $k;
-                        if (isset($newArray[2])) {
-                            foreach ($newArray[2] as $kkk => $vvv) {
-                                $str = $vvv . '-' . $vv . '-' . $v;
-                                $key = $kkk . ',' . $kk . ',' . $k;
-                                if (isset($newArray[3])) {
-                                    foreach ($newArray[3] as $kkkk => $vvvv) {
-                                        $str = $vvvv . '-' . $vvv . '-' . $vv . '-' . $v;
-                                        $key = $kkkk . ',' . $kkk . ',' . $kk . ',' . $k;
-                                        $arr[$key] = $str;
-                                    }
-                                } else {
-                                    $arr[$key] = $str;
-                                }
-                            }
-                        } else {
-                            $arr[$key] = $str;
-                        }
-                    }
-                }
-
-                if (count($newArray) == 1) {
-                    exit(json_encode($newArray[0]));
-                }
-                $arr = [];
-                foreach ($newArray[0] as $k => $v) {
-                    foreach ($newArray[1] as $kk => $vv) {
-                        $str = $vv . '-' . $v;
-                        $key = $kk . ',' . $k;
-                        if (isset($newArray[2])) {
-                            foreach ($newArray[2] as $kkk => $vvv) {
-                                $str = $vvv . '-' . $vv . '-' . $v;
-                                $key = $kkk . ',' . $kk . ',' . $k;
-                                if (isset($newArray[3])) {
-                                    foreach ($newArray[3] as $kkkk => $vvvv) {
-                                        $str = $vvvv . '-' . $vvv . '-' . $vv . '-' . $v;
-                                        $key = $kkkk . ',' . $kkk . ',' . $kk . ',' . $k;
-                                        $arr[$key] = $str;
-                                    }
-                                } else {
-                                    $arr[$key] = $str;
-                                }
-                            }
-                        } else {
-                            $arr[$key] = $str;
-                        }
-                    }
-                }
-                exit(json_encode($arr));
             }
+
+            $arr = [];
+            foreach ($newArray[0] as $k => $v) {
+                foreach ($newArray[1] as $kk => $vv) {
+                    $str = $vv . '-' . $v;
+                    $key = $kk . ',' . $k;
+                    if (isset($newArray[2])) {
+                        foreach ($newArray[2] as $kkk => $vvv) {
+                            $str = $vvv . '-' . $vv . '-' . $v;
+                            $key = $kkk . ',' . $kk . ',' . $k;
+                            if (isset($newArray[3])) {
+                                foreach ($newArray[3] as $kkkk => $vvvv) {
+                                    $str = $vvvv . '-' . $vvv . '-' . $vv . '-' . $v;
+                                    $key = $kkkk . ',' . $kkk . ',' . $kk . ',' . $k;
+                                    $arr[$key] = $str;
+                                }
+                            } else {
+                                $arr[$key] = $str;
+                            }
+                        }
+                    } else {
+                        $arr[$key] = $str;
+                    }
+                }
+            }
+            exit(json_encode($arr));
         }
 }
