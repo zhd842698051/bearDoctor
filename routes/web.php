@@ -105,17 +105,17 @@ Route::group(['middleware' => 'auth:web'], function () {
    
     //订单
     Route::get('/order', '\App\Http\Controllers\Auth\OrderController@list');
-    Route::get('/orderno', '\App\Http\Controllers\Auth\OrderController@orderNo');
     Route::get('/orderinfo', '\App\Http\Controllers\Auth\OrderController@orderInfo');
     Route::get('/addorder', '\App\Http\Controllers\Auth\OrderController@addOrder');
     Route::get('/delCart', '\App\Http\Controllers\Auth\OrderController@delCart');
     Route::get('/getaddress', '\App\Http\Controllers\Auth\OrderController@getAddress');
     Route::get('/getadd', '\App\Http\Controllers\Auth\OrderController@getAdd');
     Route::get('/order','\App\Http\Controllers\Auth\OrderController@list');
-    Route::get('/orderno','\App\Http\Controllers\Auth\OrderController@orderNo');
+   
     Route::get('/orderinfo','\App\Http\Controllers\Auth\OrderController@orderInfo');
     Route::post('/addorder','\App\Http\Controllers\Auth\OrderController@addOrder');
      Route::get('/confirmorder','\App\Http\Controllers\Auth\OrderController@confirmOrder');
+     Route::get('/saveOrder','\App\Http\Controllers\Auth\OrderController@saveOrder');
     Route::get('/delCart','\App\Http\Controllers\Auth\OrderController@delCart');
     Route::get('/cartorder','\App\Http\Controllers\Auth\OrderController@cart');
     Route::get('/getaddress','\App\Http\Controllers\Auth\OrderController@getAddress');
@@ -128,7 +128,7 @@ Route::group(['middleware' => 'auth:web'], function () {
 Route::post('/alipay','\App\Http\Controllers\Auth\alipayController@Alipay'); 
 
 Route::any('notify','\App\Http\Controllers\Auth\alipayController@AliPayNotify'); //服务器异步通知页面路径
-Route::any('return','\App\Http\Controllers\Auth\alipayController@AliPayReturn');  //页面跳转同步通知页面路径
+Route::get('return','\App\Http\Controllers\Auth\alipayController@AliPayReturn');  //页面跳转同步通知页面路径
 
 
     //微信支付

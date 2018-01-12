@@ -8,9 +8,11 @@ return [
    'sign_type' => 'MD5',
 
    // 服务器异步通知页面路径。根据自己项目路径做相应的修改
-   'notify_url' => 'http://web.wan.com/notify',
+   'notify_url' => 'http://www.bshop.com/notify',
 
    // 页面跳转同步通知页面路径。根据自己项目路径做相应的修改
-   'return_url' => 'http://web.wan.com/return'
+
+   'return_url' => 'http://www.bshop.com/return'
 ];
+
 
