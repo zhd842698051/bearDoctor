@@ -448,9 +448,16 @@
                         $(".un_login").css({
                             'display':'none'
                         })
+                        $("#cart").html(str);
+                        countMoney();
                     }
-                    $("#cart").html(str);
-                    countMoney();
+                    else
+                    {
+                        $("#cart").html('<center>购物车为空</center>');
+                        $("#money").html(0);
+                        $(".count").html(0);
+                    }
+                    
                 }
             })
         }

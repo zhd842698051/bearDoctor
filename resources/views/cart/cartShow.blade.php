@@ -193,7 +193,7 @@ $(function(){
             var re = '';
             var dat=eval(cart);
             $.each(dat,function(k,v){
-                re+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.product_id+"' /><input type='hidden' name='num' value='"+v.goods_num+"'></td><td><div class='c_s_img'><img src='"+v.goods_image+"' width='73' height='73' /></div><span class='goods_name'>"+v.goods_name+"</span></td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.goods_num+"' name='stock' class='car_ipt' /><input type='hidden' value='"+v.goods_price+"' class='hide_money'/><input type='hidden' value='"+v.product_id+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /><input type='hidden' class='image' value='"+v.goods_image+"'></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>"+v.goods_price*v.goods_num+"</span></td><td align='center'><a class='delete'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
+                re+="<tr class='tr'><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.product_id+"' /><input type='hidden' name='num' value='"+v.goods_num+"'></td><td><div class='c_s_img'><img src='"+v.goods_image+"' width='73' height='73' /></div><span class='goods_name'>"+v.goods_name+"</span></td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.goods_num+"' name='stock' class='car_ipt' /><input type='hidden' value='"+v.goods_price+"' class='hide_money'/><input type='hidden' value='"+v.product_id+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /><input type='hidden' class='image' value='"+v.goods_image+"'></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>"+v.goods_price*v.goods_num+"</span></td><td align='center'><a class='delete'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
             })
             $("#content").html(re)
             common_price();
@@ -395,7 +395,7 @@ $(function(){
                 $.each(result,function(k,v){
                     if(cart_id==v.product_id)
                     {
-                       $(this).parents('tr').remove('tr')
+                       
                     }
                     else
                     {
@@ -419,7 +419,7 @@ $(function(){
                     {
                         if(msg=='ok')
                         {
-                            $(this).parents('tr').remove('tr')
+                            //$(this).parents('tr').find(".tr").remove();
                         }
                     }
                 })   
@@ -436,8 +436,7 @@ $(function(){
         else    //删除数据库
         { 
             //调用ajax
-            Dbcart(userid,'get',"cart");
-            ShowDiv('MyDiv3','fade');
+            Dbcart(userid,'get',"{{URL('cart')}}");
         }
     })
 
@@ -573,6 +572,7 @@ $(function(){
                     {
                          $("#del").html("删除失败")
                     }
+                    ShowDiv('MyDiv3','fade');
                 }
 
                 //Database select
@@ -589,8 +589,7 @@ $(function(){
                         console.log(result)
                         var str = '';
                         $.each(result,function(k,v){
-                      //      console.log('http://p22vshs5l.bkt.clouddn.com/'+v.cover)
-                            str+="<tr><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.product_id+"' /></td><td><div class='c_s_img'><img src='http://p22vshs5l.bkt.clouddn.com/"+v.cover+"' width='73' height='73' /></div>"+v.name+"</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.num+"' name='stock' class='car_ipt' /><input type='hidden' value='"+v.sell_price+"' class='hide_money'/><input type='hidden' value='"+v.goods_id+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>"+v.sell_price*v.num+"</span></td><td align='center'><a class='delete'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
+                            str+="<tr class='tr'><td><input type='checkbox' class='checkbox' name='fruit' value='"+v.product_id+"' /></td><td><div class='c_s_img'><img src='http://p22vshs5l.bkt.clouddn.com/"+v.cover+"' width='73' height='73' /></div>"+v.name+"</td><td align='center'>颜色：灰色</td><td align='center'><div class='c_num'><input type='button' value='' name='jian' class='car_btn_1' /><input type='text' value='"+v.num+"' name='stock' class='car_ipt' /><input type='hidden' value='"+v.sell_price+"' class='hide_money'/><input type='hidden' value='"+v.goods_id+"' class='goods'><input type='button' value='' name='jia' class='car_btn_2' /></div></td><td align='center' style='color:#ff4e00'>￥<span class='money'>"+v.sell_price*v.num+"</span></td><td align='center'><a class='delete'>删除</a>&nbsp; &nbsp;<a href='#'>加入收藏</a></td></tr>"
                         });
                         $("#content").html(str)
                         common_price();

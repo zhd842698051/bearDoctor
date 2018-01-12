@@ -63,7 +63,7 @@
                     <input type="button" value="" class="n_btn_1" id='jia'/>
                     <input type="button" value="" class="n_btn_2" id='jian'/>   
                 </div>
-                <span class="fl"><a onclick="ShowDiv_1('MyDiv1','fade1')"><img src="{{asset('images')}}/j_car.png" id='addcart' /></a></span>
+                <span class="fl"><a href="#"><img src="{{asset('images')}}/j_car.png" id='addcart' /></a></span>
             </div>            
         </div>    
         
@@ -407,6 +407,7 @@
                 {
                     var fruit = "[{'product_id':"+product_id+",'goods_num':"+num+",'goods_image':'"+image+"','goods_name':'"+goodsname+"','goods_price':'"+price+"'}]";
                     window.localStorage.setItem('cart',fruit);
+                    ShowDiv_1('MyDiv1','fade1')
                 }
                 else{
                     var data = eval(cart);
@@ -428,6 +429,7 @@
                     }
                     st +=']';
                     window.localStorage.setItem('cart',st);
+                    ShowDiv_1('MyDiv1','fade1')
                 }
             }
             else
@@ -442,13 +444,11 @@
                         data:result,
                     },
                     success:function(msg){
-                        // if(msg=='ok')
-                        // {
-                            console.log(msg)
-                            return false;
-                        //     // window.localStorage.removeItem('cart')
-                        // }
-                        // Dbcart(userid,'get',"{{URL('cart/dataSel')}}")
+                        if(msg=='ok')
+                        {
+                            ShowDiv_1('MyDiv1','fade1')
+                        }
+                        //Dbcart(userid,'get',"{{URL('cart/dataSel')}}")
                         
                     }
                 })

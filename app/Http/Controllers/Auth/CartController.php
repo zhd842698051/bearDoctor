@@ -143,7 +143,7 @@ class CartController extends Controller
 	{
 		$userid = \Auth::id();
 		$data = Db::table('cart')->where('user_id',$userid)->join('product','cart.product_id','=','product.id')->join('goods','product.goods_id','=','goods.id')->select('cart.num','user_id','price','sell_price','cover','goods_id','name','product_id','sell_price')->get();
-		if($data)
+		if(!empty($data[0]))
 		{
 			$result['count'] = count(Db::table('cart')->where('user_id',$userid)->get());
 			$result['data'] = $data;
