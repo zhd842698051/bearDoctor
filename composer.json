@@ -54,6 +54,9 @@
         "sort-packages": true,
         "optimize-autoloader": true
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> d06d857a511ca695470b77c485dcde64941068cf
 }
 
